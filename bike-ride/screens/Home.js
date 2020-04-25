@@ -17,8 +17,10 @@ const Home = ({navigation}) => {
 				<Button nav="Forecast" navigation={navigation} text="7 Day Forecast" />
 			</View>
 			<Footer>
-				<Text>save button</Text>
-				<Text>Ride Criteria button</Text>
+				<View>
+					<Icon type="FontAwesome" name="" />save
+					<Text>Ride Criteria</Text>
+				</View>				
 			</Footer>
 		</Container>
 	);
