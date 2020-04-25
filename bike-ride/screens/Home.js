@@ -5,6 +5,7 @@ import { Container, Footer,Text, Icon, H1, H2, H3 } from 'native-base';
 import Header from '../components/Header.js';
 import Button from '../components/Button.js';
 
+//First screen in the app that loads data for the app's operations
 const Home = ({navigation}) => {
 	return (
 		<Container>
@@ -32,14 +33,14 @@ contentStyle:{
 	flex:1,	/*Evenly distribute space for each component */
 	textAlign:"center",
 },
-mainImageStyle:{
-	marginTop:20,
-	marginBottom:40,
+mainImageStyle:{/*Styles for the main two images at the top of the screen */
+	marginTop:20,/*white-space between Header and Primary Image */
+	marginBottom:40,/*white-space between Primary Image and other elements */
 	fontSize:250,/*Size of main image */
 	textAlign:"center",
 	flex:2,/*Override to double area */
 },
-sunImage:{
+sunImage:{/*color of the sun image */
 	color:"yellow",
 },
 });

@@ -2,6 +2,7 @@ import React from 'react';
 import {View, StyleSheet } from 'react-native';
 import {Header, Text } from 'native-base';
 
+//Header component for each screen
 const Head = (props) => {
 	return (
 		<View>
@@ -13,7 +14,7 @@ const Head = (props) => {
 }
 
 const styles = StyleSheet.create({
-	headerContainer: {
+	headerContainer: {/*Style the container that center the text */
 		backgroundColor: "navy",
 		display: "flex",
 		justifyContent: "center",
