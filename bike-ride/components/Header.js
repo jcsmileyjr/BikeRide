@@ -6,7 +6,7 @@ const Head = (props) => {
 	return (
 		<View>
 			<Header style={styles.headerContainer}>
-				<Text style={styles.textStyle}>Head</Text>
+				<Text style={styles.textStyle}>{props.title}</Text>
 			</Header>
 		</View>
 	);
