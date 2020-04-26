@@ -32,7 +32,7 @@ const Home = ({navigation}) => {
 				{!this.getTodayForecast() &&
 					<View style={styles.mainImageContainer}>
 						<Icon style={[styles.mainImageStyle, styles.stopHandImage]} type="FontAwesome" name="hand-stop-o" />
-						<H1 style={styles.contentStyle} >Do Not to Ride</H1>
+						<H1 style={styles.contentStyle} >Do Not go Ride</H1>
 					</View>					
 				}								
 				
