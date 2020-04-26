@@ -41,8 +41,8 @@ const Home = ({navigation}) => {
 			</View>
 			<Footer style={styles.footerStyle}>
 				<View>
-					<Icon style={styles.saveIconStyle} type="FontAwesome" name="save" />
-					<Text style={styles.footerTextStyle}>Ride Criteria</Text>					
+					<Icon style={styles.cogIconStyle} type="FontAwesome" name="cog" />
+					<Text style={styles.footerTextStyle}>Edit Ride Criteria</Text>					
 				</View>			
 			</Footer>
 		</Container>
@@ -77,13 +77,14 @@ stopHandImage:{
 footerStyle:{/*Style for the footer*/
 	paddingTop: 5,/*add white space above content */
 	paddingBottom:5,/*add white space below content */
+	backgroundColor:"white",
 },
-saveIconStyle:{/*Style for the save icon in the footer */
-	color:"black",/*Color of the icon*/
+cogIconStyle:{/*Style for the save icon in the footer */
+	color:"navy",/*Color of the icon*/
 	textAlign:"center",/*Center the icon in its row*/
 },
 footerTextStyle:{
-	color:"white",
+	color:"black",
 }
 });
 
