@@ -4,13 +4,12 @@ import { Container, Footer,Text, Icon, H1} from 'native-base';
 
 import Header from '../components/Header.js';
 import Button from '../components/Button.js';//Navigation button to the Forecast Screen
-import weather from '../data/weather.json';
+import weather from '../data/weather.json';//Dummy data representing a sanitized 7 day weather forecast as a array of objects.
 
 //First screen shown in the app that loads data for the app's operations
 const Home = ({navigation}) => {
 
-
-	//function that return true or false based on a criteria like temperature
+	//Return true or false based on a criteria like temperature
 	getTodayForecast = () => {
 		const forecast = weather.weather[0];
 		if(forecast.temperature >= 60 && forecast.temperature <=85){
@@ -50,9 +49,9 @@ const Home = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
-contentlayout:{
+contentlayout:{/*Take up all available space between the Header and Footer*/
 	display:"flex",
-	flex:1,/*Take up all available space */
+	flex:1,
 },
 contentStyle:{
 	flex:1,	/*Evenly distribute space for each component in the content-layout section*/
@@ -65,13 +64,13 @@ mainImageStyle:{/*Styles for the main two images at the top of the screen */
 	marginTop:20,/*white-space between Header and Primary Image */
 	marginBottom:40,/*white-space between Primary Image and other elements */
 	fontSize:250,/*Size of main image */
-	textAlign:"center",
+	textAlign:"center",/*center the image */
 	
 },
 sunImage:{/*color of the sun image */
 	color:"yellow",
 },
-stopHandImage:{
+stopHandImage:{/*color of the stop riding image */
 	color:"red",
 },
 footerStyle:{/*Style for the footer*/
