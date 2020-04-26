@@ -5,6 +5,7 @@ import { Container,Text, Icon, H1} from 'native-base';
 import Header from '../components/Header.js';
 import Button from '../components/Button.js';//Navigation button to the Forecast Screen
 import Footer from '../components/Footer.js';
+import CriteriaIcon from '../components/EditCriteria.js';/*Cog icon to navigate user to EditCriteria screen */
 import weather from '../data/weather.json';//Dummy data representing a sanitized 7 day weather forecast as a array of objects.
 
 /**First screen shown in the app that makes an api call to get today's weather. 
@@ -42,10 +43,7 @@ const Home = ({navigation}) => {
 				<Button nav="Forecast" navigation={navigation} text="7 Day Forecast" />
 			</View>
 			<Footer>
-				<View>
-					<Icon style={styles.cogIconStyle} type="FontAwesome" name="cog" />
-					<Text style={styles.footerTextStyle}>Edit Ride Criteria</Text>					
-				</View>				
+				<CriteriaIcon />				
 			</Footer>
 		</Container>
 	);

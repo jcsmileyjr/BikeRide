@@ -23,5 +23,5 @@ const navigationOptions = {
   headerMode: 'none'
 }
 
-const AppNavigator = createStackNavigator({ Forecast:ForecastScreen, Home: HomeScreen}, navigationOptions);
+const AppNavigator = createStackNavigator({ Home: HomeScreen, Forecast:ForecastScreen}, navigationOptions);
 const AppContainer = createAppContainer(AppNavigator);
