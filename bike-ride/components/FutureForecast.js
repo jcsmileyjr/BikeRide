@@ -5,7 +5,7 @@ import {Icon} from 'native-base';
 const FutureForecast = (props) => {
 	return(
 		<View style={styles.contentLayout}>
-			<Text style={styles.textStyle}>props.date</Text>
+			<Text style={styles.textStyle}>{props.date}</Text>
 			<Text style={styles.textStyle}>{props.outcome}</Text>
 
 			{props.outcome ==="Good" &&
@@ -29,15 +29,15 @@ const styles = StyleSheet.create({
 		marginBottom:10,	/*white-space around forecast */	
 	},
 	textStyle:{
-		fontSize:40,/*Size of text */
+		fontSize:30,/*Size of text */
 	},
 	sunImage:{/*color and size of the sun image */
 		color:"yellow",
-		fontSize:75,
+		fontSize:50,
 	},
 	stopHandImage:{/*color and size of the stop riding image */
 		color:"red",
-		fontSize:75,
+		fontSize:50,
 	}
 });
 

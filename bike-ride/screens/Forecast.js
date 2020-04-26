@@ -21,14 +21,8 @@ const Forecast = () => {
 				}else{
 					return <FutureForecast key={index} date={forecast.date} outcome="Bad" />
 				}
-			})
-
+			 })
 			}
-
-			<View style={styles.contentlayout}>
-				<FutureForecast outcome="Good" />
-				<FutureForecast outcome="Bad" />
-			</View>
 			<Footer>
 				<View><Text>Bottom of the screen</Text></View>
 			</Footer>
