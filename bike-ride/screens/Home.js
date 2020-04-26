@@ -1,9 +1,10 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native';
-import { Container, Footer,Text, Icon, H1} from 'native-base';
+import { Container,Text, Icon, H1} from 'native-base';
 
 import Header from '../components/Header.js';
 import Button from '../components/Button.js';//Navigation button to the Forecast Screen
+import Footer from '../components/Footer.js';
 import weather from '../data/weather.json';//Dummy data representing a sanitized 7 day weather forecast as a array of objects.
 
 //First screen shown in the app that loads data for the app's operations
@@ -38,11 +39,11 @@ const Home = ({navigation}) => {
 				<Text style={styles.contentStyle}>The temperature is {weather.weather[0].temperature} degrees</Text>
 				<Button nav="Forecast" navigation={navigation} text="7 Day Forecast" />
 			</View>
-			<Footer style={styles.footerStyle}>
+			<Footer>
 				<View>
 					<Icon style={styles.cogIconStyle} type="FontAwesome" name="cog" />
 					<Text style={styles.footerTextStyle}>Edit Ride Criteria</Text>					
-				</View>			
+				</View>				
 			</Footer>
 		</Container>
 	);
