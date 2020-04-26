@@ -12,6 +12,7 @@ const Forecast = () => {
 			<Header title="7 Day Forecast" />
 			<View style={styles.contentlayout}>
 				<FutureForecast outcome="Good" />
+				<FutureForecast outcome="Bad" />
 			</View>
 			<Footer>
 				<View><Text>Bottom of the screen</Text></View>
