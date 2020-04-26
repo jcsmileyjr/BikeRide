@@ -5,12 +5,13 @@ import {Container} from 'native-base';
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
 import FutureForecast from '../components/FutureForecast.js';
+import Button from '../components/Button.js';//Navigation button to the Home Screen
 import weather from '../data/weather.json';//Dummy data representing a sanitized 7 day weather forecast as a array of objects.
 
 /*7 Day Forecast screen that makes an api call to get 7 days of weather data.
 That data is then use to display if each day is a good or bad day to ride a bicycle. 
 */
-const Forecast = () => {
+const Forecast = ({navigation}) => {
 	return(
 		<Container>
 			<Header title="7 Day Forecast" />
@@ -23,6 +24,8 @@ const Forecast = () => {
 				}
 			 })
 			}
+
+			<Button nav="Home" navigation={navigation} text="Today Forecast" />
 			<Footer>
 				<View><Text>Bottom of the screen</Text></View>
 			</Footer>

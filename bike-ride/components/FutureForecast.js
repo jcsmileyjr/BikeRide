@@ -21,6 +21,7 @@ const FutureForecast = (props) => {
 
 const styles = StyleSheet.create({
 	contentLayout:{/*layout of the component */
+		flex:1,
 		display:"flex",
 		justifyContent:"space-around",
 		alignItems:"center",
