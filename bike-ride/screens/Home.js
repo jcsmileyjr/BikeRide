@@ -19,7 +19,7 @@ const Home = ({navigation}) => {
 			<Footer style={styles.footerStyle}>
 				<View>
 					<Icon style={styles.saveIconStyle} type="FontAwesome" name="save" />
-					<Text>Ride Criteria</Text>					
+					<Text style={styles.footerTextStyle}>Ride Criteria</Text>					
 				</View>			
 			</Footer>
 		</Container>
@@ -52,6 +52,9 @@ footerStyle:{/*Style for the footer*/
 saveIconStyle:{/*Style for the save icon in the footer */
 	color:"black",/*Color of the icon*/
 	textAlign:"center",/*Center the icon in its row*/
+},
+footerTextStyle:{
+	color:"white",
 }
 });
 

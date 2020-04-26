@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
 	buttonContainer:{/*Style for the container of the button */
 		alignItems:"center",  //help center the button
 		justifyContent:"center",
+		marginBottom:30,
 	},
 	buttonText:{
 		color: "white", //text color
