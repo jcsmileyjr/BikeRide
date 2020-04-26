@@ -7,7 +7,9 @@ import Button from '../components/Button.js';//Navigation button to the Forecast
 import Footer from '../components/Footer.js';
 import weather from '../data/weather.json';//Dummy data representing a sanitized 7 day weather forecast as a array of objects.
 
-//First screen shown in the app that loads data for the app's operations
+/**First screen shown in the app that makes an api call to get today's weather. 
+ * That data is use to display if today is a good or bad to ride a bicycle. 
+ */
 const Home = ({navigation}) => {
 
 	//Return true or false based on a criteria like temperature

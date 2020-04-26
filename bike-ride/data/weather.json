@@ -4,37 +4,44 @@
 			{
 				"temperature":70,
 				"windSpeed":5,
-				"ifRained":"no"
+				"ifRained":"no",
+				"date":"4/25/2020"
 			},
 			{
 				"temperature":85,
 				"windSpeed":10,
-				"ifRained":"yes"
+				"ifRained":"yes",
+				"date":"4/26/2020"
 			},
 			{
 				"temperature":90,
 				"windSpeed":1,
-				"ifRained":"no"
+				"ifRained":"no",
+				"date":"4/27/2020"
 			},
 			{
 				"temperature":83,
 				"windSpeed":5,
-				"ifRained":"no"
+				"ifRained":"no",
+				"date":"4/28/2020"
 			},
 			{
 				"temperature":61,
 				"windSpeed":10,
-				"ifRained":"no"
+				"ifRained":"no",
+				"date":"4/29/2020"
 			},
 			{
 				"temperature":68,
 				"windSpeed":7,
-				"ifRained":"yes"
+				"ifRained":"yes",
+				"date":"4/30/2020"
 			},
 			{
 				"temperature":104,
 				"windSpeed":1,
-				"ifRained":"no"
+				"ifRained":"no",
+				"date":"5/1/2020"
 			}
 		]
 

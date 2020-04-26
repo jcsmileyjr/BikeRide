@@ -5,7 +5,7 @@ import {Icon} from 'native-base';
 const FutureForecast = (props) => {
 	return(
 		<View style={styles.contentLayout}>
-			<Text style={styles.textStyle}>Date</Text>
+			<Text style={styles.textStyle}>props.date</Text>
 			<Text style={styles.textStyle}>{props.outcome}</Text>
 
 			{props.outcome ==="Good" &&
