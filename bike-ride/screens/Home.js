@@ -5,9 +5,12 @@ import { Container,Text, Icon, H1} from 'native-base';
 import Header from '../components/Header.js';
 import Button from '../components/Button.js';//Navigation button to the Forecast Screen
 import Footer from '../components/Footer.js';
+import CriteriaIcon from '../components/EditCriteria.js';/*Cog icon to navigate user to EditCriteria screen */
 import weather from '../data/weather.json';//Dummy data representing a sanitized 7 day weather forecast as a array of objects.
 
-//First screen shown in the app that loads data for the app's operations
+/**First screen shown in the app that makes an api call to get today's weather. 
+ * That data is use to display if today is a good or bad to ride a bicycle. 
+ */
 const Home = ({navigation}) => {
 
 	//Return true or false based on a criteria like temperature
@@ -32,7 +35,7 @@ const Home = ({navigation}) => {
 				{!this.getTodayForecast() &&
 					<View style={styles.mainImageContainer}>
 						<Icon style={[styles.mainImageStyle, styles.stopHandImage]} type="FontAwesome" name="hand-stop-o" />
-						<H1 style={styles.contentStyle} >Do Not to Ride</H1>
+						<H1 style={styles.contentStyle} >Do Not go Ride</H1>
 					</View>					
 				}								
 				
@@ -40,10 +43,7 @@ const Home = ({navigation}) => {
 				<Button nav="Forecast" navigation={navigation} text="7 Day Forecast" />
 			</View>
 			<Footer>
-				<View>
-					<Icon style={styles.cogIconStyle} type="FontAwesome" name="cog" />
-					<Text style={styles.footerTextStyle}>Edit Ride Criteria</Text>					
-				</View>				
+				<CriteriaIcon />				
 			</Footer>
 		</Container>
 	);
