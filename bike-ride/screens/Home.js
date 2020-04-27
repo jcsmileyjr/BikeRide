@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import dotenv from 'dotenv';
-dotenv.config();
+import {ACCESS_KEY, API_URL} from 'react-native-dotenv';
 import { View, StyleSheet } from 'react-native';
 import { Container,Text, Icon, H1} from 'native-base';
 
@@ -21,13 +20,16 @@ const Home = ({navigation}) => {
 	//API call to get the current weather forcast
 	//format is: weatherData[0].current.temperature
 	getForecast = async () => {
-		return fetch(`${process.env.API_URL}current?access_key=${process.env.ACCESS_KEY}&query=Memphis&units=f`)
+		/*
+		return fetch(`${API_URL}current?access_key=${ACCESS_KEY}&query=Memphis&units=f`)
 			.then((response) => response.json())
 			.then((data) =>{
+				console.log(data);
 				weatherData.push(data);
-				console.log(weatherData[0].current.temperature);
+				console.log("Testing " + weatherData[0].current.temperature);
 			})
 			.catch((error) => console.log(error));
+		*/
 	}
 
 	//Return true or false based on a criteria like temperature
