@@ -7,7 +7,6 @@ import Header from '../components/Header.js';
 import Button from '../components/Button.js';//Navigation button to the Forecast Screen
 import Footer from '../components/Footer.js';
 import CriteriaIcon from '../components/EditCriteria.js';/*Cog icon to navigate user to EditCriteria screen */
-import weather from '../data/weather.json';//Dummy data representing a sanitized 7 day weather forecast as a array of objects.
 
 /**First screen shown in the app that makes an api call to get today's weather. 
  * That data is use to display if today is a good or bad to ride a bicycle. 
@@ -59,8 +58,7 @@ const Home = ({ navigation }) => {
 
 	//Return true or false based on a criteria like temperature
 	getTodayForecast = () => {
-		const forecast = weather.weather[0];
-		if (forecast.temperature >= 60 && forecast.temperature <= 85) {
+		if (weatherData >= 60 && weatherData <= 85) {
 			return true;
 		}
 		return false;
