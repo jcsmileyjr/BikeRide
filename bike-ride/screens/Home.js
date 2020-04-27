@@ -1,4 +1,6 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import dotenv from 'dotenv';
+dotenv.config();
 import { View, StyleSheet } from 'react-native';
 import { Container,Text, Icon, H1} from 'native-base';
 
@@ -12,6 +14,21 @@ import weather from '../data/weather.json';//Dummy data representing a sanitized
  * That data is use to display if today is a good or bad to ride a bicycle. 
  */
 const Home = ({navigation}) => {
+	const [weatherData, setWeatherData] = useState([]);
+
+	useEffect(() => {this.getForecast();}, []);
+
+	//API call to get the current weather forcast
+	//format is: weatherData[0].current.temperature
+	getForecast = async () => {
+		return fetch(`${process.env.API_URL}current?access_key=${process.env.ACCESS_KEY}&query=Memphis&units=f`)
+			.then((response) => response.json())
+			.then((data) =>{
+				weatherData.push(data);
+				console.log(weatherData[0].current.temperature);
+			})
+			.catch((error) => console.log(error));
+	}
 
 	//Return true or false based on a criteria like temperature
 	getTodayForecast = () => {
