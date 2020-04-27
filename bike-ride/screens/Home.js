@@ -20,16 +20,36 @@ const Home = ({navigation}) => {
 	//API call to get the current weather forcast
 	//format is: weatherData[0].current.temperature
 	getForecast = async () => {
-		/*
+		
 		return fetch(`${API_URL}current?access_key=${ACCESS_KEY}&query=Memphis&units=f`)
 			.then((response) => response.json())
 			.then((data) =>{
 				console.log(data);
-				weatherData.push(data);
-				console.log("Testing " + weatherData[0].current.temperature);
+				weatherData.push(this.sanitizeData(data));
+				console.log("Testing " + weatherData[0].temperature);
+				
 			})
 			.catch((error) => console.log(error));
-		*/
+		
+	}
+
+	/**
+				"temperature":85,
+				"windSpeed":10,
+				"ifRained":"yes",
+				"date":"4/26/2020"
+	 */
+	sanitizeData = (apiData) => {
+		const workingArray = [];//temp array to hold data object from weather service api call
+		let convertedData = {};
+		workingArray.push(apiData);//push the api data object into the temp array
+
+		convertedData.temperature = workingArray[0].current.temperature;
+		convertedData.windSpeed = workingArray[0].current.windSpeed;
+		convertedData.ifRained = workingArray[0].current.precip;
+		convertedData.date = workingArray[0].location.localtime;
+
+		return convertedData;
 	}
 
 	//Return true or false based on a criteria like temperature
