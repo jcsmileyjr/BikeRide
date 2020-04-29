@@ -16,6 +16,10 @@ const styles = StyleSheet.create({
 		paddingTop: 5,/*add white space above content */
 		paddingBottom:5,/*add white space below content */
 		backgroundColor:"white",
+		display:"flex",
+		justifyContent:"space-around",
+		alignItems:"center",
+
 	}
 });
 

@@ -8,6 +8,7 @@ import Footer from '../components/Footer.js';
 import FutureForecast from '../components/FutureForecast.js';
 import Button from '../components/Button.js';//Navigation button to the Home Screen
 import CriteriaIcon from '../components/EditCriteria.js';/*Cog icon to navigate user to EditCriteria screen */
+import SavePredictions from '../components/SavePredictions.js';/*Disk icon to save 7 day forecast to local storage */
 
 /*7 Day Forecast screen that makes an api call to get 7 days of weather data.
 That data is then use to display if each day is a good or bad day to ride a bicycle. 
@@ -75,6 +76,7 @@ const Forecast = ({navigation}) => {
 
 			<Button nav="Home" navigation={navigation} text="Today Forecast" />
 			<Footer>
+				<SavePredictions />
 				<CriteriaIcon />
 			</Footer>
 		</Container>
