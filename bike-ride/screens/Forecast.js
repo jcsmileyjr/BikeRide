@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import {StyleSheet} from 'react-native';
-import {Container} from 'native-base';
+import {StyleSheet, View} from 'react-native';
+import {Container, H1} from 'native-base';
 import {FORECAST_ACCESS_KEY, FORECAST_API_URL, FORECAST_APP_ID } from 'react-native-dotenv';//Weather service API keys
 
 import Header from '../components/Header.js';
@@ -58,6 +58,11 @@ const Forecast = ({navigation}) => {
 	return(
 		<Container>
 			<Header title="7 Day Forecast" />
+			{/*Display warning to user while data is loading */}
+			{weatherData.length === 0 &&
+				<View><H1 style={styles.loadingText}>Data is loading</H1></View>
+			}
+
 			{/*Loops through an array of converted api data to display a future Forcast for next 7 days based on a criteria */}
 			{weatherData.map((forecast, index) => {
 				if(forecast.temperature >= 60 && forecast.temperature <=85){
@@ -80,6 +85,10 @@ const styles = StyleSheet.create({
 	contentlayout:{/*Take up all available space between the Header and Footer*/
 		display:"flex",
 		flex:1,
+	},
+	loadingText: {
+		textAlign:"center",
+		color:"red",
 	}
 });
 
