@@ -31,9 +31,11 @@ const Forecast = ({navigation}) => {
 		setWeatherData(data.temperature);
 
 		//PRODUCTION CODE
-		return fetch(`${FORECAST_API_URL}?app_id=${FORECAST_APP_ID}&app_key=${FORECAST_ACCESS_KEY}`)
+		return fetch(`${FORECAST_API_URL}35.149,-90.049?app_id=${FORECAST_APP_ID}&app_key=${FORECAST_ACCESS_KEY}`)
 			.then((response) => response.json())
-			.then((data) =>{console.log(data);console.log(FORECAST_API_URL);})
+			.then((data) =>{
+				console.log(this.sanitizeData(data));
+			})
 			/*
 			.then((data) =>{
 				const convertedData = this.sanitizeData(data);//convert api data into a sanitize object with only needed information
@@ -49,15 +51,24 @@ const Forecast = ({navigation}) => {
 	//Method to convert data from API object into a sanitize object to be comsume by the Home screen
 	sanitizeData = (apiData) => {
 		const workingArray = [];//temp array to hold data object from weather service api call
-		let convertedData = {};//temp object to hold select data from API object
 		workingArray.push(apiData);//push the api data object into the temp array
+		let convertedArray = [];
+		
 
-		convertedData.temperature = workingArray[0].current.temperature;
-		convertedData.windSpeed = workingArray[0].current.windSpeed;
-		convertedData.ifRained = workingArray[0].current.precip;
-		convertedData.date = workingArray[0].location.localtime;
+		workingArray[0].Days.map((weather, index) => {
+			let convertedData = {};//temp object to hold select data from API object
+			convertedData.temperature = weather.temp_max_f;
+			convertedData.windSpeed = weather.windspd_max_mph;
+			convertedData.rain = weather.rain_total_in;
+			convertedData.date = weather.date;
 
-		return convertedData;
+		convertedArray.push(convertedData);
+
+		console.log(weather.date);
+			//return convertedData;
+		})
+
+		return convertedArray;
 	}
 	return(
 		<Container>
