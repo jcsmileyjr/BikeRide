@@ -1,6 +1,6 @@
 import React, { useState} from 'react'
 import { View, TextInput, StyleSheet, AsyncStorage } from 'react-native';
-import { Container, Text, Icon, H1} from 'native-base';
+import { Container, Text, ListItem, CheckBox, H1} from 'native-base';
 
 import Header from '../components/Header.js';
 import Button from '../components/Button.js';//Navigation button to the Home Screen
@@ -40,8 +40,10 @@ const SetCriteria = ({navigation}) => {
                     <TextInput style={styles.textInputStyle}  onChangeText={(windSpd)=> setWindSpeed(windSpd)} />
                 </View>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.inputLabelStyle}>Type True or False if you want to ride if it Rained</Text>
-                    <TextInput style={styles.textInputStyle}  onChangeText={(rideIfRain)=> setIfRained(rideIfRain)} />
+                    <ListItem >
+                        <CheckBox checked={ifRained} onPress={() => setIfRained(true)}/>
+                        <Text> I want to ride even if in wet conditions</Text>
+                    </ListItem>
                 </View>
 
                 <View style={styles.buttonWhiteSpace}>
