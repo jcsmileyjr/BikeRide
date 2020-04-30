@@ -77,7 +77,7 @@ const Forecast = ({navigation}) => {
 			<Button nav="Home" navigation={navigation} text="Today Forecast" />
 			<Footer>
 				<SavePredictions forecast={weatherData} />
-				<CriteriaIcon />
+				<CriteriaIcon navigation={navigation} />
 			</Footer>
 		</Container>
 	);

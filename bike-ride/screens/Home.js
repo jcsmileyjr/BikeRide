@@ -42,10 +42,7 @@ const Home = ({ navigation }) => {
 			.then((response) => response.json())
 			.then((data) =>{
 				const convertedData = this.sanitizeData(data);//convert api data into a sanitize object with only needed information
-				setWeatherData(convertedData);//updates weatherData with today's temperature
-				//setWeatherData(convertedData.temperature);//updates weatherData with today's temperature
-				
-				//weatherData.push(this.sanitizeData(data));//old code that works				
+				setWeatherData(convertedData);//updates weatherData with today's weather data		
 			})
 			.catch((error) => console.log(error));
 		*/
@@ -115,7 +112,7 @@ const Home = ({ navigation }) => {
 				<Button nav="Forecast" navigation={navigation} text="7 Day Forecast" />
 			</View>
 			<Footer>
-				<CriteriaIcon />
+				<CriteriaIcon navigation={navigation} />
 			</Footer>
 		</Container>
 	);
