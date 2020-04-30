@@ -84,10 +84,6 @@ const Forecast = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
-	contentlayout:{/*Take up all available space between the Header and Footer*/
-		display:"flex",
-		flex:1,
-	},
 	loadingText: {
 		textAlign:"center",
 		color:"red",

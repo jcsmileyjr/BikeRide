@@ -68,7 +68,7 @@ const Home = ({ navigation }) => {
 			return false;
 		}
 		if(weatherData.windSpeed > rideSetting.windSpeedLimit){return false}
-		if(weatherData.precip > 0){return false}
+		if(weatherData.precip > 0 && rideSetting.ifRained === false){return false}
 		return true;
 
 	}
