@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { ACCESS_KEY, API_URL } from 'react-native-dotenv';
 import { View, StyleSheet, AsyncStorage } from 'react-native';
+import { NavigationEvents } from "react-navigation";
 import { Container, Text, Icon, H1 } from 'native-base';
 
 import Header from '../components/Header.js';
@@ -83,7 +84,7 @@ const Home = ({ navigation }) => {
 			}else{
 				//If there is no saved data, then save base criteria to local storage           
 				await AsyncStorage.setItem("rideCriteria",JSON.stringify(baseRideCriteria));//Save base criteria to local storage
-				setRideSetting(baseRideCriteria);
+				setRideSetting(baseRideCriteria);//save base criteria to local state
 			}
 		}catch (e){
 			console.log(e);
@@ -94,6 +95,10 @@ const Home = ({ navigation }) => {
 	return (
 		<Container>
 			<Header title="Today" />
+			{/*Check if the riding criteria have change */}
+			<NavigationEvents onDidFocus={() => this.setCriteria()} />
+
+			{/*Show a sun or red hand icon based on the riding criteria */}
 			<View style={styles.contentlayout}>
 				{this.getTodayForecast() &&
 					<View style={styles.mainImageContainer}>

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState} from 'react'
 import { View, TextInput, StyleSheet, AsyncStorage } from 'react-native';
-import { Container, Text, Icon, H1 } from 'native-base';
+import { Container, Text, Icon, H1} from 'native-base';
 
 import Header from '../components/Header.js';
-import Footer from '../components/Footer.js';
 import Button from '../components/Button.js';//Navigation button to the Home Screen
 
 const SetCriteria = ({navigation}) => {
@@ -11,6 +10,18 @@ const SetCriteria = ({navigation}) => {
     const [maximumTemp, setMaximumTemp] = useState(0);
     const [windSpeed, setWindSpeed] = useState(0);
     const [ifRained, setIfRained] = useState(false);
+
+    //method called when user click the button. Creates a new riding criteria object and save to local storage
+    saveData = async () => {
+        let newCriteria = {};
+        newCriteria.minimalTemperature = minimalTemp;
+        newCriteria.maximumTemperature= maximumTemp;
+        newCriteria.ifRained = ifRained;
+        newCriteria.windSpeedLimit = windSpeed;
+
+        await AsyncStorage.setItem("rideCriteria",JSON.stringify(newCriteria));//Save new criteria to local storage
+    }
+
     return(
         <Container>
             <Header title="Today" />
@@ -34,7 +45,7 @@ const SetCriteria = ({navigation}) => {
                 </View>
 
                 <View style={styles.buttonWhiteSpace}>
-                    <Button nav="Home" navigation={navigation} text="Save" />
+                    <Button nav="Home" navigation={navigation} text="Save" save={saveData}/>
                 </View>
             </View>
         </Container>
@@ -46,7 +57,7 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flex: 1,
 	},
-    textInputStyle:{
+    textInputStyle:{/*Style for input fields */
 		width: 270,
 		color: 'grey',  //blue text color
 		textAlign: "center",
@@ -56,7 +67,7 @@ const styles = StyleSheet.create({
 		elevation: 1,
 		fontSize: 18,
     },
-    inputLabelStyle:{
+    inputLabelStyle:{/*Style for labels */
         textAlign:'center',/*center the label text*/
         color:"grey",/*add color */
     },

@@ -1,8 +1,20 @@
 import React from 'react';
 import {View, Text, TouchableNativeFeedback, StyleSheet} from 'react-native';
 
-//Navigation button for moving the user between the screens
+//Navigation button for moving the user between the screens and saving ride criteria data if save prop is present
 const Button = (props) => {
+	{/*Use on the EditCriteria screen to check if the save props is used. If so, save bike ride criteria data to local storage */}
+	if(props.save){
+		return(
+			<View style={styles.buttonContainer}>
+				<TouchableNativeFeedback onPress={() => {props.navigation.navigate(props.nav); props.save()}} >
+					<View style={styles.buttonStyle}>
+							<Text style={styles.buttonText}>{props.text}</Text>
+					</View>
+				</TouchableNativeFeedback>
+			</View>
+		);		
+	}
 	return(
 		<View style={styles.buttonContainer}>
 			<TouchableNativeFeedback onPress={() => props.navigation.navigate(props.nav)} >
