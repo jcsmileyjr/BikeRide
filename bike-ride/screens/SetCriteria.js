@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState, useEffect} from 'react'
 import { View, TextInput, StyleSheet, AsyncStorage } from 'react-native';
 import { Container, Text, ListItem, CheckBox, H1} from 'native-base';
 
@@ -10,6 +10,18 @@ const SetCriteria = ({navigation}) => {
     const [maximumTemp, setMaximumTemp] = useState(0);
     const [windSpeed, setWindSpeed] = useState(0);
     const [ifRained, setIfRained] = useState(false);
+    const [oldCriteria, setOldCriteria] = useState({});
+
+    useEffect(() => { this.getOldCriteria(); }, []);
+
+    getOldCriteria = async () => {
+        const savedCritera = await AsyncStorage.getItem('rideCriteria');//get saved ride criteria from local storage 
+        const oldCriteria =JSON.parse(savedCritera);
+        setMinimalTemp(oldCriteria.minimalTemperature);
+        setMaximumTemp(oldCriteria.maximumTemperature);
+        setWindSpeed(oldCriteria.windSpeedLimit);
+        setIfRained(oldCriteria.ifRained);
+    }
 
     //method called when user click the button. Creates a new riding criteria object and save to local storage
     saveData = async () => {
@@ -29,15 +41,18 @@ const SetCriteria = ({navigation}) => {
                 <H1 style={styles.pageTitle}>Set the Criteria for a Good Bicycle Rides</H1>
                 <View style={styles.inputContainer}>
                     <Text style={styles.inputLabelStyle}>Set Minimal Temperature to Ride</Text>
-                    <TextInput style={styles.textInputStyle}  onChangeText={(minimalTemp)=> setMinimalTemp(minimalTemp)} />
+                    <TextInput style={styles.textInputStyle} clearTextOnFocus  onChangeText={(minTemp)=> setMinimalTemp(minTemp)} />
+                    <Text style={styles.inputLabelStyle}>Old temp is {minimalTemp}</Text>
                 </View>
                 <View style={styles.inputContainer}>
                     <Text style={styles.inputLabelStyle}>Set Maximum Temperature to Ride</Text>
-                    <TextInput style={styles.textInputStyle}  onChangeText={(maximumTemp)=> setMaximumTemp(maximumTemp)} />
+                    <TextInput style={styles.textInputStyle}  onChangeText={(maxTemp)=> setMaximumTemp(maxTemp)} />
+                    <Text style={styles.inputLabelStyle}>Old temp is {maximumTemp}</Text>
                 </View>
                 <View style={styles.inputContainer}>
                     <Text style={styles.inputLabelStyle}>Set Maximum Wind Speed to Ride</Text>
                     <TextInput style={styles.textInputStyle}  onChangeText={(windSpd)=> setWindSpeed(windSpd)} />
+                    <Text style={styles.inputLabelStyle}>Old wind speed is {windSpeed}</Text>
                 </View>
                 <View style={styles.inputContainer}>
                     <ListItem >
