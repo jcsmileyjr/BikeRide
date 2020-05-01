@@ -2,10 +2,10 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Icon} from 'native-base';
 
-const EditCriteria = () => {
+const EditCriteria = (props) => {
 	return(
 		<View>
-			<Icon style={styles.cogIconStyle} type="FontAwesome" name="cog" />
+			<Icon style={styles.cogIconStyle} type="FontAwesome" name="cog" onPress={() => props.navigation.navigate("SetCriteria")}/>
 			<Text style={styles.footerTextStyle}>Edit Ride Criteria</Text>					
 		</View>		
 	);

@@ -5,6 +5,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import HomeScreen from './screens/Home.js';
 import ForecastScreen from './screens/Forecast.js';
+import SetCriteriaScreen from './screens/SetCriteria.js';
 
 export default function App() {
   return (<AppContainer />);
@@ -23,5 +24,5 @@ const navigationOptions = {
   headerMode: 'none'
 }
 
-const AppNavigator = createStackNavigator({ Home: HomeScreen, Forecast:ForecastScreen}, navigationOptions);
+const AppNavigator = createStackNavigator({ Home: HomeScreen, Forecast:ForecastScreen, SetCriteria:SetCriteriaScreen}, navigationOptions);
 const AppContainer = createAppContainer(AppNavigator);

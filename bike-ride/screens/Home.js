@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { ACCESS_KEY, API_URL } from 'react-native-dotenv';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, AsyncStorage } from 'react-native';
+import { NavigationEvents } from "react-navigation";
 import { Container, Text, Icon, H1 } from 'native-base';
 
 import Header from '../components/Header.js';
@@ -8,35 +9,41 @@ import Button from '../components/Button.js';//Navigation button to the Forecast
 import Footer from '../components/Footer.js';
 import CriteriaIcon from '../components/EditCriteria.js';/*Cog icon to navigate user to EditCriteria screen */
 
+const baseRideCriteria = {
+	"minimalTemperature":60,
+	"maximumTemperature":85,
+	"ifRained":false,
+	"windSpeedLimit":20,
+}
+
 /**First screen shown in the app that makes an api call to get today's weather. 
  * That data is use to display if today is a good or bad to ride a bicycle. 
  */
 const Home = ({ navigation }) => {
-	const [weatherData, setWeatherData] = useState(0);
+	const [weatherData, setWeatherData] = useState({});
+	const [rideSetting, setRideSetting] = useState({});
 
-	useEffect(() => { this.getForecast(); }, []);
+	useEffect(() => { this.getForecast(); this.setCriteria(); }, []);/*This code runs before the screen renders */
 
-	//API call to get the current weather forecast
+	//API call to get the current weather forecast and update weatherData with the temperature
 	getForecast = async () => {
 		//TESTING ONLY.
 		
 		const data = {
-			"temperature": "72",
-			"windSpeed": "11",
-			"precip": "0",
+			"temperature": 72,
+			"windSpeed": 11,
+			"precip": 0,
 			"date": "2020-04-27 15:12"
 		}
-		setWeatherData(data.temperature);
-
+		setWeatherData(data);
+		
 
 		/*PRODUCTION CODE
 		return fetch(`${API_URL}current?access_key=${ACCESS_KEY}&query=Memphis&units=f`)
 			.then((response) => response.json())
 			.then((data) =>{
 				const convertedData = this.sanitizeData(data);//convert api data into a sanitize object with only needed information
-				setWeatherData(convertedData.temperature);//updates weatherData with today's temperature
-				
-				//weatherData.push(this.sanitizeData(data));//old code that works				
+				setWeatherData(convertedData);//updates weatherData with today's weather data		
 			})
 			.catch((error) => console.log(error));
 		*/
@@ -56,17 +63,43 @@ const Home = ({ navigation }) => {
 		return convertedData;
 	}
 
-	//Return true or false based on a criteria like temperature
+	//Return true or false based on ride criteria
 	getTodayForecast = () => {
-		if (weatherData >= 60 && weatherData <= 85) {
-			return true;
+		//If current weather temperature is less then minimal temp criteria or more then maximum temp criteria then return false
+		if (weatherData.temperature < rideSetting.minimalTemperature || weatherData.temperature > rideSetting.maximumTemperature) {
+			return false;
 		}
-		return false;
+		if(weatherData.windSpeed > rideSetting.windSpeedLimit){return false}//If current weather windspeed is greater then criteria, return false
+		if(weatherData.precip > 0 && rideSetting.ifRained === false){return false}//If it has rained and the criteria is false (no ride), return false
+		return true;
+
+	}
+
+	
+	//When the app loads, check if there is a riding criteria in local storage, if not then update local storage and state with base criteria
+	setCriteria = async () => {
+		try{
+			const savedCriteria = await AsyncStorage.getItem('rideCriteria');//get saved ride criteria from local storage 
+			if(savedCriteria !== null){//check if the data saved to local storage is not empty                
+				setRideSetting(JSON.parse(savedCriteria));
+			}else{
+				//If there is no saved data, then save base criteria to local storage           
+				await AsyncStorage.setItem("rideCriteria",JSON.stringify(baseRideCriteria));//Save base criteria to local storage
+				setRideSetting(baseRideCriteria);//save base criteria to local state
+			}
+		}catch (e){
+			console.log(e);
+		}
+		
 	}
 
 	return (
 		<Container>
 			<Header title="Today" />
+			{/*Check if the riding criteria have change */}
+			<NavigationEvents onDidFocus={() => this.setCriteria()} />
+
+			{/*Show a sun or red hand icon based on the riding criteria */}
 			<View style={styles.contentlayout}>
 				{this.getTodayForecast() &&
 					<View style={styles.mainImageContainer}>
@@ -81,11 +114,11 @@ const Home = ({ navigation }) => {
 					</View>
 				}
 
-				<Text style={styles.contentStyle}>The temperature is {weatherData} degrees</Text>
+				<Text style={styles.contentStyle}>The temperature is {weatherData.temperature} degrees</Text>
 				<Button nav="Forecast" navigation={navigation} text="7 Day Forecast" />
 			</View>
 			<Footer>
-				<CriteriaIcon />
+				<CriteriaIcon navigation={navigation} />
 			</Footer>
 		</Container>
 	);
