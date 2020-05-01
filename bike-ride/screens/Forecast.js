@@ -5,7 +5,7 @@ import {FORECAST_ACCESS_KEY, FORECAST_API_URL, FORECAST_APP_ID } from 'react-nat
 
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
-import FutureForecast from '../components/FutureForecast.js';
+import FutureForecast from '../components/FutureForecast.js';//Component with Icon detailing if its a good or bad day to ride
 import Button from '../components/Button.js';//Navigation button to the Home Screen
 import CriteriaIcon from '../components/EditCriteria.js';/*Cog icon to navigate user to EditCriteria screen */
 import SavePredictions from '../components/SavePredictions.js';/*Disk icon to save 7 day forecast to local storage */
@@ -16,7 +16,7 @@ That data is then use to display if each day is a good or bad day to ride a bicy
 const Forecast = ({navigation}) => {
 	const [weatherData, setWeatherData] = useState([]);//state to hold weather data
 
-	useEffect(() => { this.getForecast(); }, []);//load data with page is loaded
+	useEffect(() => { this.getForecast(); }, []);//load data before page is loading
 
 	//API call to get the current weather forecast
 	getForecast = async () => {

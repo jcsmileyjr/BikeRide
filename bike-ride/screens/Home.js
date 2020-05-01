@@ -23,7 +23,7 @@ const Home = ({ navigation }) => {
 	const [weatherData, setWeatherData] = useState({});
 	const [rideSetting, setRideSetting] = useState({});
 
-	useEffect(() => { this.getForecast(); this.setCriteria(); }, []);
+	useEffect(() => { this.getForecast(); this.setCriteria(); }, []);/*This code runs before the screen renders */
 
 	//API call to get the current weather forecast and update weatherData with the temperature
 	getForecast = async () => {

@@ -5,6 +5,7 @@ import { Container, Text, ListItem, CheckBox, H1} from 'native-base';
 import Header from '../components/Header.js';
 import Button from '../components/Button.js';//Navigation button to the Home Screen
 
+//Screen shown when user click the cog icon in the footer. User can edit the criteria for good days while bike riding
 const SetCriteria = ({navigation}) => {
     const [minimalTemp, setMinimalTemp] = useState(0);
     const [maximumTemp, setMaximumTemp] = useState(0);
@@ -12,8 +13,9 @@ const SetCriteria = ({navigation}) => {
     const [ifRained, setIfRained] = useState(false);
     const [oldCriteria, setOldCriteria] = useState({});
 
-    useEffect(() => { this.getOldCriteria(); }, []);
+    useEffect(() => { this.getOldCriteria(); }, []);/*This code runs before the screen renders */
 
+    //Get the criteria saved to local storage to be displayed to the user
     getOldCriteria = async () => {
         const savedCritera = await AsyncStorage.getItem('rideCriteria');//get saved ride criteria from local storage 
         const oldCriteria =JSON.parse(savedCritera);
@@ -38,19 +40,19 @@ const SetCriteria = ({navigation}) => {
         <Container>
             <Header title="Today" />
             <View style={styles.contentlayout}>
-                <H1 style={styles.pageTitle}>Set the Criteria for a Good Bicycle Rides</H1>
+                <H1 style={styles.pageTitle}>Set the Criteria for a Good Bicycle Ride</H1>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.inputLabelStyle}>Set Minimal Temperature to Ride</Text>
+                    <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Set Minimal Temperature to Ride</Text>
                     <TextInput style={styles.textInputStyle} clearTextOnFocus  onChangeText={(minTemp)=> setMinimalTemp(minTemp)} />
                     <Text style={styles.inputLabelStyle}>Old temp is {minimalTemp}</Text>
                 </View>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.inputLabelStyle}>Set Maximum Temperature to Ride</Text>
+                    <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Set Maximum Temperature to Ride</Text>
                     <TextInput style={styles.textInputStyle}  onChangeText={(maxTemp)=> setMaximumTemp(maxTemp)} />
                     <Text style={styles.inputLabelStyle}>Old temp is {maximumTemp}</Text>
                 </View>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.inputLabelStyle}>Set Maximum Wind Speed to Ride</Text>
+                    <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Set Maximum Wind Speed to Ride</Text>
                     <TextInput style={styles.textInputStyle}  onChangeText={(windSpd)=> setWindSpeed(windSpd)} />
                     <Text style={styles.inputLabelStyle}>Old wind speed is {windSpeed}</Text>
                 </View>
@@ -84,6 +86,9 @@ const styles = StyleSheet.create({
 		elevation: 1,
 		fontSize: 18,
     },
+    boldLabel:{
+        fontWeight:"bold",
+    },
     inputLabelStyle:{/*Style for labels */
         textAlign:'center',/*center the label text*/
         color:"grey",/*add color */
@@ -94,11 +99,11 @@ const styles = StyleSheet.create({
         alignItems:"center",/* center the content */
         marginTop:20,/*white space between input fields */
     },
-    pageTitle:{
+    pageTitle:{/*Style for the page title */
         textAlign:"center",
         fontWeight:"bold",
     },
-    buttonWhiteSpace:{
+    buttonWhiteSpace:{/*Whitespace around the save button */
         marginTop:10,
     }
 });
