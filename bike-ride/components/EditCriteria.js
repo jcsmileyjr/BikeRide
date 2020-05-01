@@ -5,7 +5,7 @@ import {Icon} from 'native-base';
 const EditCriteria = (props) => {
 	return(
 		<View>
-			<Icon style={styles.cogIconStyle} type="FontAwesome" name="cog" onPress={() => props.navigation.navigate("SetCriteria")}/>
+			<Icon style={styles.cogIconStyle} type="FontAwesome" name="cog" onPress={() => props.navigation.push("SetCriteria")}/>
 			<Text style={styles.footerTextStyle}>Edit Ride Criteria</Text>					
 		</View>		
 	);
