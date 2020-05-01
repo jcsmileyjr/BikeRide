@@ -10,13 +10,28 @@ import Button from '../components/Button.js';//Navigation button to the Home Scr
 import CriteriaIcon from '../components/EditCriteria.js';/*Cog icon to navigate user to EditCriteria screen */
 import SavePredictions from '../components/SavePredictions.js';/*Disk icon to save 7 day forecast to local storage */
 
+const baseRideCriteria = {
+	"minimalTemperature":60,
+	"maximumTemperature":85,
+	"ifRained":false,
+	"windSpeedLimit":20,
+}
+
 /*7 Day Forecast screen that makes an api call to get 7 days of weather data.
 That data is then use to display if each day is a good or bad day to ride a bicycle. 
 */
 const Forecast = ({navigation}) => {
 	const [weatherData, setWeatherData] = useState([]);//state to hold weather data
+	const [rideSetting, setRideSetting] = useState({});//state to hold riding criteria
 
-	useEffect(() => { this.getForecast(); }, []);//load data before page is loading
+	useEffect(() => { this.getForecast(); }, []);//load API data to component state before page is loading
+	
+	useEffect(() => { //load riding criteria to component state
+		let mounted = true;		
+		this.setCriteria(mounted); 		
+		
+		return () => mounted = false;
+	}, []);//load data before page is loading
 
 	//API call to get the current weather forecast
 	getForecast = async () => {
@@ -35,7 +50,7 @@ const Forecast = ({navigation}) => {
 			})		
 			.then((data) =>{
 				const sortedData = this.sanitizeData(data);//convert api data into a sanitize object with only needed information
-				setWeatherData(sortedData);//updates weatherData with today's temperature		
+				setWeatherData(sortedData);//updates weatherData with today's temperature					
 			})
 			
 			.catch((error) => console.log(error));
@@ -67,6 +82,36 @@ const Forecast = ({navigation}) => {
 		return `${convertIntoArray[1]}/${convertIntoArray[0]}/${convertIntoArray[2]}`;		
 	}
 
+	//When the app loads, check if there is a riding criteria in local storage, if not then update local storage and state with base criteria
+	setCriteria = async (isComponentMounted) => {
+		try{
+			const savedCriteria = await AsyncStorage.getItem('rideCriteria');//get saved ride criteria from local storage 
+			if(isComponentMounted){//Bug Fix: UseEffect is called when the screen changes and throw an error. This fix by checking if the component is mounted. 
+				if(savedCriteria !== null){//check if the data saved to local storage is not empty                
+					setRideSetting(JSON.parse(savedCriteria));
+				}else{
+					//If there is no saved data, then save base criteria to local storage           
+					await AsyncStorage.setItem("rideCriteria",JSON.stringify(baseRideCriteria));//Save base criteria to local storage
+					setRideSetting(baseRideCriteria);//save base criteria to local state
+				}
+			}	
+		}catch (e){
+			console.log(e);
+		}
+		
+	}
+
+	//Return true or false based on ride criteria
+	applyRidingCriteria = (forecast) => {
+		//If current weather temperature is less then minimal temp criteria or more then maximum temp criteria then return false
+		if (forecast.temperature < rideSetting.minimalTemperature || forecast.temperature > rideSetting.maximumTemperature) {
+			return false;
+		}
+		if(forecast.windSpeed > rideSetting.windSpeedLimit){return false}//If current weather windspeed is greater then criteria, return false
+		if(forecast.rain > 0 && rideSetting.ifRained === false){return false}//If it has rained and the criteria is false (no ride), return false
+		return true;
+	}
+
 	return(
 		<Container>
 			<Header title="7 Day Forecast" />
@@ -77,7 +122,7 @@ const Forecast = ({navigation}) => {
 
 			{/*Loops through an array of converted api data to display a future Forcast for next 7 days based on a criteria */}
 			{weatherData.map((forecast, index) => {
-				if(forecast.temperature >= 60 && forecast.temperature <=85){
+				if(applyRidingCriteria(forecast)){
 					return <FutureForecast key={index} date={forecast.date} outcome="Good" />
 				}else{
 					return <FutureForecast key={index} date={forecast.date} outcome="Bad" />
