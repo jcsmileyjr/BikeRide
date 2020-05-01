@@ -40,7 +40,7 @@ const Home = ({ navigation }) => {
 
 		/*PRODUCTION CODE
 		return fetch(`${API_URL}current?access_key=${ACCESS_KEY}&query=Memphis&units=f`)
-			.then((response) => response.json())
+			.then((response) => response.json()) //extracts the JSON from the response.body and converts JSON string into a JavaScript object
 			.then((data) =>{
 				const convertedData = this.sanitizeData(data);//convert api data into a sanitize object with only needed information
 				setWeatherData(convertedData);//updates weatherData with today's weather data		
