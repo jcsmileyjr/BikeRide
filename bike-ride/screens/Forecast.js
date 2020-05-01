@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import {StyleSheet, View} from 'react-native';
-import {Container, H1} from 'native-base';
+import {StyleSheet, View, AsyncStorage} from 'react-native';
+import {Container, H1, Toast} from 'native-base';
 import {FORECAST_ACCESS_KEY, FORECAST_API_URL, FORECAST_APP_ID } from 'react-native-dotenv';//Weather service API keys
 
 import Header from '../components/Header.js';
@@ -21,7 +21,18 @@ const Forecast = ({navigation}) => {
 	//API call to get the current weather forecast
 	getForecast = async () => {
 		return fetch(`${FORECAST_API_URL}35.149,-90.049?app_id=${FORECAST_APP_ID}&app_key=${FORECAST_ACCESS_KEY}`)
-			.then((response) => response.json())//converts api string into a JSON			
+			.then((response) => {//extracts the JSON from the response.body and converts JSON string into a JavaScript object
+				if (!response.ok) {//there is no response or network connection failed
+					const savedForecast = AsyncStorage.getItem('predictions');//get saved 7 day forecast from local storage
+					if(savedForecast !== null){//check if the data saved to local storage is not empty                
+						setWeatherData(JSON.parse(savedForecast));//save data to local state
+					}else{
+						//display error message to user
+						Toast.show({text:"No network connection and no saved 7 day forecast", position:"top", type:"warning", duration:5000});
+					}
+				  }
+				return response.json()
+			})		
 			.then((data) =>{
 				const sortedData = this.sanitizeData(data);//convert api data into a sanitize object with only needed information
 				setWeatherData(sortedData);//updates weatherData with today's temperature		
