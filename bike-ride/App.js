@@ -1,4 +1,5 @@
 import React from 'react';
+import { Root } from "native-base";
 import { StyleSheet, Text, View } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -8,7 +9,12 @@ import ForecastScreen from './screens/Forecast.js';
 import SetCriteriaScreen from './screens/SetCriteria.js';
 
 export default function App() {
-  return (<AppContainer />);
+  return (
+    <Root>{/*Needed to display Toasts */}
+      <AppContainer />
+    </Root>
+  
+  );
 }
 
 const styles = StyleSheet.create({
