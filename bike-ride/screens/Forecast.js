@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import {StyleSheet, View, AsyncStorage} from 'react-native';
 import {Container, H1, Toast} from 'native-base';
 import {FORECAST_ACCESS_KEY, FORECAST_API_URL, FORECAST_APP_ID } from 'react-native-dotenv';//Weather service API keys
+import * as Location from 'expo-location';
 
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
@@ -35,17 +36,15 @@ const Forecast = ({navigation}) => {
 
 	//API call to get the current weather forecast
 	getForecast = async () => {
-		return fetch(`${FORECAST_API_URL}35.149,-90.049?app_id=${FORECAST_APP_ID}&app_key=${FORECAST_ACCESS_KEY}`)
+		navigator.geolocation.getCurrentPosition(position => {
+			const lat = JSON.stringify(position.coords.latitude);
+			const long = JSON.stringify(position.coords.longitude);
+			
+			return fetch(`${FORECAST_API_URL}${lat},${long}app_id=${FORECAST_APP_ID}&app_key=${FORECAST_ACCESS_KEY}`)
 			.then((response) => {//extracts the JSON from the response.body and converts JSON string into a JavaScript object
-				if (!response.ok) {//there is no response or network connection failed
-					const savedForecast = AsyncStorage.getItem('predictions');//get saved 7 day forecast from local storage
-					if(savedForecast !== null){//check if the data saved to local storage is not empty                
-						setWeatherData(JSON.parse(savedForecast));//save data to local state
-					}else{
-						//display error message to user
-						Toast.show({text:"No network connection and no saved 7 day forecast", position:"top", type:"warning", duration:5000});
-					}
-				  }
+				if (response.ok === false) {//there is no response or network connection failed				
+					this.getSavedPredictions();
+				}
 				return response.json()
 			})		
 			.then((data) =>{
@@ -54,6 +53,23 @@ const Forecast = ({navigation}) => {
 			})
 			
 			.catch((error) => console.log(error));
+		},
+		error => console.log(error.message),
+		{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+		
+		)
+
+	}
+
+	getSavedPredictions = async () => {
+		const savedForecast = await AsyncStorage.getItem('predictions');//get saved 7 day forecast from local storage
+		const convertedForcast = JSON.parse(savedForecast);
+		if(convertedForcast !== null ){//check if the data saved to local storage is not empty 
+			setWeatherData(convertedForcast);
+		}else{					
+			//display error message to user
+			Toast.show({text:"No network connection and no saved 7 day forecast", position:"top", type:"warning", duration:5000});
+		}
 	}
 
 	//Method to convert data from an API object into a sanitize object to be comsume by the Forecast screen
