@@ -8,6 +8,7 @@ import Header from '../components/Header.js';
 import Button from '../components/Button.js';//Navigation button to the Forecast Screen
 import Footer from '../components/Footer.js';
 import CriteriaIcon from '../components/EditCriteria.js';/*Cog icon to navigate user to EditCriteria screen */
+import SaveGoodDay from '../components/SaveGoodDay.js' //Heart icon to save the current weather as a good Day
 
 const baseRideCriteria = {
 	"minimalTemperature":60,
@@ -117,6 +118,7 @@ const Home = ({ navigation }) => {
 				<Button nav="Forecast" navigation={navigation} text="7 Day Forecast" />
 			</View>
 			<Footer>
+				<SaveGoodDay goodDay={weatherData} />
 				<CriteriaIcon navigation={navigation} />
 			</Footer>
 		</Container>
