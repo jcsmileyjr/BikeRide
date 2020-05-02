@@ -10,7 +10,7 @@ import Footer from '../components/Footer.js';
 import CriteriaIcon from '../components/EditCriteria.js';/*Cog icon to navigate user to EditCriteria screen */
 import SaveGoodDayIcon from '../components/SaveGoodDay.js' //Heart icon to save the current weather as a good Day
 import baseRideCriteria from '../js/baseRideCriteria.js';
-import {sanitizeData} from '../js/homeScreenFunctions';
+import {sanitizeData, applyRidingCriteria} from '../js/homeScreenFunctions';
 
 /**First screen shown in the app that makes an api call to get today's weather. 
  * That data is use to display if today is a good or bad to ride a bicycle. 
@@ -37,22 +37,11 @@ const Home = ({ navigation }) => {
 		return fetch(`${API_URL}current?access_key=${ACCESS_KEY}&query=Memphis&units=f`)
 			.then((response) => response.json()) //extracts the JSON from the response.body and converts JSON string into a JavaScript object
 			.then((data) =>{
-				const convertedData = this.sanitizeData(data);//convert api data into a sanitize object with only needed information
+				const convertedData = sanitizeData(data);//convert api data into a sanitize object with only needed information
 				setWeatherData(convertedData);//updates weatherData with today's weather data		
 			})
 			.catch((error) => console.log(error));
 		*/
-	}
-
-	//Return true or false based on ride criteria
-	applyRidingCriteria  = () => {
-		//If current weather temperature is less then minimal temp criteria or more then maximum temp criteria then return false
-		if (weatherData.temperature < rideSetting.minimalTemperature || weatherData.temperature > rideSetting.maximumTemperature) {
-			return false;
-		}
-		if(weatherData.windSpeed > rideSetting.windSpeedLimit){return false}//If current weather windspeed is greater then criteria, return false
-		if(weatherData.precip > 0 && rideSetting.ifRained === false){return false}//If it has rained and the criteria is false (no ride), return false
-		return true;
 	}
 
 	
@@ -81,13 +70,13 @@ const Home = ({ navigation }) => {
 
 			{/*Show a sun or red hand icon based on the riding criteria */}
 			<View style={styles.contentlayout}>
-				{this.applyRidingCriteria () &&
+				{applyRidingCriteria(weatherData, rideSetting) &&
 					<View style={styles.mainImageContainer}>
 						<Icon style={[styles.mainImageStyle, styles.sunImage]} name="md-sunny" />
 						<H1 style={styles.contentStyle} >Good Day to Ride</H1>
 					</View>
 				}
-				{!this.applyRidingCriteria () &&
+				{!applyRidingCriteria(weatherData, rideSetting) &&
 					<View style={styles.mainImageContainer}>
 						<Icon style={[styles.mainImageStyle, styles.stopHandImage]} type="FontAwesome" name="hand-stop-o" />
 						<H1 style={styles.contentStyle} >Do Not go Ride</H1>

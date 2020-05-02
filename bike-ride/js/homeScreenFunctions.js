@@ -12,3 +12,15 @@
 
 		return convertedData;
     }
+
+
+    //Return true or false based on ride criteria
+	export const applyRidingCriteria  = (weatherData, rideSetting) => {
+		//If current weather temperature is less then minimal temp criteria or more then maximum temp criteria then return false
+		if (weatherData.temperature < rideSetting.minimalTemperature || weatherData.temperature > rideSetting.maximumTemperature) {
+			return false;
+		}
+		if(weatherData.windSpeed > rideSetting.windSpeedLimit){return false}//If current weather windspeed is greater then criteria, return false
+		if(weatherData.precip > 0 && rideSetting.ifRained === false){return false}//If it has rained and the criteria is false (no ride), return false
+		return true;
+	}
