@@ -7,7 +7,7 @@ const Button = (props) => {
 	if(props.save){
 		return(
 			<View style={styles.buttonContainer}>
-				<TouchableNativeFeedback onPress={() => {props.navigation.navigate(props.nav); props.save()}} >
+				<TouchableNativeFeedback onPress={() => {props.navigation.goBack(); props.save()}} >
 					<View style={styles.buttonStyle}>
 							<Text style={styles.buttonText}>{props.text}</Text>
 					</View>

@@ -20,8 +20,8 @@ const baseRideCriteria = {
  * That data is use to display if today is a good or bad to ride a bicycle. 
  */
 const Home = ({ navigation }) => {
-	const [weatherData, setWeatherData] = useState({});
-	const [rideSetting, setRideSetting] = useState({});
+	const [weatherData, setWeatherData] = useState({});//state to hold weather data
+	const [rideSetting, setRideSetting] = useState({});//state to hold riding criteria
 
 	useEffect(() => { this.getForecast(); this.setCriteria(); }, []);/*This code runs before the screen renders */
 
@@ -64,7 +64,7 @@ const Home = ({ navigation }) => {
 	}
 
 	//Return true or false based on ride criteria
-	getTodayForecast = () => {
+	applyRidingCriteria  = () => {
 		//If current weather temperature is less then minimal temp criteria or more then maximum temp criteria then return false
 		if (weatherData.temperature < rideSetting.minimalTemperature || weatherData.temperature > rideSetting.maximumTemperature) {
 			return false;
@@ -72,7 +72,6 @@ const Home = ({ navigation }) => {
 		if(weatherData.windSpeed > rideSetting.windSpeedLimit){return false}//If current weather windspeed is greater then criteria, return false
 		if(weatherData.precip > 0 && rideSetting.ifRained === false){return false}//If it has rained and the criteria is false (no ride), return false
 		return true;
-
 	}
 
 	
@@ -101,13 +100,13 @@ const Home = ({ navigation }) => {
 
 			{/*Show a sun or red hand icon based on the riding criteria */}
 			<View style={styles.contentlayout}>
-				{this.getTodayForecast() &&
+				{this.applyRidingCriteria () &&
 					<View style={styles.mainImageContainer}>
 						<Icon style={[styles.mainImageStyle, styles.sunImage]} name="md-sunny" />
 						<H1 style={styles.contentStyle} >Good Day to Ride</H1>
 					</View>
 				}
-				{!this.getTodayForecast() &&
+				{!this.applyRidingCriteria () &&
 					<View style={styles.mainImageContainer}>
 						<Icon style={[styles.mainImageStyle, styles.stopHandImage]} type="FontAwesome" name="hand-stop-o" />
 						<H1 style={styles.contentStyle} >Do Not go Ride</H1>
