@@ -5,7 +5,18 @@ import {Icon, Toast} from 'native-base';
 const SaveGoodDay = (props) => {
 
     saveData = async () => {
-		await AsyncStorage.setItem("goodDays",JSON.stringify(props.goodDay));//Save array of weather objects to local storage 
+		try{
+			let arrayOfSavedDays = [];//array of weather objects
+			const previousSavedGoodDays = await AsyncStorage.getItem('savedDays');//get saved array of good days from local storage 
+			if(previousSavedGoodDays !== null){//check if the data saved to local storage is not empty 
+				arrayOfSavedDays = JSON.parse(previousSavedGoodDays); 
+			}
+			arrayOfSavedDays.push(props.goodDay);//push the current good day object into the array				              
+			await AsyncStorage.setItem("savedDays",JSON.stringify(arrayOfSavedDays));//Save base criteria to local storage
+console.log(arrayOfSavedDays);//TESTING TESTING TESTING
+		}catch (e){
+			console.log(e);
+		}	
 		Toast.show({text:"Today's weather has been saved!!!", position:"top", type:"success", textStyle:{color:"white", textAlign:"center"}, duration:3000});
     }
 
