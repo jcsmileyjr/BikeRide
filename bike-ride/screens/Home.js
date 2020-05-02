@@ -9,8 +9,7 @@ import Button from '../components/Button.js';//Navigation button to the Forecast
 import Footer from '../components/Footer.js';
 import CriteriaIcon from '../components/EditCriteria.js';/*Cog icon to navigate user to EditCriteria screen */
 import SaveGoodDayIcon from '../components/SaveGoodDay.js' //Heart icon to save the current weather as a good Day
-import baseRideCriteria from '../js/baseRideCriteria.js';
-import {sanitizeData, applyRidingCriteria} from '../js/homeScreenFunctions';
+import {sanitizeData, applyRidingCriteria, setCriteria} from '../js/homeScreenFunctions';
 
 /**First screen shown in the app that makes an api call to get today's weather. 
  * That data is use to display if today is a good or bad to ride a bicycle. 
@@ -19,7 +18,7 @@ const Home = ({ navigation }) => {
 	const [weatherData, setWeatherData] = useState({});//state to hold weather data
 	const [rideSetting, setRideSetting] = useState({});//state to hold riding criteria
 
-	useEffect(() => { this.getForecast(); this.setCriteria();}, []);/*This code runs before the screen renders */
+	useEffect(() => { this.getForecast(); setCriteria(setRideSetting);}, []);/*This code runs before the screen renders */
 
 	//API call to get the current weather forecast and update weatherData with the temperature
 	getForecast = async () => {
@@ -42,24 +41,6 @@ const Home = ({ navigation }) => {
 			})
 			.catch((error) => console.log(error));
 		*/
-	}
-
-	
-	//When the app loads, check if there is a riding criteria in local storage, if not then update local storage and state with base criteria
-	setCriteria = async () => {
-		try{
-			const savedCriteria = await AsyncStorage.getItem('rideCriteria');//get saved ride criteria from local storage 
-			if(savedCriteria !== null){//check if the data saved to local storage is not empty                
-				setRideSetting(JSON.parse(savedCriteria));
-			}else{
-				//If there is no saved data, then save base criteria to local storage           
-				await AsyncStorage.setItem("rideCriteria",JSON.stringify(baseRideCriteria));//Save base criteria to local storage
-				setRideSetting(baseRideCriteria);//save base criteria to local state				
-			}
-		}catch (e){
-			console.log(e);
-		}
-		
 	}
 
 	return (
