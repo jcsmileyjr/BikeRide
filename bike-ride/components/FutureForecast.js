@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 		fontSize:30,/*Size of text */
 	},
 	sunImage:{/*color and size of the sun image */
-		color:"yellow",
+		color:"#e8e600",
 		fontSize:50,
 	},
 	stopHandImage:{/*color and size of the stop riding image */

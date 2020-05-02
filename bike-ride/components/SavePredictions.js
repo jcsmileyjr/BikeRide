@@ -12,7 +12,7 @@ const SavePredictions = (props) => {
 	return(
 		<View>
 			<Icon style={styles.cogIconStyle} type="FontAwesome" name="save" onPress={()=> this.saveData()} />
-			<Text style={styles.footerTextStyle}>Save</Text>					
+			<Text style={styles.footerTextStyle}>Save Forecast</Text>					
 		</View>		
 	);
 }
