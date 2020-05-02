@@ -36,7 +36,6 @@ const SaveGoodDay = (props) => {
 
 		//Create an object to hold the average of temp and wind speeds to be saved to local storage
 		const goodDayCriteria = {"temperature":Math.round(temperatureAverage), "windSpeed":Math.round(windSpeedAverage)};
-console.log(goodDayCriteria);		
 		await AsyncStorage.setItem("bestDayCriteria",JSON.stringify(goodDayCriteria));//Save updated good day criteria to local storage
 	}
 

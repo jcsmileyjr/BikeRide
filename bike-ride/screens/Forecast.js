@@ -119,8 +119,6 @@ const Forecast = ({navigation}) => {
 
 				if(savedBestDayCriteria !== null){//check if the data saved to local storage is not empty                
 					setBestDayCriteria(JSON.parse(savedBestDayCriteria));
-	
-	console.log("best rides set");
 				}else {
 					console.log("Best day Criteria not saved");
 				}				
@@ -142,15 +140,18 @@ const Forecast = ({navigation}) => {
 		return true;
 	}
 
-	//Return true or false based on best riding criteria temperature and wind speed by a negative or positive 2
+	//Return true or false based on best riding criteria temperature and wind speed by a negative or positive 1
 	applyBestDayCriteria = (forecast) => {
-		//Determine a best day if the forecast temperature is 2 degress more or less then the idea best day criteria temperature
-		if(forecast.temperature >= (bestDayCriteria.temperature -2) && forecast.temperature <= (bestDayCriteria.temperature + 2)){
+		if(bestDayCriteria === false){//Return false if there is no best day criteria saved
+			return false;
+		}
+		//Determine a best day if the forecast temperature is 1 degress more or less then the idea best day criteria temperature
+		if(forecast.temperature >= (bestDayCriteria.temperature - 1) && forecast.temperature <= (bestDayCriteria.temperature + 1)){
 			return false
 		}
 
-		//Determine a best day if the forecast wind speed is 2 degress more or less then the idea best day criteria wind speed
-		if(forecast.windSpeed >= (bestDayCriteria.windSpeed -2) && forecast.windSpeed <= (bestDayCriteria.windSpeed + 2)){
+		//Determine a best day if the forecast wind speed is 1 degress more or less then the idea best day criteria wind speed
+		if(forecast.windSpeed >= (bestDayCriteria.windSpeed -1) && forecast.windSpeed <= (bestDayCriteria.windSpeed + 1)){
 			return false
 		}		
 		return true;
