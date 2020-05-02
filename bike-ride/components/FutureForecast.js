@@ -13,7 +13,7 @@ const FutureForecast = (props) => {
 			}
 
 			{props.outcome ==="Bad" &&
-				<Icon type="FontAwesome" name="hand-stop-o" style={styles.stopHandImage}  />
+				<Icon type="FontAwesome" name="times-circle-o" style={styles.stopHandImage}  />
 			}
 
 			{props.outcome ==="Best" &&
