@@ -2,22 +2,22 @@ import {AsyncStorage } from 'react-native';
 import baseRideCriteria from '../js/baseRideCriteria.js';;
 import { ACCESS_KEY, API_URL } from 'react-native-dotenv';
 
-	//Method to convert data from API object into a sanitize object to be comsume by the Home screen
-	export const sanitizeData = (apiData) => {
-		const workingArray = [];//temp array to hold data object from weather service api call
+    //Method call in the getCurrentWeather() to convert raw data from an API call into a sanitize object to be comsume 
+    //on the Home screen. Certain data is extracted and placed into an object. That object is use to update the weatherData component state 
+	export const sanitizeData = (apiRawData) => {
 		let convertedData = {};//temp object to hold select data from API object
-		workingArray.push(apiData);//push the api data object into the temp array
 
-		convertedData.temperature = workingArray[0].current.temperature;
-		convertedData.windSpeed = workingArray[0].current.windSpeed;
-		convertedData.ifRained = workingArray[0].current.precip;
-		convertedData.date = workingArray[0].location.localtime;
+		convertedData.temperature = apiRawData.current.temperature;
+		convertedData.windSpeed = apiRawData.current.windSpeed;
+		convertedData.ifRained = apiRawData.current.precip;
+		convertedData.date = apiRawData.location.localtime;
 
 		return convertedData;
     }
 
 
-    //Return true or false based on ride criteria
+    //Function used to determine if its a good day to ride based on a ride criteria and current weather data on the Home screen. 
+    //Function is called to determine what icon to display.
 	export const applyRidingCriteria  = (weatherData, rideSetting) => {
 		//If current weather temperature is less then minimal temp criteria or more then maximum temp criteria then return false
 		if (weatherData.temperature < rideSetting.minimalTemperature || weatherData.temperature > rideSetting.maximumTemperature) {
