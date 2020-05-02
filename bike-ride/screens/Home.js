@@ -31,7 +31,7 @@ const Home = ({ navigation }) => {
 		//TESTING ONLY.
 		
 		const data = {
-			"temperature": 72,
+			"temperature": 70,
 			"windSpeed": 11,
 			"precip": 0,
 			"date": "2020-04-27 15:12"
