@@ -24,14 +24,14 @@ const Home = ({ navigation }) => {
 	const [weatherData, setWeatherData] = useState({});//state to hold weather data
 	const [rideSetting, setRideSetting] = useState({});//state to hold riding criteria
 
-	useEffect(() => { this.getForecast(); this.setCriteria(); }, []);/*This code runs before the screen renders */
+	useEffect(() => { this.getForecast(); this.setCriteria();}, []);/*This code runs before the screen renders */
 
 	//API call to get the current weather forecast and update weatherData with the temperature
 	getForecast = async () => {
 		//TESTING ONLY.
 		
 		const data = {
-			"temperature": 72,
+			"temperature": 84,
 			"windSpeed": 11,
 			"precip": 0,
 			"date": "2020-04-27 15:12"

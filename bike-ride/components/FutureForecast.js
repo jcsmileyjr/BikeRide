@@ -15,6 +15,10 @@ const FutureForecast = (props) => {
 			{props.outcome ==="Bad" &&
 				<Icon type="FontAwesome" name="hand-stop-o" style={styles.stopHandImage}  />
 			}
+
+			{props.outcome ==="Best" &&
+				<Icon type="FontAwesome" name="bicycle" style={styles.bicycleImage}  />
+			}			
 		</View>
 	);
 }
@@ -38,6 +42,10 @@ const styles = StyleSheet.create({
 	},
 	stopHandImage:{/*color and size of the stop riding image */
 		color:"red",
+		fontSize:50,
+	},
+	bicycleImage:{
+		color:"navy",
 		fontSize:50,
 	}
 });
