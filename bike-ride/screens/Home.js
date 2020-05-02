@@ -10,6 +10,7 @@ import Footer from '../components/Footer.js';
 import CriteriaIcon from '../components/EditCriteria.js';/*Cog icon to navigate user to EditCriteria screen */
 import SaveGoodDayIcon from '../components/SaveGoodDay.js' //Heart icon to save the current weather as a good Day
 import baseRideCriteria from '../js/baseRideCriteria.js';
+import {sanitizeData} from '../js/homeScreenFunctions';
 
 /**First screen shown in the app that makes an api call to get today's weather. 
  * That data is use to display if today is a good or bad to ride a bicycle. 
@@ -41,20 +42,6 @@ const Home = ({ navigation }) => {
 			})
 			.catch((error) => console.log(error));
 		*/
-	}
-
-	//Method to convert data from API object into a sanitize object to be comsume by the Home screen
-	sanitizeData = (apiData) => {
-		const workingArray = [];//temp array to hold data object from weather service api call
-		let convertedData = {};//temp object to hold select data from API object
-		workingArray.push(apiData);//push the api data object into the temp array
-
-		convertedData.temperature = workingArray[0].current.temperature;
-		convertedData.windSpeed = workingArray[0].current.windSpeed;
-		convertedData.ifRained = workingArray[0].current.precip;
-		convertedData.date = workingArray[0].location.localtime;
-
-		return convertedData;
 	}
 
 	//Return true or false based on ride criteria
