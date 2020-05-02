@@ -18,12 +18,17 @@ const baseRideCriteria = {
 	"windSpeedLimit":20,
 }
 
+const defaultBestDayCriteria = {
+
+}
+
 /*7 Day Forecast screen that makes an api call to get 7 days of weather data.
 That data is then use to display if each day is a good or bad day to ride a bicycle. 
 */
 const Forecast = ({navigation}) => {
 	const [weatherData, setWeatherData] = useState([]);//state to hold weather data
 	const [rideSetting, setRideSetting] = useState({});//state to hold riding criteria
+	const [bestDayCriteria, setBestDayCriteria] = useState(false);
 
 	useEffect(() => { this.getForecast(); }, []);//load API data to component state before page is loading
 	
@@ -101,7 +106,8 @@ const Forecast = ({navigation}) => {
 	//When the app loads, check if there is a riding criteria in local storage, if not then update local storage and state with base criteria
 	setCriteria = async (isComponentMounted) => {
 		try{
-			const savedCriteria = await AsyncStorage.getItem('rideCriteria');//get saved ride criteria from local storage 
+			const savedCriteria = await AsyncStorage.getItem('rideCriteria');//get saved ride criteria from local storage
+			const savedBestDayCriteria = await AsyncStorage.getItem('bestDayCriteria');//get saved best ride criteria from local storage  
 			if(isComponentMounted){//Bug Fix: UseEffect is called when the screen changes and throw an error. This fix by checking if the component is mounted. 
 				if(savedCriteria !== null){//check if the data saved to local storage is not empty                
 					setRideSetting(JSON.parse(savedCriteria));
@@ -110,6 +116,14 @@ const Forecast = ({navigation}) => {
 					await AsyncStorage.setItem("rideCriteria",JSON.stringify(baseRideCriteria));//Save base criteria to local storage
 					setRideSetting(baseRideCriteria);//save base criteria to local state
 				}
+
+				if(savedBestDayCriteria !== null){//check if the data saved to local storage is not empty                
+					setBestDayCriteria(JSON.parse(savedBestDayCriteria));
+	
+	console.log("best rides set");
+				}else {
+					console.log("Best day Criteria not saved");
+				}				
 			}	
 		}catch (e){
 			console.log(e);
@@ -128,6 +142,20 @@ const Forecast = ({navigation}) => {
 		return true;
 	}
 
+	//Return true or false based on best riding criteria temperature and wind speed by a negative or positive 2
+	applyBestDayCriteria = (forecast) => {
+		//Determine a best day if the forecast temperature is 2 degress more or less then the idea best day criteria temperature
+		if(forecast.temperature >= (bestDayCriteria.temperature -2) && forecast.temperature <= (bestDayCriteria.temperature + 2)){
+			return false
+		}
+
+		//Determine a best day if the forecast wind speed is 2 degress more or less then the idea best day criteria wind speed
+		if(forecast.windSpeed >= (bestDayCriteria.windSpeed -2) && forecast.windSpeed <= (bestDayCriteria.windSpeed + 2)){
+			return false
+		}		
+		return true;
+	}
+
 	return(
 		<Container>
 			<Header title="7 Day Forecast" />
@@ -136,11 +164,17 @@ const Forecast = ({navigation}) => {
 				<View><H1 style={styles.loadingText}>Data is loading</H1></View>
 			}
 
-			{/*Loops through an array of converted api data to display a future Forcast for next 7 days based on a criteria */}
+			{/*Loops through an array of converted api data to display a future Forcast for next 7 days based on two criteria */}
 			{weatherData.map((forecast, index) => {
 				if(applyRidingCriteria(forecast)){
-					return <FutureForecast key={index} date={forecast.date} outcome="Good" />
-				}else{
+					if(applyBestDayCriteria(forecast)){
+						return <FutureForecast key={index} date={forecast.date} outcome="Best" />
+					}else{
+						return <FutureForecast key={index} date={forecast.date} outcome="Good" />
+					}					
+				}
+				
+				if(!applyRidingCriteria(forecast)){
 					return <FutureForecast key={index} date={forecast.date} outcome="Bad" />
 				}
 			 })

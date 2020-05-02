@@ -16,7 +16,7 @@ const SaveGoodDay = (props) => {
 			}
 			arrayOfSavedDays.push(props.goodDay);//push the current good day object into the array				              
 			await AsyncStorage.setItem("savedDays",JSON.stringify(arrayOfSavedDays));//Save base criteria to local storage
-			this.determineBestDay(arrayOfSavedDays);
+			this.determineBestDay(arrayOfSavedDays);//Use the array of good days to determine a Good Day criteria
 		}catch (e){
 			console.log(e);
 		}	
@@ -27,7 +27,6 @@ const SaveGoodDay = (props) => {
 	determineBestDay = async (bestDays) => {
 		let temperatureArray = [];
 		let windSpeedArray = [];
-
 
 		bestDays.forEach((day) => temperatureArray.push(day.temperature));//create an array of temperatures
 		bestDays.forEach((day) => windSpeedArray.push(day.windSpeed));//create an array of wind speeds
