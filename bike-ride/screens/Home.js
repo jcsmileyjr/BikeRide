@@ -8,14 +8,8 @@ import Header from '../components/Header.js';
 import Button from '../components/Button.js';//Navigation button to the Forecast Screen
 import Footer from '../components/Footer.js';
 import CriteriaIcon from '../components/EditCriteria.js';/*Cog icon to navigate user to EditCriteria screen */
-import SaveGoodDay from '../components/SaveGoodDay.js' //Heart icon to save the current weather as a good Day
-
-const baseRideCriteria = {
-	"minimalTemperature":60,
-	"maximumTemperature":85,
-	"ifRained":false,
-	"windSpeedLimit":20,
-}
+import SaveGoodDayIcon from '../components/SaveGoodDay.js' //Heart icon to save the current weather as a good Day
+import baseRideCriteria from '../js/baseRideCriteria.js';
 
 /**First screen shown in the app that makes an api call to get today's weather. 
  * That data is use to display if today is a good or bad to ride a bicycle. 
@@ -28,8 +22,7 @@ const Home = ({ navigation }) => {
 
 	//API call to get the current weather forecast and update weatherData with the temperature
 	getForecast = async () => {
-		//TESTING ONLY.
-		
+		//TESTING ONLY.	
 		const data = {
 			"temperature": 84,
 			"windSpeed": 11,
@@ -85,7 +78,7 @@ const Home = ({ navigation }) => {
 			}else{
 				//If there is no saved data, then save base criteria to local storage           
 				await AsyncStorage.setItem("rideCriteria",JSON.stringify(baseRideCriteria));//Save base criteria to local storage
-				setRideSetting(baseRideCriteria);//save base criteria to local state
+				setRideSetting(baseRideCriteria);//save base criteria to local state				
 			}
 		}catch (e){
 			console.log(e);
@@ -118,7 +111,7 @@ const Home = ({ navigation }) => {
 				<Button nav="Forecast" navigation={navigation} text="7 Day Forecast" />
 			</View>
 			<Footer>
-				<SaveGoodDay goodDay={weatherData} />
+				<SaveGoodDayIcon goodDay={weatherData} />
 				<CriteriaIcon navigation={navigation} />
 			</Footer>
 		</Container>
