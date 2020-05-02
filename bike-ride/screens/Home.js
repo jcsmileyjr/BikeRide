@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
 
 	},
 	sunImage: {/*color of the sun image */
-		color: "yellow",
+		color: "#e8e600",
 	},
 	stopHandImage: {/*color of the stop riding image */
 		color: "red",
