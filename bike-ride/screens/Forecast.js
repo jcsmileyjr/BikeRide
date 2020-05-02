@@ -34,16 +34,16 @@ const Forecast = ({navigation}) => {
 		return () => mounted = false;
 	}, []);//load data before page is loading
 
-	//API call to get the current weather forecast
+	//API call to get the current weather forecast and the user's device current location
 	getForecast = async () => {
 		navigator.geolocation.getCurrentPosition(position => {
 			const lat = JSON.stringify(position.coords.latitude);
 			const long = JSON.stringify(position.coords.longitude);
 			
-			return fetch(`${FORECAST_API_URL}${lat},${long}app_id=${FORECAST_APP_ID}&app_key=${FORECAST_ACCESS_KEY}`)
+			return fetch(`${FORECAST_API_URL}${lat},${long}?app_id=${FORECAST_APP_ID}&app_key=${FORECAST_ACCESS_KEY}`)
 			.then((response) => {//extracts the JSON from the response.body and converts JSON string into a JavaScript object
 				if (response.ok === false) {//there is no response or network connection failed				
-					this.getSavedPredictions();
+					this.getSavedPredictions();//Check if there is a saved 7 day forecast. If so, load to component state. If not, show user a message
 				}
 				return response.json()
 			})		
