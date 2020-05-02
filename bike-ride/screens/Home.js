@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
 	contentStyle: {
 		flex: 1,	/*Evenly distribute space for each component in the content-layout section*/
 		textAlign: "center",
+		fontSize:20,
 	},
 	mainImageContainer: {
 		flex: 2,/*Override to double area */
