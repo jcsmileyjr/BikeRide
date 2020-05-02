@@ -1,6 +1,6 @@
 import {AsyncStorage } from 'react-native';
 import baseRideCriteria from '../js/baseRideCriteria.js';;
-
+import { ACCESS_KEY, API_URL } from 'react-native-dotenv';
 
 	//Method to convert data from API object into a sanitize object to be comsume by the Home screen
 	export const sanitizeData = (apiData) => {
@@ -43,4 +43,16 @@ import baseRideCriteria from '../js/baseRideCriteria.js';;
 			console.log(e);
 		}
 		
-	}
+    }
+    
+    //API call to get the current weather forecast and update weatherData with the temperature
+    //PRODUCTION CODE
+    export const getCurrentWeather = (callback) => {
+        return fetch(`${API_URL}current?access_key=${ACCESS_KEY}&query=Memphis&units=f`)
+            .then((response) => response.json()) //extracts the JSON from the response.body and converts JSON string into a JavaScript object
+            .then((data) =>{
+                const convertedData = sanitizeData(data);//convert api data into a sanitize object with only needed information
+                callback(convertedData);//updates weatherData with today's weather data		
+            })
+            .catch((error) => console.log(error));
+    }

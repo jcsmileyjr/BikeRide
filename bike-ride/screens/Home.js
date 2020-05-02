@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ACCESS_KEY, API_URL } from 'react-native-dotenv';
-import { View, StyleSheet, AsyncStorage } from 'react-native';
+import { View, StyleSheet} from 'react-native';
 import { NavigationEvents } from "react-navigation";
 import { Container, Text, Icon, H1 } from 'native-base';
 
@@ -9,7 +8,7 @@ import Button from '../components/Button.js';//Navigation button to the Forecast
 import Footer from '../components/Footer.js';
 import CriteriaIcon from '../components/EditCriteria.js';/*Cog icon to navigate user to EditCriteria screen */
 import SaveGoodDayIcon from '../components/SaveGoodDay.js' //Heart icon to save the current weather as a good Day
-import {sanitizeData, applyRidingCriteria, setCriteria} from '../js/homeScreenFunctions';
+import {applyRidingCriteria, setCriteria, getCurrentWeather} from '../js/homeScreenFunctions';
 
 /**First screen shown in the app that makes an api call to get today's weather. 
  * That data is use to display if today is a good or bad to ride a bicycle. 
@@ -23,6 +22,7 @@ const Home = ({ navigation }) => {
 	//API call to get the current weather forecast and update weatherData with the temperature
 	getForecast = async () => {
 		//TESTING ONLY.	
+		
 		const data = {
 			"temperature": 84,
 			"windSpeed": 11,
@@ -31,16 +31,9 @@ const Home = ({ navigation }) => {
 		}
 		setWeatherData(data);
 		
-
-		/*PRODUCTION CODE
-		return fetch(`${API_URL}current?access_key=${ACCESS_KEY}&query=Memphis&units=f`)
-			.then((response) => response.json()) //extracts the JSON from the response.body and converts JSON string into a JavaScript object
-			.then((data) =>{
-				const convertedData = sanitizeData(data);//convert api data into a sanitize object with only needed information
-				setWeatherData(convertedData);//updates weatherData with today's weather data		
-			})
-			.catch((error) => console.log(error));
-		*/
+		
+		// Producion code
+		//getCurrentWeather(setWeatherData);
 	}
 
 	return (
