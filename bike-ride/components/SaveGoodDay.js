@@ -7,7 +7,6 @@ const SaveGoodDay = (props) => {
 
 	//When the user press the heart icon, the current weather criteria is save to local storage
     saveData = async () => {
-		//await AsyncStorage.removeItem('savedDays');//TESTING TESTING TESTING TESTING
 		try{
 			let arrayOfSavedDays = [];//array of weather objects
 			const previousSavedGoodDays = await AsyncStorage.getItem('savedDays');//get saved array of good days from local storage 
