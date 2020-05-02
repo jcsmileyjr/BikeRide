@@ -45,14 +45,22 @@ import { ACCESS_KEY, API_URL } from 'react-native-dotenv';
 		
     }
     
-    //API call to get the current weather forecast and update weatherData with the temperature
+    //API call to get the current user location, weather forecast, and update weatherData with the temperature
     //PRODUCTION CODE
     export const getCurrentWeather = (callback) => {
-        return fetch(`${API_URL}current?access_key=${ACCESS_KEY}&query=Memphis&units=f`)
-            .then((response) => response.json()) //extracts the JSON from the response.body and converts JSON string into a JavaScript object
-            .then((data) =>{
-                const convertedData = sanitizeData(data);//convert api data into a sanitize object with only needed information
-                callback(convertedData);//updates weatherData with today's weather data		
-            })
-            .catch((error) => console.log(error));
+		navigator.geolocation.getCurrentPosition(position => {//Use the native window api to get current position (first ask permission)
+			const lat = JSON.stringify(position.coords.latitude);//get the lat coords
+			const long = JSON.stringify(position.coords.longitude);//get the long coords		
+			return fetch(`${API_URL}current?access_key=${ACCESS_KEY}&query=${lat},${long}&units=f`)
+				.then((response) => response.json()) //extracts the JSON from the response.body and converts JSON string into a JavaScript object
+				.then((data) =>{
+					const convertedData = sanitizeData(data);//convert api data into a sanitize object with only needed information
+					callback(convertedData);//updates weatherData with today's weather data		
+				})
+				.catch((error) => console.log(error));
+			},
+			error => console.log(error.message),
+			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+			
+			)				
     }
