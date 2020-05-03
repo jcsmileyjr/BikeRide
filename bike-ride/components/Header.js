@@ -16,10 +16,11 @@ const Head = (props) => {
 
 const styles = StyleSheet.create({
 	headerContainer: {/*Style the container that center the text */
-		backgroundColor: "navy",
+		backgroundColor: "#0C87F5",
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
+		marginBottom:10,
 		paddingTop:(Constants.statusBarHeight - 100),/*Bug where status bar covers the header. This push the header below the status bar */
 	},
 	textStyle:{
