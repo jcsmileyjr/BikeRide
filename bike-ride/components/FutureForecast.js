@@ -7,7 +7,7 @@ const FutureForecast = (props) => {
 		<View style={styles.contentLayout}>
 			<Text style={styles.textStyle}>{props.date}</Text>
 			<Text style={styles.textStyle}>{props.outcome}</Text>
-			<View style={{textAlign:"right", flex:1}}>
+			<View style={styles.imageContainer}>
 				{props.outcome ==="Good" &&
 					<Icon type="FontAwesome5" name="smile" style={styles.goodImage} />
 				}
@@ -30,25 +30,35 @@ const styles = StyleSheet.create({
 		display:"flex",
 		flexDirection:"row",/*make elements display horizontally */
 		marginTop:10,/*white-space around forecast */
-		marginBottom:10,	/*white-space around forecast */	
+		marginBottom:10,	/*white-space around forecast */
+		borderBottomColor:"#F2F2F2",
+		borderBottomWidth:1,
+		borderStyle:"solid",
 	},
 	textStyle:{
 		fontSize:25,/*Size of text */
 		flex: 1,
 		paddingLeft:20,/*add whitespace around the text */
 		color:"#4D4D4D",
+
 	},
 	goodImage:{/*color and size of the sun image */
 		color:"green",
-		fontSize:50,
+		fontSize:45,
 	},
 	badImage:{/*color and size of the stop riding image */
 		color:"red",
-		fontSize:50,
+		fontSize:45,
 	},
 	bestImage:{
 		color:"navy",
-		fontSize:50,
+		fontSize:45,
+	},
+	imageContainer:{
+		flex:1,
+		textAlign:"right",
+		display:"flex",
+		justifyContent:"flex-end",
 	}
 });
 

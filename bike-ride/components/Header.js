@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
+		marginBottom:10,
 		paddingTop:(Constants.statusBarHeight - 100),/*Bug where status bar covers the header. This push the header below the status bar */
 	},
 	textStyle:{
