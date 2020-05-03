@@ -4,6 +4,7 @@ import { Container, Text, ListItem, CheckBox, H2} from 'native-base';
 
 import Header from '../components/Header.js';
 import Button from '../components/Button.js';//Navigation button to the Home Screen
+import CustomTextInput from '../components/TextInput.js';//Textinput for updating state
 
 //Screen shown when user click the cog icon in the footer. User can edit the criteria for good days while bike riding
 const SetCriteria = ({navigation}) => {
@@ -11,7 +12,6 @@ const SetCriteria = ({navigation}) => {
     const [maximumTemp, setMaximumTemp] = useState(0);
     const [windSpeed, setWindSpeed] = useState(0);
     const [ifRained, setIfRained] = useState(false);
-    const [oldCriteria, setOldCriteria] = useState({});
 
     useEffect(() => { this.getOldCriteria(); }, []);/*This code runs before the screen renders */
 
@@ -41,18 +41,11 @@ const SetCriteria = ({navigation}) => {
             <Header title="Today" />
             <View style={styles.contentlayout}>
                 <H2 style={styles.pageTitle}>Set the Criteria for a Good Ride</H2>
-                <View style={styles.inputContainer}>
-                    <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Minimum Temperature</Text>
-                    <TextInput style={styles.textInputStyle} keyboardType="number-pad" onFocus={() => setMinimalTemp("")} value={String(minimalTemp)}  onChangeText={(minTemp)=> setMinimalTemp(minTemp)} />
-                </View>
-                <View style={styles.inputContainer}>
-                    <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Maximum Temperature</Text>
-                    <TextInput style={styles.textInputStyle} keyboardType="number-pad" onFocus={() => setMaximumTemp("")}  value={String(maximumTemp)}  onChangeText={(maxTemp)=> setMaximumTemp(maxTemp)} />
-                </View>
-                <View style={styles.inputContainer}>
-                    <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Maximum Wind Speed</Text>
-                    <TextInput style={styles.textInputStyle} keyboardType="number-pad" onFocus={() => setWindSpeed("")} value={String(windSpeed)}  onChangeText={(windSpd)=> setWindSpeed(windSpd)} />
-                </View>
+
+                <CustomTextInput labelText="Minimum Temperature" state={minimalTemp} updateState={setMinimalTemp} />
+                <CustomTextInput labelText="Maximum Temperature" state={maximumTemp} updateState={setMaximumTemp} />
+                <CustomTextInput labelText="Maximum Wind Speed" state={windSpeed} updateState={setWindSpeed} />
+                
                 <View style={styles.inputContainer}>
                     <ListItem >
                         <CheckBox checked={ifRained} onPress={() => setIfRained(true)}/>
