@@ -48,7 +48,7 @@ const SetCriteria = ({navigation}) => {
                 
                 <View style={styles.inputContainer}>
                     <ListItem >
-                        <CheckBox checked={ifRained} onPress={() => setIfRained(true)}/>
+                        <CheckBox checked={ifRained} onPress={() => setIfRained(!ifRained)}/>
                         <Text> I want to ride even if in wet conditions</Text>
                     </ListItem>
                 </View>
