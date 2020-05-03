@@ -10,27 +10,21 @@ import FutureForecast from '../components/FutureForecast.js';//Component with Ic
 import Button from '../components/Button.js';//Navigation button to the Home Screen
 import CriteriaIcon from '../components/EditCriteria.js';/*Cog icon to navigate user to EditCriteria screen */
 import SavePredictions from '../components/SavePredictions.js';/*Disk icon to save 7 day forecast to local storage */
-
-const baseRideCriteria = {
-	"minimalTemperature":60,
-	"maximumTemperature":85,
-	"ifRained":false,
-	"windSpeedLimit":20,
-}
+import baseRideCriteria from '../js/baseRideCriteria.js';//If no criteria is found in local storage, this is used. Call in setCriteria()
 
 /*7 Day Forecast screen that makes an api call to get 7 days of weather data.
 That data is then use to display if each day is a good or bad day to ride a bicycle. 
 */
 const Forecast = ({navigation}) => {
-	const [weatherData, setWeatherData] = useState([]);//state to hold weather data
-	const [rideSetting, setRideSetting] = useState({});//state to hold riding criteria
-	const [bestDayCriteria, setBestDayCriteria] = useState(false);
+	const [weatherData, setWeatherData] = useState([]);//state to hold weather data received from an weather API call
+	const [rideSetting, setRideSetting] = useState({});//state to hold riding criteria loaded from local storage
+	const [bestDayCriteria, setBestDayCriteria] = useState(false);//state to hold the best day criteria loaded from local storage
 
 	useEffect(() => { this.getForecast(); }, []);//load API data to component state before page is loading
 	
 	useEffect(() => { //load riding criteria to component state
-		let mounted = true;		
-		this.setCriteria(mounted); 		
+		let mounted = true;//Represent mounte components. During clean up (components are unmounted), this stops async calls from being made		
+		this.setCriteria(mounted);//method to get the current riding criteria from local storage or use the base criteria. 		
 		
 		return () => mounted = false;
 	}, []);//load data before page is loading
