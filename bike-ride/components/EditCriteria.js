@@ -13,7 +13,7 @@ const EditCriteria = (props) => {
 
 const styles = StyleSheet.create({
 	cogIconStyle:{/*Style for the save icon in the footer */
-		color:"navy",/*Color of the icon*/
+		color:"#0C87F5",/*Color of the icon*/
 		textAlign:"center",/*Center the icon in its row*/
 	},
 	footerTextStyle:{
