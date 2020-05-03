@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
 		height: 40,
 		borderColor: "grey",
 		borderWidth: 1,
-		elevation: 1,
 		fontSize: 18,
     },
     boldLabel:{
