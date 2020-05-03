@@ -16,7 +16,7 @@ const Head = (props) => {
 
 const styles = StyleSheet.create({
 	headerContainer: {/*Style the container that center the text */
-		backgroundColor: "navy",
+		backgroundColor: "#0C87F5",
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",

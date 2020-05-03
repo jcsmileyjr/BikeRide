@@ -28,7 +28,7 @@ const Button = (props) => {
 
 const styles = StyleSheet.create({
 	buttonStyle:{//style for the Navigation button
-		backgroundColor:'navy',//signature dark blue color 
+		backgroundColor:'#0C87F5',//signature dark blue color 
 		paddingTop: 8, //space between button title and border
 		paddingBottom: 8, //space between button title and border
 		margin: 10, //whitespace between button and other elements
