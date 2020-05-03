@@ -149,8 +149,10 @@ const Forecast = ({navigation}) => {
 	return(
 		<Container>
 			<Header title="7 Day Forecast" />
+
 			{/*Check if the riding criteria have change */}
 			<NavigationEvents onDidFocus={() => this.setCriteria(setRideSetting)} />
+			
 			{/*Display warning to user while data is loading */}
 			{weatherData.length === 0 &&
 				<View><H1 style={styles.loadingText}>Data is loading</H1></View>
