@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet } from 'react-native';
-import {Header, Text } from 'native-base';
-import Constants from "expo-constants";
+import {Header, Text } from 'native-base';/*UI library for styling and complex components missing from the React Native */
+import Constants from "expo-constants";/*Set the height of the Header to the status bar height */
 
 //Header component for each screen
 const Head = (props) => {

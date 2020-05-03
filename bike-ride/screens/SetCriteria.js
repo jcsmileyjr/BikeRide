@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import { View, StyleSheet, AsyncStorage } from 'react-native';
-import { Container, Text, ListItem, CheckBox, H2} from 'native-base';
+import { Container, Text, ListItem, CheckBox, H2, Toast} from 'native-base';/*UI library for styling and complex components missing from the React Native */
 
 import Header from '../components/Header.js';
 import Button from '../components/Button.js';//Navigation button to the Home Screen
@@ -34,6 +34,7 @@ const SetCriteria = ({navigation}) => {
         newCriteria.windSpeedLimit = windSpeed;
 
         await AsyncStorage.setItem("rideCriteria",JSON.stringify(newCriteria));//Save new criteria to local storage
+        Toast.show({text:"New Riding Criteria has been implemented", position:"bottom", type:"success", duration:5000});
     }
 
     return(

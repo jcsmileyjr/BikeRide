@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, StyleSheet } from 'react-native';
-import {Footer, Text } from 'native-base';
+import {StyleSheet } from 'react-native';
+import {Footer} from 'native-base';/*UI library for styling and complex components missing from the React Native */
 
 //Footer component for each screen
 const Foot = (props) => {

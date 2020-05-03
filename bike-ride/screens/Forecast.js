@@ -63,7 +63,7 @@ const Forecast = ({navigation}) => {
 			setWeatherData(convertedForcast);
 		}else{					
 			//display error message to user
-			Toast.show({text:"No network connection and no saved 7 day forecast", position:"top", type:"warning", duration:5000});
+			Toast.show({text:"No network connection and no saved 7 day forecast", position:"bottom", type:"warning", duration:5000});
 		}
 	}
 

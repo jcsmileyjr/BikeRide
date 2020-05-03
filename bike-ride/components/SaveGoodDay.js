@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, AsyncStorage} from 'react-native';
-import {Icon, Toast} from 'native-base';
+import {Icon, Toast} from 'native-base';/*UI library for styling and complex components missing from the React Native */
 
 //Displays a heart icon and functionality to saved the current weather day as a Good Day and determine the idea Good Day based on all Good Days saved
 const SaveGoodDay = (props) => {
@@ -19,7 +19,7 @@ const SaveGoodDay = (props) => {
 		}catch (e){
 			console.log(e);
 		}	
-		Toast.show({text:"Today's weather has been saved!!!", position:"top", type:"success", textStyle:{color:"white", textAlign:"center"}, duration:3000});
+		Toast.show({text:"Today's weather has been saved!!!", position:"bottom", type:"success", textStyle:{color:"white", textAlign:"center"}, duration:3000});
 	}
 
 	//Function to save averages of temp and windspeed to create an ideal Good Day based on array of good days saved
