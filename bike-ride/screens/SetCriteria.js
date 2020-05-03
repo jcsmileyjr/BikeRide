@@ -42,19 +42,16 @@ const SetCriteria = ({navigation}) => {
             <View style={styles.contentlayout}>
                 <H1 style={styles.pageTitle}>Set the Criteria for a Good Bicycle Ride</H1>
                 <View style={styles.inputContainer}>
-                    <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Set Minimal Temperature to Ride</Text>
-                    <TextInput style={styles.textInputStyle} clearTextOnFocus  onChangeText={(minTemp)=> setMinimalTemp(minTemp)} />
-                    <Text style={styles.inputLabelStyle}>Old temp is {minimalTemp}</Text>
+                    <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Minimum Temperature</Text>
+                    <TextInput style={styles.textInputStyle} clearTextOnFocus value={String(minimalTemp)}  onChangeText={(minTemp)=> setMinimalTemp(minTemp)} />
                 </View>
                 <View style={styles.inputContainer}>
-                    <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Set Maximum Temperature to Ride</Text>
-                    <TextInput style={styles.textInputStyle}  onChangeText={(maxTemp)=> setMaximumTemp(maxTemp)} />
-                    <Text style={styles.inputLabelStyle}>Old temp is {maximumTemp}</Text>
+                    <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Maximum Temperature</Text>
+                    <TextInput style={styles.textInputStyle} value={String(maximumTemp)}  onChangeText={(maxTemp)=> setMaximumTemp(maxTemp)} />
                 </View>
                 <View style={styles.inputContainer}>
-                    <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Set Maximum Wind Speed to Ride</Text>
-                    <TextInput style={styles.textInputStyle}  onChangeText={(windSpd)=> setWindSpeed(windSpd)} />
-                    <Text style={styles.inputLabelStyle}>Old wind speed is {windSpeed}</Text>
+                    <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Maximum Wind Speed</Text>
+                    <TextInput style={styles.textInputStyle} value={String(windSpeed)}  onChangeText={(windSpd)=> setWindSpeed(windSpd)} />
                 </View>
                 <View style={styles.inputContainer}>
                     <ListItem >
@@ -80,7 +77,7 @@ const styles = StyleSheet.create({
 		width: 270,
 		color: 'grey',  //blue text color
 		textAlign: "center",
-		height: 50,
+		height: 40,
 		borderColor: "grey",
 		borderWidth: 1,
 		elevation: 1,
