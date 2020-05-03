@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import {StyleSheet, View, AsyncStorage} from 'react-native';
 import {Container, H1, Toast} from 'native-base';
 import {FORECAST_ACCESS_KEY, FORECAST_API_URL, FORECAST_APP_ID } from 'react-native-dotenv';//Weather service API keys
-import * as Location from 'expo-location';
+import { NavigationEvents } from "react-navigation";
 
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
@@ -10,31 +10,21 @@ import FutureForecast from '../components/FutureForecast.js';//Component with Ic
 import Button from '../components/Button.js';//Navigation button to the Home Screen
 import CriteriaIcon from '../components/EditCriteria.js';/*Cog icon to navigate user to EditCriteria screen */
 import SavePredictions from '../components/SavePredictions.js';/*Disk icon to save 7 day forecast to local storage */
-
-const baseRideCriteria = {
-	"minimalTemperature":60,
-	"maximumTemperature":85,
-	"ifRained":false,
-	"windSpeedLimit":20,
-}
-
-const defaultBestDayCriteria = {
-
-}
+import baseRideCriteria from '../js/baseRideCriteria.js';//If no criteria is found in local storage, this is used. Call in setCriteria()
 
 /*7 Day Forecast screen that makes an api call to get 7 days of weather data.
 That data is then use to display if each day is a good or bad day to ride a bicycle. 
 */
 const Forecast = ({navigation}) => {
-	const [weatherData, setWeatherData] = useState([]);//state to hold weather data
-	const [rideSetting, setRideSetting] = useState({});//state to hold riding criteria
-	const [bestDayCriteria, setBestDayCriteria] = useState(false);
+	const [weatherData, setWeatherData] = useState([]);//state to hold weather data received from an weather API call
+	const [rideSetting, setRideSetting] = useState({});//state to hold riding criteria loaded from local storage
+	const [bestDayCriteria, setBestDayCriteria] = useState(false);//state to hold the best day criteria loaded from local storage
 
 	useEffect(() => { this.getForecast(); }, []);//load API data to component state before page is loading
 	
 	useEffect(() => { //load riding criteria to component state
-		let mounted = true;		
-		this.setCriteria(mounted); 		
+		let mounted = true;//Represent mounte components. During clean up (components are unmounted), this stops async calls from being made		
+		this.setCriteria(mounted);//method to get the current riding criteria from local storage or use the base criteria. 		
 		
 		return () => mounted = false;
 	}, []);//load data before page is loading
@@ -159,6 +149,10 @@ const Forecast = ({navigation}) => {
 	return(
 		<Container>
 			<Header title="7 Day Forecast" />
+
+			{/*Check if the riding criteria have change */}
+			<NavigationEvents onDidFocus={() => this.setCriteria(setRideSetting)} />
+			
 			{/*Display warning to user while data is loading */}
 			{weatherData.length === 0 &&
 				<View><H1 style={styles.loadingText}>Data is loading</H1></View>

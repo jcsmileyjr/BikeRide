@@ -1,5 +1,5 @@
 import {AsyncStorage } from 'react-native';
-import baseRideCriteria from '../js/baseRideCriteria.js';;
+import baseRideCriteria from '../js/baseRideCriteria.js';
 import { ACCESS_KEY, API_URL } from 'react-native-dotenv';
 
     //Method call in the getCurrentWeather() to convert raw data from an API call into a sanitize object to be comsume 

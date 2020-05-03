@@ -14,7 +14,8 @@ import {applyRidingCriteria, setCriteria, getCurrentWeather} from '../js/homeScr
  * That data is use to display if today is a good or bad to ride a bicycle. 
  */
 const Home = ({ navigation }) => {
-	const [weatherData, setWeatherData] = useState({});//state to hold weather data
+	const loading = false;
+	const [weatherData, setWeatherData] = useState(loading);//state to hold weather data
 	const [rideSetting, setRideSetting] = useState({});//state to hold riding criteria
 
 	useEffect(() => { this.getForecast(); setCriteria(setRideSetting);}, []);/*This code runs before the screen renders */
@@ -42,24 +43,31 @@ const Home = ({ navigation }) => {
 			{/*Check if the riding criteria have change */}
 			<NavigationEvents onDidFocus={() => setCriteria(setRideSetting)} />
 
-			{/*Show a sun or red hand icon based on the riding criteria */}
-			<View style={styles.contentlayout}>
-				{applyRidingCriteria(weatherData, rideSetting) &&
-					<View style={styles.mainImageContainer}>
-						<Icon style={[styles.mainImageStyle, styles.goodImage]} type="FontAwesome5" name="smile" />
-						<H1 style={styles.contentStyle} >Good Day to Ride</H1>
-					</View>
-				}
-				{!applyRidingCriteria(weatherData, rideSetting) &&
-					<View style={styles.mainImageContainer}>
-						<Icon style={[styles.mainImageStyle, styles.badImage]} type="FontAwesome5" name="angry" />
-						<H1 style={styles.contentStyle} >Do Not go Ride</H1>
-					</View>
-				}
+			{/*Display warning to user while data is loading */}
+			{weatherData === false &&
+				<Text style={[styles.contentStyle, styles.loadingText]}>Data is loading</Text>
+			}
 
-				<Text style={styles.contentStyle}>The temperature is {weatherData.temperature} degrees</Text>
-				<Button nav="Forecast" navigation={navigation} text="7 Day Forecast" />
-			</View>
+			{/*Show a sun or red hand icon based on the riding criteria */}
+			{weatherData !== false &&
+				<View style={styles.contentlayout}>
+					{applyRidingCriteria(weatherData, rideSetting) &&
+						<View style={styles.mainImageContainer}>
+							<Icon style={[styles.mainImageStyle, styles.goodImage]} type="FontAwesome5" name="smile" />
+							<H1 style={styles.contentStyle} >Good Day to Ride</H1>
+						</View>
+					}
+					{!applyRidingCriteria(weatherData, rideSetting) &&
+						<View style={styles.mainImageContainer}>
+							<Icon style={[styles.mainImageStyle, styles.badImage]} type="FontAwesome5" name="angry" />
+							<H1 style={styles.contentStyle} >Do Not go Ride</H1>
+						</View>
+					}
+
+					<Text style={styles.contentStyle}>The temperature is {weatherData.temperature} degrees</Text>
+					<Button nav="Forecast" navigation={navigation} text="7 Day Forecast" />
+				</View>
+			}
 			<Footer>
 				<SaveGoodDayIcon goodDay={weatherData} />
 				<CriteriaIcon navigation={navigation} />
@@ -78,6 +86,9 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		fontSize:20,
 		paddingTop:150,
+	},
+	loadingText: {
+		color:"red",
 	},
 	mainImageContainer: {
 		flex: 2,/*Override to double area */
