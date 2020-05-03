@@ -43,15 +43,15 @@ const SetCriteria = ({navigation}) => {
                 <H2 style={styles.pageTitle}>Set the Criteria for a Good Ride</H2>
                 <View style={styles.inputContainer}>
                     <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Minimum Temperature</Text>
-                    <TextInput style={styles.textInputStyle} clearTextOnFocus value={String(minimalTemp)}  onChangeText={(minTemp)=> setMinimalTemp(minTemp)} />
+                    <TextInput style={styles.textInputStyle} onFocus={() => setMinimalTemp("")} value={String(minimalTemp)}  onChangeText={(minTemp)=> setMinimalTemp(minTemp)} />
                 </View>
                 <View style={styles.inputContainer}>
                     <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Maximum Temperature</Text>
-                    <TextInput style={styles.textInputStyle} value={String(maximumTemp)}  onChangeText={(maxTemp)=> setMaximumTemp(maxTemp)} />
+                    <TextInput style={styles.textInputStyle} onFocus={() => setMaximumTemp("")}  value={String(maximumTemp)}  onChangeText={(maxTemp)=> setMaximumTemp(maxTemp)} />
                 </View>
                 <View style={styles.inputContainer}>
                     <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Maximum Wind Speed</Text>
-                    <TextInput style={styles.textInputStyle} value={String(windSpeed)}  onChangeText={(windSpd)=> setWindSpeed(windSpd)} />
+                    <TextInput style={styles.textInputStyle} onFocus={() => setWindSpeed("")} value={String(windSpeed)}  onChangeText={(windSpd)=> setWindSpeed(windSpd)} />
                 </View>
                 <View style={styles.inputContainer}>
                     <ListItem >
