@@ -40,7 +40,7 @@ const Home = ({ navigation }) => {
 		<Container>
 			<Header title="Today" />
 			{/*Check if the riding criteria have change */}
-			<NavigationEvents onDidFocus={() => this.setCriteria()} />
+			<NavigationEvents onDidFocus={() => setCriteria(setRideSetting)} />
 
 			{/*Show a sun or red hand icon based on the riding criteria */}
 			<View style={styles.contentlayout}>
