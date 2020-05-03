@@ -9,15 +9,15 @@ const FutureForecast = (props) => {
 			<Text style={styles.textStyle}>{props.outcome}</Text>
 			<View style={{textAlign:"right", flex:1}}>
 				{props.outcome ==="Good" &&
-					<Icon name="md-sunny" style={styles.sunImage} />
+					<Icon type="FontAwesome5" name="smile" style={styles.goodImage} />
 				}
 
 				{props.outcome ==="Bad" &&
-					<Icon type="FontAwesome" name="times-circle-o" style={styles.stopHandImage}  />
+					<Icon type="FontAwesome5" name="angry" style={styles.badImage}  />
 				}
 
 				{props.outcome ==="Best" &&
-					<Icon type="FontAwesome" name="bicycle" style={styles.bicycleImage}  />
+					<Icon type="FontAwesome5" name="grin-stars" style={styles.bestImage}  />
 				}
 			</View>			
 		</View>
@@ -33,19 +33,20 @@ const styles = StyleSheet.create({
 		marginBottom:10,	/*white-space around forecast */	
 	},
 	textStyle:{
-		fontSize:30,/*Size of text */
+		fontSize:25,/*Size of text */
 		flex: 1,
-		marginLeft:20,/*add whitespace around the text */
+		paddingLeft:20,/*add whitespace around the text */
+		color:"#4D4D4D",
 	},
-	sunImage:{/*color and size of the sun image */
-		color:"#e8e600",
+	goodImage:{/*color and size of the sun image */
+		color:"green",
 		fontSize:50,
 	},
-	stopHandImage:{/*color and size of the stop riding image */
+	badImage:{/*color and size of the stop riding image */
 		color:"red",
 		fontSize:50,
 	},
-	bicycleImage:{
+	bestImage:{
 		color:"navy",
 		fontSize:50,
 	}
