@@ -2,12 +2,13 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Icon} from 'native-base';
 
+//Displayed on the Forecast Screen, it repersent weather for a day.
 const FutureForecast = (props) => {
 	return(
 		<View style={styles.contentLayout}>
-			<Text style={[styles.textStyle, styles.dateSection]}>{props.date}</Text>
-			<Text style={[styles.textStyle, styles.outcomeSection]}>{props.outcome}</Text>
-			<View style={styles.imageContainer}>
+			<Text style={[styles.textStyle, styles.dateSection, styles.seperator]}>{props.date}</Text>
+			<Text style={[styles.textStyle, styles.outcomeSection, styles.seperator]}>{props.outcome}</Text>
+			<View style={[styles.imageContainer, styles.seperator]}>
 				{props.outcome ==="Good" &&
 					<Icon type="FontAwesome5" name="smile" style={styles.goodImage} />
 				}
@@ -27,41 +28,40 @@ const FutureForecast = (props) => {
 const styles = StyleSheet.create({
 	contentLayout:{/*layout of the component */
 		flex:1,
-		display:"flex",
+		display:"flex",/*make elements display horizontally */
 		flexDirection:"row",/*make elements display horizontally */
 		marginTop:10,/*white-space around forecast */
 		marginBottom:10,	/*white-space around forecast */
-		borderBottomColor:"#F2F2F2",
-		borderBottomWidth:1,
-		borderStyle:"solid",
+		borderBottomColor:"#F2F2F2",/*Style for light grey seperator between each forecast */
+		borderBottomWidth:1,/*Style for light grey seperator between each forecast */
+		borderStyle:"solid",/*Style for light grey seperator between each forecast */
 	},
 	textStyle:{
 		fontSize:25,/*Size of text */
-		color:"#4D4D4D",
+		color:"#4D4D4D",/*Light grey color */
 	},
-	goodImage:{/*color and size of the sun image */
+	goodImage:{/*color and size of the good day image */
 		color:"green",
 		fontSize:45,
 	},
-	badImage:{/*color and size of the stop riding image */
+	badImage:{/*color and size of the bad day image */
 		color:"red",
 		fontSize:45,
 	},
-	bestImage:{
+	bestImage:{/*color and size of the great day image */
 		color:"navy",
 		fontSize:45,
 	},
-	imageContainer:{
+	imageContainer:{/*Style for container of the image */
 		flex:1,
-		textAlign:"right",
 		display:"flex",
-		justifyContent:"flex-end",
+		justifyContent:"flex-end",/*Center the image */
 	},
-	dateSection:{
+	dateSection:{/*Style for date */
 		flex:2,
 		paddingLeft:20,
 	},
-	outcomeSection:{
+	outcomeSection:{/*Style for outcome */
 		flex:1,
 	}
 });
