@@ -46,13 +46,13 @@ const Home = ({ navigation }) => {
 			<View style={styles.contentlayout}>
 				{applyRidingCriteria(weatherData, rideSetting) &&
 					<View style={styles.mainImageContainer}>
-						<Icon style={[styles.mainImageStyle, styles.sunImage]} name="md-sunny" />
+						<Icon style={[styles.mainImageStyle, styles.goodImage]} type="FontAwesome5" name="smile" />
 						<H1 style={styles.contentStyle} >Good Day to Ride</H1>
 					</View>
 				}
 				{!applyRidingCriteria(weatherData, rideSetting) &&
 					<View style={styles.mainImageContainer}>
-						<Icon style={[styles.mainImageStyle, styles.stopHandImage]} type="FontAwesome" name="hand-stop-o" />
+						<Icon style={[styles.mainImageStyle, styles.badImage]} type="FontAwesome5" name="angry" />
 						<H1 style={styles.contentStyle} >Do Not go Ride</H1>
 					</View>
 				}
@@ -88,10 +88,10 @@ const styles = StyleSheet.create({
 		textAlign: "center",/*center the image */
 
 	},
-	sunImage: {/*color of the sun image */
-		color: "#e8e600",
+	goodImage: {/*color of the good image */
+		color: "green",
 	},
-	stopHandImage: {/*color of the stop riding image */
+	badImage: {/*color of the stop riding image */
 		color: "red",
 	},
 	footerStyle: {/*Style for the footer*/
