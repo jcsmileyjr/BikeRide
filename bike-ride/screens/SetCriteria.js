@@ -1,9 +1,10 @@
 import React, { useState, useEffect} from 'react'
-import { View, TextInput, StyleSheet, AsyncStorage } from 'react-native';
-import { Container, Text, ListItem, CheckBox, H2} from 'native-base';
+import { View, StyleSheet, AsyncStorage } from 'react-native';
+import { Container, Text, ListItem, CheckBox, H2, Toast} from 'native-base';/*UI library for styling and complex components missing from the React Native */
 
 import Header from '../components/Header.js';
 import Button from '../components/Button.js';//Navigation button to the Home Screen
+import CustomTextInput from '../components/TextInput.js';//Textinput for updating state
 
 //Screen shown when user click the cog icon in the footer. User can edit the criteria for good days while bike riding
 const SetCriteria = ({navigation}) => {
@@ -11,7 +12,6 @@ const SetCriteria = ({navigation}) => {
     const [maximumTemp, setMaximumTemp] = useState(0);
     const [windSpeed, setWindSpeed] = useState(0);
     const [ifRained, setIfRained] = useState(false);
-    const [oldCriteria, setOldCriteria] = useState({});
 
     useEffect(() => { this.getOldCriteria(); }, []);/*This code runs before the screen renders */
 
@@ -34,6 +34,7 @@ const SetCriteria = ({navigation}) => {
         newCriteria.windSpeedLimit = windSpeed;
 
         await AsyncStorage.setItem("rideCriteria",JSON.stringify(newCriteria));//Save new criteria to local storage
+        Toast.show({text:"New Riding Criteria has been implemented", position:"bottom", type:"success", duration:5000});
     }
 
     return(
@@ -41,21 +42,14 @@ const SetCriteria = ({navigation}) => {
             <Header title="Today" />
             <View style={styles.contentlayout}>
                 <H2 style={styles.pageTitle}>Set the Criteria for a Good Ride</H2>
-                <View style={styles.inputContainer}>
-                    <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Minimum Temperature</Text>
-                    <TextInput style={styles.textInputStyle} onFocus={() => setMinimalTemp("")} value={String(minimalTemp)}  onChangeText={(minTemp)=> setMinimalTemp(minTemp)} />
-                </View>
-                <View style={styles.inputContainer}>
-                    <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Maximum Temperature</Text>
-                    <TextInput style={styles.textInputStyle} onFocus={() => setMaximumTemp("")}  value={String(maximumTemp)}  onChangeText={(maxTemp)=> setMaximumTemp(maxTemp)} />
-                </View>
-                <View style={styles.inputContainer}>
-                    <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Maximum Wind Speed</Text>
-                    <TextInput style={styles.textInputStyle} onFocus={() => setWindSpeed("")} value={String(windSpeed)}  onChangeText={(windSpd)=> setWindSpeed(windSpd)} />
-                </View>
+
+                <CustomTextInput labelText="Minimum Temperature" state={minimalTemp} updateState={setMinimalTemp} />
+                <CustomTextInput labelText="Maximum Temperature" state={maximumTemp} updateState={setMaximumTemp} />
+                <CustomTextInput labelText="Maximum Wind Speed" state={windSpeed} updateState={setWindSpeed} />
+                
                 <View style={styles.inputContainer}>
                     <ListItem >
-                        <CheckBox checked={ifRained} onPress={() => setIfRained(true)}/>
+                        <CheckBox checked={ifRained} onPress={() => setIfRained(!ifRained)}/>
                         <Text> I want to ride even if in wet conditions</Text>
                     </ListItem>
                 </View>
@@ -73,22 +67,6 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flex: 1,
 	},
-    textInputStyle:{/*Style for input fields */
-		width: 270,
-		color: 'grey',  //blue text color
-		textAlign: "center",
-		height: 40,
-		borderColor: "grey",
-		borderWidth: 1,
-		fontSize: 18,
-    },
-    boldLabel:{
-        fontWeight:"bold",
-    },
-    inputLabelStyle:{/*Style for labels */
-        textAlign:'center',/*center the label text*/
-        color:"grey",/*add color */
-    },
     inputContainer:{
         display:"flex",/* center the content */
         justifyContent:"center",/* center the content */

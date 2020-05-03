@@ -15,6 +15,8 @@ const Button = (props) => {
 			</View>
 		);		
 	}
+
+	{/*Use on the EditCriteria screen to check if the save props is NOT used. If so, save bike ride criteria data to local storage */}
 	return(
 		<View style={styles.buttonContainer}>
 			<TouchableNativeFeedback onPress={() => props.navigation.navigate(props.nav)} >

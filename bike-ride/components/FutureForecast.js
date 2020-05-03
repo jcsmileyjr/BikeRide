@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {Icon} from 'native-base';
+import {Icon} from 'native-base';/*UI library for styling and complex components missing from the React Native */
 
 //Displayed on the Forecast Screen, it repersent weather for a day.
 const FutureForecast = (props) => {

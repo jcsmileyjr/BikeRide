@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, StyleSheet} from 'react-native';
-import { NavigationEvents } from "react-navigation";
-import { Container, Text, Icon, H1 } from 'native-base';
+import { NavigationEvents } from "react-navigation"; /*Use to reload state when navigating from another screen */
+import { Container, Text, Icon, H1 } from 'native-base';/*UI library for styling and complex components missing from the React Native */
 
 import Header from '../components/Header.js';
 import Button from '../components/Button.js';//Navigation button to the Forecast Screen
