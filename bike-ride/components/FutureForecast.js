@@ -5,8 +5,8 @@ import {Icon} from 'native-base';
 const FutureForecast = (props) => {
 	return(
 		<View style={styles.contentLayout}>
-			<Text style={styles.textStyle}>{props.date}</Text>
-			<Text style={styles.textStyle}>{props.outcome}</Text>
+			<Text style={[styles.textStyle, styles.dateSection]}>{props.date}</Text>
+			<Text style={[styles.textStyle, styles.outcomeSection]}>{props.outcome}</Text>
 			<View style={styles.imageContainer}>
 				{props.outcome ==="Good" &&
 					<Icon type="FontAwesome5" name="smile" style={styles.goodImage} />
@@ -37,10 +37,7 @@ const styles = StyleSheet.create({
 	},
 	textStyle:{
 		fontSize:25,/*Size of text */
-		flex: 1,
-		paddingLeft:20,/*add whitespace around the text */
 		color:"#4D4D4D",
-
 	},
 	goodImage:{/*color and size of the sun image */
 		color:"green",
@@ -59,6 +56,13 @@ const styles = StyleSheet.create({
 		textAlign:"right",
 		display:"flex",
 		justifyContent:"flex-end",
+	},
+	dateSection:{
+		flex:2,
+		paddingLeft:20,
+	},
+	outcomeSection:{
+		flex:1,
 	}
 });
 
