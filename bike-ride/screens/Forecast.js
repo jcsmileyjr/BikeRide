@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import {StyleSheet, View, AsyncStorage} from 'react-native';
 import {Container, H1, Toast} from 'native-base';
 import {FORECAST_ACCESS_KEY, FORECAST_API_URL, FORECAST_APP_ID } from 'react-native-dotenv';//Weather service API keys
-import * as Location from 'expo-location';
+import { NavigationEvents } from "react-navigation";
 
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
@@ -16,10 +16,6 @@ const baseRideCriteria = {
 	"maximumTemperature":85,
 	"ifRained":false,
 	"windSpeedLimit":20,
-}
-
-const defaultBestDayCriteria = {
-
 }
 
 /*7 Day Forecast screen that makes an api call to get 7 days of weather data.
@@ -159,6 +155,8 @@ const Forecast = ({navigation}) => {
 	return(
 		<Container>
 			<Header title="7 Day Forecast" />
+			{/*Check if the riding criteria have change */}
+			<NavigationEvents onDidFocus={() => this.setCriteria(setRideSetting)} />
 			{/*Display warning to user while data is loading */}
 			{weatherData.length === 0 &&
 				<View><H1 style={styles.loadingText}>Data is loading</H1></View>
