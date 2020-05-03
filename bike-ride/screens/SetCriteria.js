@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react'
-import { View, TextInput, StyleSheet, AsyncStorage } from 'react-native';
+import { View, StyleSheet, AsyncStorage } from 'react-native';
 import { Container, Text, ListItem, CheckBox, H2} from 'native-base';
 
 import Header from '../components/Header.js';
