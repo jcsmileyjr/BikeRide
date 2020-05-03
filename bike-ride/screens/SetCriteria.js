@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import { View, TextInput, StyleSheet, AsyncStorage } from 'react-native';
-import { Container, Text, ListItem, CheckBox, H1} from 'native-base';
+import { Container, Text, ListItem, CheckBox, H2} from 'native-base';
 
 import Header from '../components/Header.js';
 import Button from '../components/Button.js';//Navigation button to the Home Screen
@@ -40,7 +40,7 @@ const SetCriteria = ({navigation}) => {
         <Container>
             <Header title="Today" />
             <View style={styles.contentlayout}>
-                <H1 style={styles.pageTitle}>Set the Criteria for a Good Bicycle Ride</H1>
+                <H2 style={styles.pageTitle}>Set the Criteria for a Good Ride</H2>
                 <View style={styles.inputContainer}>
                     <Text style={[styles.inputLabelStyle, styles.boldLabel]}>Minimum Temperature</Text>
                     <TextInput style={styles.textInputStyle} clearTextOnFocus value={String(minimalTemp)}  onChangeText={(minTemp)=> setMinimalTemp(minTemp)} />
