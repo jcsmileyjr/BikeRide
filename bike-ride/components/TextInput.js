@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 
-//Input text field to update state with an number based on input
+// Input text field to update state with an number based on input
 const CustomTextInput = (props) => {
     return(                
         <View style={styles.inputContainer}>
@@ -13,9 +13,9 @@ const CustomTextInput = (props) => {
 }
 
 const styles = StyleSheet.create({
-    textInputStyle:{/*Style for input fields */
+    textInputStyle:{
 		width: 270,
-		color: 'grey',  //blue text color
+		color: 'grey',  
 		textAlign: "center",
 		height: 40,
 		borderColor: "grey",
@@ -25,15 +25,15 @@ const styles = StyleSheet.create({
     boldLabel:{
         fontWeight:"bold",
     },
-    inputLabelStyle:{/*Style for labels */
-        textAlign:'center',/*center the label text*/
-        color:"grey",/*add color */
+    inputLabelStyle:{
+        textAlign:'center',
+        color:"grey",
     },
     inputContainer:{
-        display:"flex",/* center the content */
-        justifyContent:"center",/* center the content */
-        alignItems:"center",/* center the content */
-        marginTop:20,/*white space between input fields */
+        display:"flex",// Center the content
+        justifyContent:"center",// Center the content
+        alignItems:"center",// Center the content
+        marginTop:20,
     }
 });
 

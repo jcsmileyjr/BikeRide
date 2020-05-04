@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {Icon} from 'native-base';/*UI library for styling and complex components missing from the React Native */
+import {Icon} from 'native-base';// UI library for styling and complex components missing from the React Native
 
-//Displayed on the Forecast Screen, it repersent weather for a day.
+// Displayed on the Forecast Screen, it repersent weather for a day.
 const FutureForecast = (props) => {
 	return(
 		<View style={styles.contentLayout}>
@@ -26,25 +26,25 @@ const FutureForecast = (props) => {
 }
 
 const styles = StyleSheet.create({
-	contentLayout:{/*layout of the component */
+	contentLayout:{
 		flex:1,
-		display:"flex",/*make elements display horizontally */
-		flexDirection:"row",/*make elements display horizontally */
-		marginTop:10,/*white-space around forecast */
-		marginBottom:10,	/*white-space around forecast */
-		borderBottomColor:"#F2F2F2",/*Style for light grey seperator between each forecast */
-		borderBottomWidth:1,/*Style for light grey seperator between each forecast */
-		borderStyle:"solid",/*Style for light grey seperator between each forecast */
+		display:"flex",// Make elements display horizontally
+		flexDirection:"row",// Make elements display horizontally
+		marginTop:10,
+		marginBottom:10,	
+		borderBottomColor:"#F2F2F2",// Style for light grey seperator between each forecast
+		borderBottomWidth:1,// Style for light grey seperator between each forecast
+		borderStyle:"solid",// Style for light grey seperator between each forecast
 	},
 	textStyle:{
-		fontSize:25,/*Size of text */
-		color:"#4D4D4D",/*Light grey color */
+		fontSize:25,
+		color:"#4D4D4D",// Light grey color
 	},
-	goodImage:{/*color and size of the good day image */
+	goodImage:{// Color and size of the good day image
 		color:"green",
 		fontSize:45,
 	},
-	badImage:{/*color and size of the bad day image */
+	badImage:{// Color and size of the bad day image
 		color:"red",
 		fontSize:45,
 	},

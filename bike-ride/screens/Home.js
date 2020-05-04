@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import { View, StyleSheet} from 'react-native';
-import { NavigationEvents } from "react-navigation"; /*Use to reload state when navigating from another screen */
-import { Container, Text, Icon, H1 } from 'native-base';/*UI library for styling and complex components missing from the React Native */
+import { NavigationEvents } from "react-navigation"; // Use to reload state when navigating from another screen
+import { Container, Text, Icon, H1 } from 'native-base';// UI library for styling and complex components missing from the React Native
 
 import Header from '../components/Header.js';
-import Button from '../components/Button.js';//Navigation button to the Forecast Screen
+import Button from '../components/Button.js';
 import Footer from '../components/Footer.js';
-import CriteriaIcon from '../components/EditCriteria.js';/*Cog icon to navigate user to EditCriteria screen */
-import SaveGoodDayIcon from '../components/SaveGoodDay.js' //Heart icon to save the current weather as a good Day
-import {applyRidingCriteria, setCriteria, getCurrentWeather} from '../js/homeScreenFunctions';
+import CriteriaIcon from '../components/EditCriteria.js';
+import SaveGoodDayIcon from '../components/SaveGoodDay.js';
+import {applyRidingCriteria, loadCriteria, getCurrentWeather} from '../js/homeScreenFunctions';
 
-/**First screen shown in the app that makes an api call to get today's weather. 
- * That data is use to display if today is a good or bad to ride a bicycle. 
- */
+// First screen shown in the app that makes an api call to get today's weather to display if today is a good or bad to ride a bicycle. 
 const Home = ({ navigation }) => {
 	const loading = false;
-	const [weatherData, setWeatherData] = useState(loading);//state to hold weather data
-	const [rideSetting, setRideSetting] = useState({});//state to hold riding criteria
+	const [weatherData, setWeatherData] = useState(loading);// State to hold weather data
+	const [rideCriteria, setRideSetting] = useState({});// State to hold riding criteria
 
-	useEffect(() => { this.getForecast(); setCriteria(setRideSetting);}, []);/*This code runs before the screen renders */
+	useEffect(() => { this.loadWeatherData(); loadCriteria(setRideSetting);}, []);// This code runs before the screen renders
 
-	//API call to get the current weather forecast and update weatherData with the temperature
-	getForecast = async () => {
+	// API call to get the current weather forecast and update weatherData with the temperature
+	loadWeatherData = async () => {
 		//TESTING ONLY.	
 		//
 		const data = {
@@ -33,7 +31,7 @@ const Home = ({ navigation }) => {
 		setWeatherData(data);
 		//
 		
-		// Producion code
+		// API call to get the current user location, weather forecast, and update the component state with the temperature
 		//getCurrentWeather(setWeatherData);
 	}
 
@@ -41,7 +39,7 @@ const Home = ({ navigation }) => {
 		<Container>
 			<Header title="Today" />
 			{/*Check if the riding criteria have change */}
-			<NavigationEvents onDidFocus={() => setCriteria(setRideSetting)} />
+			<NavigationEvents onDidFocus={() => loadCriteria(setRideSetting)} />
 
 			{/*Display warning to user while data is loading */}
 			{weatherData === false &&
@@ -51,21 +49,21 @@ const Home = ({ navigation }) => {
 			{/*Show a sun or red hand icon based on the riding criteria */}
 			{weatherData !== false &&
 				<View style={styles.contentlayout}>
-					{applyRidingCriteria(weatherData, rideSetting) &&
+					{applyRidingCriteria(weatherData, rideCriteria) &&
 						<View style={styles.mainImageContainer}>
 							<Icon style={[styles.mainImageStyle, styles.goodImage]} type="FontAwesome5" name="smile" />
-							<H1 style={styles.contentStyle} >Good Day to Ride</H1>
+							<H1 style={styles.imageHeaderStyle}>Good Day to Ride</H1>
 						</View>
 					}
-					{!applyRidingCriteria(weatherData, rideSetting) &&
+					{!applyRidingCriteria(weatherData, rideCriteria) &&
 						<View style={styles.mainImageContainer}>
 							<Icon style={[styles.mainImageStyle, styles.badImage]} type="FontAwesome5" name="angry" />
-							<H1 style={styles.contentStyle} >Do Not go Ride</H1>
+							<H1 style={styles.imageHeaderStyle} >Do Not go Ride</H1>
 						</View>
 					}
 
 					<Text style={styles.contentStyle}>The temperature is {weatherData.temperature} degrees</Text>
-					<Button nav="Forecast" navigation={navigation} text="7 Day Forecast" />
+					<Button nav="Forecast" navigation={navigation} text="View 7 Day Forecast" />
 				</View>
 			}
 			<Footer>
@@ -77,46 +75,35 @@ const Home = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
-	contentlayout: {/*Take up all available space between the Header and Footer*/
+	contentlayout: {// Take up all available space between the Header and Footer
 		display: "flex",
 		flex: 1,
 	},
 	contentStyle: {
-		flex: 1,	/*Evenly distribute space for each component in the content-layout section*/
+		flex: 1,
 		textAlign: "center",
-		fontSize:20,
-		paddingTop:150,
+		fontSize:16,
+		paddingTop:225,
 	},
 	loadingText: {
 		color:"red",
 	},
 	mainImageContainer: {
-		flex: 2,/*Override to double area */
+		flex: 2,
 	},
-	mainImageStyle: {/*Styles for the main two images at the top of the screen */
-		marginTop: 20,/*white-space between Header and Primary Image */
-		marginBottom: 40,/*white-space between Primary Image and other elements */
-		fontSize: 250,/*Size of main image */
-		textAlign: "center",/*center the image */
-
+	mainImageStyle: {// Styles for the main two images at the top of the screen
+		marginTop: 20,
+		fontSize: 250,// Size of main image
+		textAlign: "center",
 	},
-	goodImage: {/*color of the good image */
+	goodImage: {// Color of the good image
 		color: "green",
 	},
-	badImage: {/*color of the stop riding image */
+	badImage: {// Color of the stop riding image
 		color: "red",
 	},
-	footerStyle: {/*Style for the footer*/
-		paddingTop: 5,/*add white space above content */
-		paddingBottom: 5,/*add white space below content */
-		backgroundColor: "white",
-	},
-	cogIconStyle: {/*Style for the save icon in the footer */
-		color: "navy",/*Color of the icon*/
-		textAlign: "center",/*Center the icon in its row*/
-	},
-	footerTextStyle: {
-		color: "black",
+	imageHeaderStyle:{
+		textAlign:"center",
 	}
 });
 
