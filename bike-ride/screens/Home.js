@@ -21,7 +21,7 @@ const Home = ({ navigation }) => {
 	// API call to get the current weather forecast and update weatherData with the temperature
 	loadWeatherData = async () => {
 		//TESTING ONLY.	
-		//
+		/*
 		const data = {
 			"temperature": 84,
 			"windSpeed": 11,
@@ -29,10 +29,10 @@ const Home = ({ navigation }) => {
 			"date": "2020-04-27 15:12"
 		}
 		setWeatherData(data);
-		//
+		*/
 		
 		// API call to get the current user location, weather forecast, and update the component state with the temperature
-		//getCurrentWeather(setWeatherData);
+		getCurrentWeather(setWeatherData);
 	}
 
 	return (
