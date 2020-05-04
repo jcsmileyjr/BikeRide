@@ -1,21 +1,21 @@
 import React, { useState, useEffect} from 'react'
 import { View, StyleSheet, AsyncStorage } from 'react-native';
-import { Container, Text, ListItem, CheckBox, H2, Toast} from 'native-base';/*UI library for styling and complex components missing from the React Native */
+import { Container, Text, ListItem, CheckBox, H2, Toast} from 'native-base';// UI library for styling and complex components missing from the React Native
 
 import Header from '../components/Header.js';
-import Button from '../components/Button.js';//Navigation button to the Home Screen
-import CustomTextInput from '../components/TextInput.js';//Textinput for updating state
+import Button from '../components/Button.js';
+import CustomTextInput from '../components/TextInput.js';
 
-//Screen shown when user click the cog icon in the footer. User can edit the criteria for good days while bike riding
+// Screen shown when user click the cog icon in the footer. User can edit the criteria for good days while bike riding
 const SetCriteria = ({navigation}) => {
     const [minimalTemp, setMinimalTemp] = useState(0);
     const [maximumTemp, setMaximumTemp] = useState(0);
     const [windSpeed, setWindSpeed] = useState(0);
     const [ifRained, setIfRained] = useState(false);
 
-    useEffect(() => { this.getOldCriteria(); }, []);/*This code runs before the screen renders */
+    useEffect(() => { this.getOldCriteria(); }, []);// This code runs before the screen renders
 
-    //Get the criteria saved to local storage to be displayed to the user
+    // Get the criteria saved to local storage to be displayed to the user
     getOldCriteria = async () => {
         const savedCritera = await AsyncStorage.getItem('rideCriteria');//get saved ride criteria from local storage 
         const oldCriteria =JSON.parse(savedCritera);
@@ -25,7 +25,7 @@ const SetCriteria = ({navigation}) => {
         setIfRained(oldCriteria.ifRained);
     }
 
-    //method called when user click the button. Creates a new riding criteria object and save to local storage
+    // When user click the button, creates a new riding criteria object and save to local storage
     saveData = async () => {
         let newCriteria = {};
         newCriteria.minimalTemperature = minimalTemp;
@@ -63,21 +63,21 @@ const SetCriteria = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
-    contentlayout: {/*Take up all available space between the Header and Footer*/
+    contentlayout: {// Take up all available space between the Header and Footer
 		display: "flex",
 		flex: 1,
 	},
     inputContainer:{
-        display:"flex",/* center the content */
-        justifyContent:"center",/* center the content */
-        alignItems:"center",/* center the content */
-        marginTop:20,/*white space between input fields */
+        display:"flex",// Center the content
+        justifyContent:"center",// Center the content
+        alignItems:"center",// Center the content
+        marginTop:20,
     },
-    pageTitle:{/*Style for the page title */
+    pageTitle:{
         textAlign:"center",
         fontWeight:"bold",
     },
-    buttonWhiteSpace:{/*Whitespace around the save button */
+    buttonWhiteSpace:{
         marginTop:10,
     }
 });
