@@ -52,18 +52,18 @@ const Home = ({ navigation }) => {
 					{applyRidingCriteria(weatherData, rideCriteria) &&
 						<View style={styles.mainImageContainer}>
 							<Icon style={[styles.mainImageStyle, styles.goodImage]} type="FontAwesome5" name="smile" />
-							<H1 style={styles.contentStyle} >Good Day to Ride</H1>
+							<H1 style={styles.imageHeaderStyle}>Good Day to Ride</H1>
 						</View>
 					}
 					{!applyRidingCriteria(weatherData, rideCriteria) &&
 						<View style={styles.mainImageContainer}>
 							<Icon style={[styles.mainImageStyle, styles.badImage]} type="FontAwesome5" name="angry" />
-							<H1 style={styles.contentStyle} >Do Not go Ride</H1>
+							<H1 style={styles.imageHeaderStyle} >Do Not go Ride</H1>
 						</View>
 					}
 
 					<Text style={styles.contentStyle}>The temperature is {weatherData.temperature} degrees</Text>
-					<Button nav="Forecast" navigation={navigation} text="7 Day Forecast" />
+					<Button nav="Forecast" navigation={navigation} text="View 7 Day Forecast" />
 				</View>
 			}
 			<Footer>
@@ -82,8 +82,8 @@ const styles = StyleSheet.create({
 	contentStyle: {
 		flex: 1,
 		textAlign: "center",
-		fontSize:20,
-		paddingTop:150,
+		fontSize:16,
+		paddingTop:225,
 	},
 	loadingText: {
 		color:"red",
@@ -93,16 +93,17 @@ const styles = StyleSheet.create({
 	},
 	mainImageStyle: {// Styles for the main two images at the top of the screen
 		marginTop: 20,
-		marginBottom: 40,
 		fontSize: 250,// Size of main image
 		textAlign: "center",
-
 	},
 	goodImage: {// Color of the good image
 		color: "green",
 	},
 	badImage: {// Color of the stop riding image
 		color: "red",
+	},
+	imageHeaderStyle:{
+		textAlign:"center",
 	}
 });
 
