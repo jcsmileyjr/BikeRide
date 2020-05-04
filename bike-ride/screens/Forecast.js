@@ -7,9 +7,9 @@ import { NavigationEvents } from "react-navigation";// Use to reload state when 
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
 import FutureForecast from '../components/FutureForecast.js';// Component with Icon detailing if its a good or bad day to ride
-import Button from '../components/Button.js';// Navigation button to the Home Screen
-import CriteriaIcon from '../components/EditCriteria.js';// Cog icon to navigate user to EditCriteria screen
-import SavePredictions from '../components/SavePredictions.js';// Disk icon to save 7 day forecast to local storage
+import Button from '../components/Button.js';
+import CriteriaIcon from '../components/EditCriteria.js';
+import SavePredictions from '../components/SavePredictions.js';
 import baseRideCriteria from '../js/baseRideCriteria.js';// If no criteria is found in local storage, this is used. Call in loadCriteria()
 
 // Screen that makes an api call to get 7 days of weather data to display if each day is a good or bad day to ride a bicycle. 
@@ -18,7 +18,7 @@ const Forecast = ({navigation}) => {
 	const [rideCriteria, setRideCriteria] = useState({});// State to hold riding criteria loaded from local storage
 	const [bestDayCriteria, setBestDayCriteria] = useState(false);// State to hold the best day criteria loaded from local storage
 
-	useEffect(() => { this.loadWeatherData(); }, []);//load API weather data to component state before page is loading
+	useEffect(() => { this.loadWeatherData(); }, []);// Load API weather data to component state before page is loading
 	
 	useEffect(() => { // Load riding criteria to component state
 		let mounted = true;// Unmounted components "Bug Fix". During clean up (components are unmounted), this stops async calls from being made		
@@ -29,7 +29,7 @@ const Forecast = ({navigation}) => {
 
 	// API call to get the current weather forecast and the user's device current location
 	loadWeatherData = async () => {
-		navigator.geolocation.getCurrentPosition(position => {// Get the user current location
+		navigator.geolocation.getCurrentPosition(position => {
 			const lat = JSON.stringify(position.coords.latitude);
 			const long = JSON.stringify(position.coords.longitude);
 
@@ -72,7 +72,7 @@ const Forecast = ({navigation}) => {
 		
 		// Convert key data from each weather object and push into an array
 		workingArray[0].Days.map((weather, index) => {
-			let convertedData = {};// Temp object to hold select data from API object
+			let convertedData = {};
 			convertedData.temperature = weather.temp_max_f;
 			convertedData.windSpeed = weather.windspd_max_mph;
 			convertedData.rain = weather.rain_total_in;
