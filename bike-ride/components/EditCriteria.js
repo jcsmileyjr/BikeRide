@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Icon} from 'native-base';
 
+//Icon and text that appear in the footer to navigate the user to the Edit Criteria screen
 const EditCriteria = (props) => {
 	return(
 		<View>
@@ -12,9 +13,9 @@ const EditCriteria = (props) => {
 }
 
 const styles = StyleSheet.create({
-	cogIconStyle:{/*Style for the save icon in the footer */
-		color:"#0C87F5",/*Color of the icon*/
-		textAlign:"center",/*Center the icon in its row*/
+	cogIconStyle:{
+		color:"#0C87F5",
+		textAlign:"center",
 	},
 	footerTextStyle:{
 		color:"black",
