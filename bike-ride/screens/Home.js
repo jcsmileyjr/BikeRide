@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { View, StyleSheet} from 'react-native';
-import { NavigationEvents } from "react-navigation"; /*Use to reload state when navigating from another screen */
-import { Container, Text, Icon, H1 } from 'native-base';/*UI library for styling and complex components missing from the React Native */
+import { NavigationEvents } from "react-navigation"; // Use to reload state when navigating from another screen
+import { Container, Text, Icon, H1 } from 'native-base';// UI library for styling and complex components missing from the React Native
 
 import Header from '../components/Header.js';
 import Button from '../components/Button.js';
 import Footer from '../components/Footer.js';
-import CriteriaIcon from '../components/EditCriteria.js';// Cog icon to navigate user to EditCriteria screen
-import SaveGoodDayIcon from '../components/SaveGoodDay.js' // Heart icon to save the current weather as a good Day
+import CriteriaIcon from '../components/EditCriteria.js';
+import SaveGoodDayIcon from '../components/SaveGoodDay.js';
 import {applyRidingCriteria, loadCriteria, getCurrentWeather} from '../js/homeScreenFunctions';
 
-//First screen shown in the app that makes an api call to get today's weather to display if today is a good or bad to ride a bicycle. 
+// First screen shown in the app that makes an api call to get today's weather to display if today is a good or bad to ride a bicycle. 
 const Home = ({ navigation }) => {
 	const loading = false;
 	const [weatherData, setWeatherData] = useState(loading);// State to hold weather data
@@ -18,7 +18,7 @@ const Home = ({ navigation }) => {
 
 	useEffect(() => { this.loadWeatherData(); loadCriteria(setRideSetting);}, []);// This code runs before the screen renders
 
-	//API call to get the current weather forecast and update weatherData with the temperature
+	// API call to get the current weather forecast and update weatherData with the temperature
 	loadWeatherData = async () => {
 		//TESTING ONLY.	
 		//
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	contentStyle: {
-		flex: 1,// Evenly distribute space for each component in the content-layout section
+		flex: 1,
 		textAlign: "center",
 		fontSize:20,
 		paddingTop:150,
@@ -89,11 +89,11 @@ const styles = StyleSheet.create({
 		color:"red",
 	},
 	mainImageContainer: {
-		flex: 2,// Override to double area
+		flex: 2,
 	},
 	mainImageStyle: {// Styles for the main two images at the top of the screen
-		marginTop: 20,// White-space between Header and Primary Image
-		marginBottom: 40,// White-space between Primary Image and other elements
+		marginTop: 20,
+		marginBottom: 40,
 		fontSize: 250,// Size of main image
 		textAlign: "center",
 
