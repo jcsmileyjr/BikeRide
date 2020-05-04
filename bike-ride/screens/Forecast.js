@@ -10,47 +10,46 @@ import FutureForecast from '../components/FutureForecast.js';// Component with I
 import Button from '../components/Button.js';// Navigation button to the Home Screen
 import CriteriaIcon from '../components/EditCriteria.js';// Cog icon to navigate user to EditCriteria screen
 import SavePredictions from '../components/SavePredictions.js';// Disk icon to save 7 day forecast to local storage
-import baseRideCriteria from '../js/baseRideCriteria.js';// If no criteria is found in local storage, this is used. Call in setCriteria()
+import baseRideCriteria from '../js/baseRideCriteria.js';// If no criteria is found in local storage, this is used. Call in loadCriteria()
 
 // Screen that makes an api call to get 7 days of weather data to display if each day is a good or bad day to ride a bicycle. 
 const Forecast = ({navigation}) => {
 	const [weatherData, setWeatherData] = useState([]);// State to hold weather data received from an weather API call
-	const [rideSetting, setRideSetting] = useState({});// State to hold riding criteria loaded from local storage
+	const [rideCriteria, setRideCriteria] = useState({});// State to hold riding criteria loaded from local storage
 	const [bestDayCriteria, setBestDayCriteria] = useState(false);// State to hold the best day criteria loaded from local storage
 
-	useEffect(() => { this.getForecast(); }, []);//load API weather data to component state before page is loading
+	useEffect(() => { this.loadWeatherData(); }, []);//load API weather data to component state before page is loading
 	
 	useEffect(() => { // Load riding criteria to component state
 		let mounted = true;// Unmounted components "Bug Fix". During clean up (components are unmounted), this stops async calls from being made		
-		this.setCriteria(mounted);// Get the current riding criteria from local storage or use the base criteria. 		
+		this.loadCriteria(mounted);// Get the current riding criteria from local storage or use the base criteria. 		
 		
 		return () => mounted = false;
 	}, []);
 
 	// API call to get the current weather forecast and the user's device current location
-	getForecast = async () => {
+	loadWeatherData = async () => {
 		navigator.geolocation.getCurrentPosition(position => {// Get the user current location
 			const lat = JSON.stringify(position.coords.latitude);
 			const long = JSON.stringify(position.coords.longitude);
-			
-			return fetch(`${FORECAST_API_URL}${lat},${long}?app_id=${FORECAST_APP_ID}&app_key=${FORECAST_ACCESS_KEY}`)
-			.then((response) => {
-				if (response.ok === false) {// Check if there is no response or network connection failed				
-					this.getSavedPredictions();// Check if there is a saved 7 day forecast. If so, load to component state. If not, show user a message
-				}
-				return response.json()// Extracts the JSON from the response.body and converts JSON string into a JavaScript object
-			})		
-			.then((data) =>{
-				const sortedData = this.sanitizeData(data);// Convert api data into a sanitize object with only needed information
-				setWeatherData(sortedData);// Updates weatherData with today's temperature					
-			})
-			
-			.catch((error) => console.log(error));
+
+			this.getWeather(lat, long);// API call to get the current weather forecast and update component state
 		},
 		error => console.log(error.message),
 		{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
 		
 		)
+	}
+
+	// API call to get the current weather forecast or use a saved 7 day forecast if there is no internet access
+	getWeather = async (lat, long) => {
+		const response = await fetch(`${FORECAST_API_URL}${lat},${long}?app_id=${FORECAST_APP_ID}&app_key=${FORECAST_ACCESS_KEY}`);
+		if (response.ok === false) {// Check if there is no response or network connection failed				
+			this.getSavedPredictions();// Check if there is a saved 7 day forecast. If so, load to component state. If not, show user a message
+		}
+
+		const data = await response.json();// Extracts the JSON from the response.body and converts JSON string into a JavaScript object
+		setWeatherData(this.sanitizeData(data))// Convert api data into a sanitize object with only needed information
 	}
 
 	// If there is no internet access, then get from local storage the last saved 7 Day forecast. If that is empty, display a message to the user
@@ -92,39 +91,43 @@ const Forecast = ({navigation}) => {
 	}
 
 	// When the app loads, check if there is a riding criteria in local storage, if not then update local storage and state with base criteria
-	setCriteria = async (isComponentMounted) => {
-		try{
-			const savedCriteria = await AsyncStorage.getItem('rideCriteria');// Get saved ride criteria from local storage
-			const savedBestDayCriteria = await AsyncStorage.getItem('bestDayCriteria');// Get saved best ride criteria from local storage  
-			if(isComponentMounted){// Bug Fix: UseEffect is called when the screen changes and throw an error. This fix by checking if the component is mounted. 
-				if(savedCriteria !== null){// Check if the data saved to local storage is not empty                
-					setRideSetting(JSON.parse(savedCriteria));
-				}else{
-					// If there is no saved data, then save base criteria to local storage           
-					await AsyncStorage.setItem("rideCriteria",JSON.stringify(baseRideCriteria));// Save base criteria to local storage
-					setRideSetting(baseRideCriteria);// Save base riding criteria to local state
-				}
+	loadCriteria = async (isComponentMounted) => {		 
+		if(isComponentMounted){// Bug Fix: UseEffect is called when the screen changes and throw an error. This fix by checking if the component is mounted. 
+			this.loadRideCriteria();
+			this.loadBestDayCriteria();			
+		}			
+	}
 
-				if(savedBestDayCriteria !== null){// Check if the data saved to local storage is not empty                
-					setBestDayCriteria(JSON.parse(savedBestDayCriteria));
-				}else {
-					console.log("Best day Criteria not saved");
-				}				
-			}	
-		}catch (e){
-			console.log(e);
-		}
-		
+	// When the app loads, check if there is a riding criteria in local storage
+	loadRideCriteria = async () => {
+		const savedCriteria = await AsyncStorage.getItem('rideCriteria');// Get saved ride criteria from local storage
+		if(savedCriteria !== null){// Check if the data saved to local storage is not empty                
+			setRideCriteria(JSON.parse(savedCriteria));
+		}else{
+			// If there is no saved data, then save base criteria to local storage           
+			await AsyncStorage.setItem("rideCriteria",JSON.stringify(baseRideCriteria));// Save base criteria to local storage
+			setRideCriteria(baseRideCriteria);// Save base riding criteria to local state
+		}		
+	}
+
+	// When the app loads, check if there is a best day to ride criteria in local storage
+	loadBestDayCriteria = async () => {
+		const savedBestDayCriteria = await AsyncStorage.getItem('bestDayCriteria');// Get saved best ride criteria from local storage
+		if(savedBestDayCriteria !== null){// Check if the data saved to local storage is not empty                
+			setBestDayCriteria(JSON.parse(savedBestDayCriteria));
+		}else {
+			console.log("Best day Criteria not saved");
+		}		 
 	}
 
 	// Return true or false based on ride criteria
 	applyRidingCriteria = (forecast) => {
 		// If current weather temperature is less then minimal temp criteria or more then maximum temp criteria then return false
-		if (forecast.temperature < rideSetting.minimalTemperature || forecast.temperature > rideSetting.maximumTemperature) {
+		if (forecast.temperature < rideCriteria.minimalTemperature || forecast.temperature > rideCriteria.maximumTemperature) {
 			return false;
 		}
-		if(forecast.windSpeed > rideSetting.windSpeedLimit){return false}// If current weather windspeed is greater then criteria, return false
-		if(forecast.rain > 0 && rideSetting.ifRained === false){return false}// If it has rained and the criteria is false (no ride), return false
+		if(forecast.windSpeed > rideCriteria.windSpeedLimit){return false}// If current weather windspeed is greater then criteria, return false
+		if(forecast.rain > 0 && rideCriteria.ifRained === false){return false}// If it has rained and the criteria is false (no ride), return false
 		return true;
 	}
 
@@ -150,7 +153,7 @@ const Forecast = ({navigation}) => {
 			<Header title="7 Day Forecast" />
 
 			{/*Check if the riding criteria have change */}
-			<NavigationEvents onDidFocus={() => this.setCriteria(setRideSetting)} />
+			<NavigationEvents onDidFocus={() => this.loadCriteria(setRideCriteria)} />
 			
 			{/*Display warning to user while data is loading */}
 			{weatherData.length === 0 &&
