@@ -1,13 +1,14 @@
 {
   "expo": {
-    "name": "Plan my Bicycle Ride",
+    "name": "Plan my Bike Ride",
+    "description":"This is a bike riding app that assists the user in determining if today or the next 7 days is good for riding.",
     "slug": "bike-ride",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
