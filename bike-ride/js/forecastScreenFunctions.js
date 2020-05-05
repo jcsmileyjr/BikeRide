@@ -3,8 +3,10 @@ import baseRideCriteria from '../js/baseRideCriteria.js';
 import {FORECAST_ACCESS_KEY, FORECAST_API_URL, FORECAST_APP_ID } from 'react-native-dotenv';// Weather service API keys
 import {Toast} from 'native-base';
 
-    // API call to get the current weather forecast and the user's device current location
-    
+    /**
+     * API call to get the current 7 Day weather forecast and the user's device current location to save to component state
+     * @param {*} setWeatherData// Component method pass down to the getWeather & getPredictions methods to update the state
+     */
 	export const loadWeatherData = async (setWeatherData) => {
 		navigator.geolocation.getCurrentPosition(position => {
 			const lat = JSON.stringify(position.coords.latitude);
@@ -18,7 +20,7 @@ import {Toast} from 'native-base';
 		)
 	}
 
-	// API call to get the current weather forecast or use a saved 7 day forecast if there is no internet access
+    // API call to get the current weather forecast or use a saved 7 day forecast if there is no internet access
 	getWeather = async (lat, long, setWeatherData) => {
 		const response = await fetch(`${FORECAST_API_URL}${lat},${long}?app_id=${FORECAST_APP_ID}&app_key=${FORECAST_ACCESS_KEY}`);
 		if (response.ok === false) {// Check if there is no response or network connection failed				
@@ -67,7 +69,12 @@ import {Toast} from 'native-base';
 		return `${convertIntoArray[1]}/${convertIntoArray[0]}/${convertIntoArray[2]}`;		
 	}
 
-	// When the app loads, check if there is a riding criteria in local storage, if not then update local storage and state with base criteria
+    /**
+     * When the app loads, check if there is a riding criteria in local storage, if not then update local storage and state with base criteria
+     * @param {*} isComponentMounted// Variable use to make sure the component is mounted. This is in regards to a earlier bug where the api call was made when the component was being unmounted. 
+     * @param {*} setRideCriteria// Method pass down to the LoadRideCriteria to update the component state 
+     * @param {*} setBestDayCriteria// Method pass down to the LoadBestDayCriteria to update the component state  
+     */
 	export const loadCriteria = async (isComponentMounted, setRideCriteria, setBestDayCriteria) => {		 
 		if(isComponentMounted){// Bug Fix: UseEffect is called when the screen changes and throw an error. This fix by checking if the component is mounted. 
 			this.loadRideCriteria(setRideCriteria);
@@ -95,7 +102,11 @@ import {Toast} from 'native-base';
 		}		 
 	}
 
-	// Return true or false based on ride criteria
+    /**
+     * Return true or false based on ride criteria
+     * @param {*} forecast // Weather object from an array in the component state
+     * @param {*} rideCriteria// Ride Criteria object from the component state 
+     */
 	export const applyRidingCriteria = (forecast, rideCriteria) => {
 		// If current weather temperature is less then minimal temp criteria or more then maximum temp criteria then return false
 		if (forecast.temperature < rideCriteria.minimalTemperature || forecast.temperature > rideCriteria.maximumTemperature) {
@@ -106,7 +117,11 @@ import {Toast} from 'native-base';
 		return true;
 	}
 
-	// Return true or false based on best riding criteria temperature and wind speed by a negative or positive 1
+    /**
+     * Return true or false based on best riding criteria temperature and wind speed by a negative or positive 1
+     * @param {*} forecast// Weather object from an array in the component state 
+     * @param {*} bestDayCriteria// Best Day Criteria object from the component state 
+     */
 	export const applyBestDayCriteria = (forecast, bestDayCriteria) => {
 		if(bestDayCriteria === false){// Return false if there is no best day criteria saved
 			return false;
