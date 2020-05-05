@@ -29,9 +29,7 @@ const styles = StyleSheet.create({
 	contentLayout:{
 		flex:1,
 		display:"flex",// Make elements display horizontally
-		flexDirection:"row",// Make elements display horizontally
-		marginTop:10,
-		marginBottom:10,	
+		flexDirection:"row",// Make elements display horizontally	
 		borderBottomColor:"#F2F2F2",// Style for light grey seperator between each forecast
 		borderBottomWidth:1,// Style for light grey seperator between each forecast
 		borderStyle:"solid",// Style for light grey seperator between each forecast
@@ -55,7 +53,6 @@ const styles = StyleSheet.create({
 	imageContainer:{/*Style for container of the image */
 		flex:1,
 		display:"flex",
-		justifyContent:"flex-end",/*Center the image */
 	},
 	dateSection:{/*Style for date */
 		flex:2,
