@@ -61,14 +61,14 @@ import {Toast} from 'native-base';
 			)				
 	}
 	
-		// API call to get the current weather forecast or display a warning message if there is no internet access
-		getWeather = async (lat, long, callback) => {
-			const response = await fetch(`${API_URL}current?access_key=${ACCESS_KEY}&query=${lat},${long}&units=f`)			
-			if (response.ok === false) {// Check if there is no response or network connection failed				
-				// Display error message to user
-				Toast.show({text:"No network connection", position:"bottom", type:"warning", duration:5000});
-			}
-	
-			const data = await response.json();// Extracts the JSON from the response.body and converts JSON string into a JavaScript object
-			callback(sanitizeData(data));// Updates weatherData with today's weather data		
+	// API call to get the current weather forecast or display a warning message if there is no internet access
+	getWeather = async (lat, long, callback) => {
+		const response = await fetch(`${API_URL}current?access_key=${ACCESS_KEY}&query=${lat},${long}&units=f`)			
+		if (response.ok === false) {// Check if there is no response or network connection failed				
+			// Display error message to user
+			Toast.show({text:"No network connection", position:"bottom", type:"warning", duration:5000});
 		}
+
+		const data = await response.json();// Extracts the JSON from the response.body and converts JSON string into a JavaScript object
+		callback(sanitizeData(data));// Updates weatherData with today's weather data		
+	}
