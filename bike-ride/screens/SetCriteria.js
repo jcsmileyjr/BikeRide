@@ -65,7 +65,9 @@ const SetCriteria = ({navigation}) => {
 const styles = StyleSheet.create({
     contentlayout: {// Take up all available space between the Header and Footer
 		display: "flex",
-		flex: 1,
+        flex: 1,
+        alignContent:"center",
+        justifyContent:"center",
 	},
     inputContainer:{
         display:"flex",// Center the content
@@ -76,6 +78,7 @@ const styles = StyleSheet.create({
     pageTitle:{
         textAlign:"center",
         fontWeight:"bold",
+        paddingBottom:50,
     },
     buttonWhiteSpace:{
         marginTop:10,
