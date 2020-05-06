@@ -16,6 +16,19 @@ const Button = (props) => {
 		);		
 	}
 
+	{/*Used on the SaveGoodDay component to close the modeal and return user to the Home screen */}
+	if(props.closeModal){
+		return(
+			<View style={styles.buttonContainer}>
+				<TouchableNativeFeedback onPress={() => {props.closeModal(false)}} >
+					<View style={styles.buttonStyle}>
+							<Text style={styles.buttonText}>{props.text}</Text>
+					</View>
+				</TouchableNativeFeedback>
+			</View>
+		);		
+	}
+
 	{/*Use on the EditCriteria screen to check if the save props is NOT used. If so, save bike ride criteria data to local storage */}
 	return(
 		<View style={styles.buttonContainer}>

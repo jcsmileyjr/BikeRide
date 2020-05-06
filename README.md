@@ -1,6 +1,6 @@
 # Planning my Bike Ride
 
-![gif of app](bike-ride\assets\wireframe\BikeRide1.gif)
+![gif of app](./bike-ride/assets/wireframe/BikeRide1.gif);
 
 ### Table of Contents
 1. Purpose
@@ -30,7 +30,7 @@ This project was used to practice developing with React Native, APIs, and unit t
 
 ### WireFrame
 
-![Screen-shot of Wireframe in use](bike-ride\assets\wireframe\bike-ride-wireframe.PNG)
+![Screen-shot of Wireframe in use](./bike-ride/assets/wireframe/bike-ride-wireframe.PNG)
 
 ### How to play with Demo
 1. Download the Expo app to your phone

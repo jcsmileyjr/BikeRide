@@ -1,9 +1,12 @@
-import React from 'react';
-import {View, Text, StyleSheet, AsyncStorage} from 'react-native';
-import {Icon, Toast} from 'native-base';// UI library for styling and complex components missing from the React Native
+import React, {useState} from 'react';
+import {View, Text, StyleSheet, AsyncStorage, Modal, TouchableNativeFeedback} from 'react-native';
+import {Icon, Toast, H2} from 'native-base';// UI library for styling and complex components missing from the React 
+
+import Button from '../components/Button.js';
 
 // Displays a heart icon and functionality to saved the current weather day as a Good Day and determine the idea Good Day based on all Good Days saved
 const SaveGoodDay = (props) => {
+	const [isVisible, setModalVisble] = useState(false);
 
 	// When the user press the heart icon, the current weather criteria is save to local storage
     saveData = async () => {	
@@ -15,7 +18,7 @@ const SaveGoodDay = (props) => {
 		arrayOfSavedDays.push(props.goodDay);// Push the current good day object into the array				              
 		await AsyncStorage.setItem("savedDays",JSON.stringify(arrayOfSavedDays));// Save base criteria to local storage
 		this.determineBestDay(arrayOfSavedDays);// Use the array of good days to determine a Good Day criteria
-		
+		setModalVisble(true);
 		Toast.show({text:"Today's weather has been saved!!!", position:"bottom", type:"success", textStyle:{color:"white", textAlign:"center"}, duration:3000});
 	}
 
@@ -37,20 +40,46 @@ const SaveGoodDay = (props) => {
 
 	return(
 		<View>
-			<Icon style={styles.cogIconStyle} type="FontAwesome" name="heart" onPress={()=> this.saveData()} />
-			<Text style={styles.footerTextStyle}>Save Good Day</Text>					
+			<Icon style={styles.penIconStyle} type="FontAwesome" name="heart" onPress={()=> this.saveData()} />
+			<Text style={styles.footerTextStyle}>Save Good Day</Text>
+			<Modal  animationType="slide" 
+                      visible={isVisible}
+                      transparent={false}>
+				<View style={[styles.modalContentStyle, styles.modalStyle]}>
+					
+					<H2 style={styles.modalText}>Track what days are "Good" days</H2>
+					<Text style={styles.modalText}>The app will "Learn" and tell you the "Best" days to ride. Today's weather has been saved!!!</Text>
+					<Button closeModal = {setModalVisble} text="Close" />
+				</View>
+
+			</Modal>					
 		</View>		
 	);
 }
 
 const styles = StyleSheet.create({
-	cogIconStyle:{
+	penIconStyle:{
 		color:"red",
 		textAlign:"center",
 	},
 	footerTextStyle:{
 		color:"black",
-	}
+	},
+	modalContentStyle:{
+		marginTop:150, //help center the modal
+		marginLeft:40,  //help center the modal
+		backgroundColor:"white",
+		height:375,
+		width:"80%",
+	  }, 
+	  modalText:{
+		color:"black",
+		textAlign:"center",
+	  },
+	  modalStyle:{
+		alignContent:"center", 
+		justifyContent:"space-around",
+	  },
 });
 
 export default SaveGoodDay;
