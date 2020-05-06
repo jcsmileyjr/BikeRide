@@ -27,8 +27,6 @@ const Forecast = ({navigation}) => {
 		return () => mounted = false;
 	}, []);
 
-
-
 	return(
 		<Container>
 			<Header title="7 Day Forecast" />

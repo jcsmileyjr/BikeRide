@@ -44,7 +44,7 @@ import {Toast} from 'native-base';
 	}
 
 	// Convert data from an API object into a sanitize object to be comsume by the Forecast screen
-	sanitizeData = (apiData) => {
+	export const sanitizeData = (apiData) => {
 		let convertedArray = [];
 		const workingArray = [];
 		workingArray.push(apiData);		
@@ -127,12 +127,12 @@ import {Toast} from 'native-base';
 			return false;
 		}
 		// Determine a best day if the forecast temperature is 1 degress more or less then the idea best day criteria temperature
-		if(forecast.temperature >= (bestDayCriteria.temperature - 1) && forecast.temperature <= (bestDayCriteria.temperature + 1)){
+		if(forecast.temperature > (bestDayCriteria.temperature + 2) || forecast.temperature < (bestDayCriteria.temperature - 2)){
 			return false
 		}
 
 		// Determine a best day if the forecast wind speed is 1 degress more or less then the idea best day criteria wind speed
-		if(forecast.windSpeed >= (bestDayCriteria.windSpeed -1) && forecast.windSpeed <= (bestDayCriteria.windSpeed + 1)){
+		if(forecast.windSpeed >= (bestDayCriteria.windSpeed + 2) || forecast.windSpeed <= (bestDayCriteria.windSpeed - 2)){
 			return false
 		}		
 		return true;
