@@ -48,7 +48,7 @@ const SetCriteria = ({navigation}) => {
                 <CustomTextInput labelText="Maximum Wind Speed" state={windSpeed} updateState={setWindSpeed} />
                 
                 <View style={styles.inputContainer}>
-                    <ListItem >
+                    <ListItem onPress={() => setIfRained(!ifRained)}>
                         <CheckBox checked={ifRained} onPress={() => setIfRained(!ifRained)}/>
                         <Text> I want to ride even if in wet conditions</Text>
                     </ListItem>
