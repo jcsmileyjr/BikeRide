@@ -11,7 +11,7 @@ import {Toast} from 'native-base';
 		let convertedData = {};// Temp object to hold select data from API object
 
 		convertedData.temperature = apiRawData.current.temperature;
-		convertedData.windSpeed = apiRawData.current.windSpeed;
+		convertedData.windSpeed = apiRawData.current.wind_speed;
 		convertedData.ifRained = apiRawData.current.precip;
 		convertedData.date = apiRawData.location.localtime;
 

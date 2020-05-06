@@ -28,11 +28,11 @@ const Home = ({ navigation }) => {
 			"precip": 0,
 			"date": "2020-04-27 15:12"
 		}
-		setWeatherData(data);
+		//setWeatherData(data);
 		//
 		
 		// API call to get the current user location, weather forecast, and update the component state with the temperature
-		//getCurrentWeather(setWeatherData);
+		getCurrentWeather(setWeatherData);
 	}
 
 	return (
