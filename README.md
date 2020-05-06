@@ -1,6 +1,6 @@
 # Planning my Bike Ride
 
-![gif of app](./bike-ride/assets/wireframe/BikeRide1.gif);
+![gif of app](./bike-ride/assets/wireframe/BikeRide2b.gif);
 
 ### Table of Contents
 1. Purpose
@@ -21,12 +21,16 @@ This is a bike riding app that assists the user in determining if today or the n
 This project was used to practice developing with React Native, APIs, and unit testing.
 
 ### Objectives:
-
+##### Original
 - Application displays if today is a good day to ride.
 - Application displays if the next 7 days is a good, bad, or the best day to ride.  
 - The user can save the 7 day forecast to use later if there is no internet accesss
 - The user can change the criteria of what a good day to ride is.
 - The user can save the current weather to help the application learn and display what a "Great" day to ride is.
+
+##### Based on User Feedback
+- User can choose between Fahrenheit & Celsius
+- Provide more details on what the "Save Good Day" feature does
 
 ### WireFrame
 
