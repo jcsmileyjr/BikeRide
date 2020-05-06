@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {StyleSheet, View, AsyncStorage} from 'react-native';
-import {Container, H1, Toast} from 'native-base';// UI library for styling and complex components missing from the React Native
+import {Container, H1, Toast, Spinner} from 'native-base';// UI library for styling and complex components missing from the React Native
 import {FORECAST_ACCESS_KEY, FORECAST_API_URL, FORECAST_APP_ID } from 'react-native-dotenv';// Weather service API keys
 import { NavigationEvents } from "react-navigation";// Use to reload state when navigating from another screen
 
@@ -157,7 +157,11 @@ const Forecast = ({navigation}) => {
 			
 			{/*Display warning to user while data is loading */}
 			{weatherData.length === 0 &&
-				<View><H1 style={styles.loadingText}>Data is loading</H1></View>
+				<View>
+					<H1 style={styles.loadingText}>Data is loading</H1>
+					<Spinner color='blue' />
+				</View>
+				
 			}
 
 			{/*Loops through an array of converted api data to display a future Forcast for next 7 days based on two criteria */}
