@@ -8,7 +8,7 @@ import Button from '../components/Button.js';
 import Footer from '../components/Footer.js';
 import CriteriaIcon from '../components/EditCriteria.js';
 import SaveGoodDayIcon from '../components/SaveGoodDay.js';
-import {applyRidingCriteria, loadCriteria, getCurrentWeather} from '../js/homeScreenFunctions';
+import {applyRidingCriteria, loadCriteria, getCurrentWeather, convertToCelsius} from '../js/homeScreenFunctions';
 
 // First screen shown in the app that makes an api call to get today's weather to display if today is a good or bad to ride a bicycle. 
 const Home = ({ navigation }) => {
@@ -62,7 +62,15 @@ const Home = ({ navigation }) => {
 						</View>
 					}
 
-					<Text style={styles.contentStyle}>The temperature is {weatherData.temperature} degrees</Text>
+					{rideCriteria.temperatureType &&
+						<Text style={styles.contentStyle}>The temperature is {weatherData.temperature} degrees</Text>
+					}
+
+					{!rideCriteria.temperatureType &&
+						<Text style={styles.contentStyle}>The temperature is {convertToCelsius(weatherData.temperature)} Celsius</Text>
+					}
+
+					
 					<Button nav="Forecast" navigation={navigation} text="View 7 Day Forecast" />
 				</View>
 			}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import { View, StyleSheet, AsyncStorage } from 'react-native';
-import { Container, Text, ListItem, CheckBox, H2, Toast} from 'native-base';// UI library for styling and complex components missing from the React Native
+import { Container, Text, ListItem, CheckBox, H2, Toast, Radio} from 'native-base';// UI library for styling and complex components missing from the React Native
 
 import Header from '../components/Header.js';
 import Button from '../components/Button.js';
@@ -12,6 +12,7 @@ const SetCriteria = ({navigation}) => {
     const [maximumTemp, setMaximumTemp] = useState(0);
     const [windSpeed, setWindSpeed] = useState(0);
     const [ifRained, setIfRained] = useState(false);
+    const [temperatureType, setTemperatureType] = useState(true);
 
     useEffect(() => { this.getOldCriteria(); }, []);// This code runs before the screen renders
 
@@ -23,6 +24,7 @@ const SetCriteria = ({navigation}) => {
         setMaximumTemp(oldCriteria.maximumTemperature);
         setWindSpeed(oldCriteria.windSpeedLimit);
         setIfRained(oldCriteria.ifRained);
+        setTemperatureType(oldCriteria.temperatureType);
     }
 
     // When user click the button, creates a new riding criteria object and save to local storage
@@ -32,6 +34,7 @@ const SetCriteria = ({navigation}) => {
         newCriteria.maximumTemperature= maximumTemp;
         newCriteria.ifRained = ifRained;
         newCriteria.windSpeedLimit = windSpeed;
+        newCriteria.temperatureType = temperatureType;
 
         await AsyncStorage.setItem("rideCriteria",JSON.stringify(newCriteria));//Save new criteria to local storage
         Toast.show({text:"New Riding Criteria has been implemented", position:"bottom", type:"success", duration:5000});
@@ -46,6 +49,15 @@ const SetCriteria = ({navigation}) => {
                 <CustomTextInput labelText="Minimum Temperature" state={minimalTemp} updateState={setMinimalTemp} />
                 <CustomTextInput labelText="Maximum Temperature" state={maximumTemp} updateState={setMaximumTemp} />
                 <CustomTextInput labelText="Maximum Wind Speed" state={windSpeed} updateState={setWindSpeed} />
+
+                <View style={styles.radioButtonContainer}>
+                    <View style={styles.radioButtonContainer}>
+                        <Radio style={styles.radioStyle}  onPress={() => setTemperatureType(true)} selected={temperatureType} /><Text>Fahrenheit</Text>
+                    </View>
+                    <View style={styles.radioButtonContainer}>
+                        <Radio style={styles.radioStyle} onPress={() => setTemperatureType(false)} selected={!temperatureType} /><Text>Celsius</Text>
+                    </View>
+                </View>
                 
                 <View style={styles.inputContainer}>
                     <ListItem onPress={() => setIfRained(!ifRained)}>
@@ -78,10 +90,20 @@ const styles = StyleSheet.create({
     pageTitle:{
         textAlign:"center",
         fontWeight:"bold",
-        paddingBottom:50,
+        paddingBottom:15,
     },
     buttonWhiteSpace:{
         marginTop:10,
+    },
+    radioButtonContainer:{
+        display:"flex",
+        flexDirection:"row",
+        justifyContent:"space-around",// Center the content
+        alignItems:"center",// Center the content
+        margin:10,
+    },
+    radioStyle:{
+        marginRight:5,
     }
 });
 

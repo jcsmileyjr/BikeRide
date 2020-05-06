@@ -72,3 +72,8 @@ import {Toast} from 'native-base';
 		const data = await response.json();// Extracts the JSON from the response.body and converts JSON string into a JavaScript object
 		callback(sanitizeData(data));// Updates weatherData with today's weather data		
 	}
+
+	//Method used on to convert Fahrenheit to Celsius
+	export const convertToCelsius = (temperature) => {
+		return Math.ceil((temperature - 32) / 1.8);
+	}
