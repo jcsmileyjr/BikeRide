@@ -3,6 +3,10 @@ import baseRideCriteria from '../js/baseRideCriteria.js';
 import {FORECAST_ACCESS_KEY, FORECAST_API_URL, FORECAST_APP_ID } from 'react-native-dotenv';// Weather service API keys
 import {Toast} from 'native-base';
 
+	
+	 //Due to a bug with the home screen exported functions not being called this code-base is only being use for unit testing.
+
+
     /**
      * API call to get the current 7 Day weather forecast and the user's device current location to save to component state
      * @param {*} setWeatherData// Component method pass down to the getWeather & getPredictions methods to update the state

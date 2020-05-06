@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { View, StyleSheet} from 'react-native';
 import { NavigationEvents } from "react-navigation"; // Use to reload state when navigating from another screen
-import { Container, Text, Icon, H1 } from 'native-base';// UI library for styling and complex components missing from the React Native
+import { Container, Text, Icon, H1, Spinner } from 'native-base';// UI library for styling and complex components missing from the React Native
 
 import Header from '../components/Header.js';
 import Button from '../components/Button.js';
 import Footer from '../components/Footer.js';
 import CriteriaIcon from '../components/EditCriteria.js';
 import SaveGoodDayIcon from '../components/SaveGoodDay.js';
-import {applyRidingCriteria, loadCriteria, getCurrentWeather} from '../js/homeScreenFunctions';
+import {applyRidingCriteria, loadCriteria, getCurrentWeather, convertToCelsius} from '../js/homeScreenFunctions';
 
 // First screen shown in the app that makes an api call to get today's weather to display if today is a good or bad to ride a bicycle. 
 const Home = ({ navigation }) => {
@@ -28,11 +28,10 @@ const Home = ({ navigation }) => {
 			"precip": 0,
 			"date": "2020-04-27 15:12"
 		}
-		setWeatherData(data);
-		//
+		//setTimeout(() => setWeatherData(data),1000);
 		
 		// API call to get the current user location, weather forecast, and update the component state with the temperature
-		//getCurrentWeather(setWeatherData);
+		getCurrentWeather(setWeatherData);
 	}
 
 	return (
@@ -43,7 +42,10 @@ const Home = ({ navigation }) => {
 
 			{/*Display warning to user while data is loading */}
 			{weatherData === false &&
-				<Text style={[styles.contentStyle, styles.loadingText]}>Data is loading</Text>
+				<View style={styles.contentStyle}>
+					<Text style={styles.loadingText}>Data is loading</Text>
+					<Spinner color='blue' />
+				</View>
 			}
 
 			{/*Show a sun or red hand icon based on the riding criteria */}
@@ -62,7 +64,15 @@ const Home = ({ navigation }) => {
 						</View>
 					}
 
-					<Text style={styles.contentStyle}>The temperature is {weatherData.temperature} degrees</Text>
+					{rideCriteria.temperatureType &&
+						<Text style={styles.contentStyle}>The temperature is {weatherData.temperature} degrees</Text>
+					}
+
+					{!rideCriteria.temperatureType &&
+						<Text style={styles.contentStyle}>The temperature is {convertToCelsius(weatherData.temperature)} Celsius</Text>
+					}
+
+					
 					<Button nav="Forecast" navigation={navigation} text="View 7 Day Forecast" />
 				</View>
 			}
@@ -86,6 +96,7 @@ const styles = StyleSheet.create({
 		paddingTop:225,
 	},
 	loadingText: {
+		textAlign:"center",
 		color:"red",
 	},
 	mainImageContainer: {
