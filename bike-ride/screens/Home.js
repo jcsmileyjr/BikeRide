@@ -16,23 +16,7 @@ const Home = ({ navigation }) => {
 	const [weatherData, setWeatherData] = useState(loading);// State to hold weather data
 	const [rideCriteria, setRideSetting] = useState({});// State to hold riding criteria
 
-	useEffect(() => { this.loadWeatherData(); loadCriteria(setRideSetting);}, []);// This code runs before the screen renders
-
-	// API call to get the current weather forecast and update weatherData with the temperature
-	loadWeatherData = async () => {
-		//TESTING ONLY.	
-		//
-		const data = {
-			"temperature": 84,
-			"windSpeed": 11,
-			"precip": 0,
-			"date": "2020-04-27 15:12"
-		}
-		//setTimeout(() => setWeatherData(data),1000);
-		
-		// API call to get the current user location, weather forecast, and update the component state with the temperature
-		getCurrentWeather(setWeatherData);
-	}
+	useEffect(() => { getCurrentWeather(setWeatherData); loadCriteria(setRideSetting);}, []);// This code runs before the screen renders
 
 	return (
 		<Container>
