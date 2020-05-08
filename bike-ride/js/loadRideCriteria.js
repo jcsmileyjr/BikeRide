@@ -13,6 +13,18 @@ import defaultRideCriteria from './baseRideCriteria.js';//
 			// If there is no saved data, then save base criteria to local storage           
 			await AsyncStorage.setItem("rideCriteria",JSON.stringify(defaultRideCriteria));// Save base criteria to local storage
 			callback(defaultRideCriteria);// Save base criteria to local state				
-		}
-		
-    }    
+		}		
+	} 
+	
+	/**
+	 * When the app loads, check if there is a best day to ride criteria in local storage
+	 * @param {*} callback // function to saved the data to the component's criteria state
+	 */
+	export const loadBestDayCriteria = async (callback) => {
+		const savedBestDayCriteria = await AsyncStorage.getItem('bestDayCriteria');// Get saved best ride criteria from local storage
+		if(savedBestDayCriteria !== null){// Check if the data saved to local storage is not empty                
+			callback(JSON.parse(savedBestDayCriteria));
+		}else {
+			console.log("Best day Criteria not saved");
+		}		 
+	}

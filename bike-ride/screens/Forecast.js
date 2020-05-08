@@ -3,7 +3,7 @@ import {StyleSheet, View, AsyncStorage} from 'react-native';
 import {Container, H1, Toast, Spinner} from 'native-base';// UI library for styling and complex components missing from the React Native
 import {FORECAST_ACCESS_KEY, FORECAST_API_URL, FORECAST_APP_ID } from 'react-native-dotenv';// Weather service API keys
 import { NavigationEvents } from "react-navigation";// Use to reload state when navigating from another screen
-import {loadRideCriteria} from '../js/loadRideCriteria.js';
+import {loadRideCriteria, loadBestDayCriteria} from '../js/loadRideCriteria.js';
 import {applyRidingCriteria, applyBestDayCriteria} from '../js/applyRideCriteria.js';
 import {sanitizeSevenDayForecastData} from '../js/sanitizeData.js';
 
@@ -70,18 +70,8 @@ const Forecast = ({navigation}) => {
 	loadCriteria = async (isComponentMounted) => {		 
 		if(isComponentMounted){// Bug Fix: UseEffect is called when the screen changes and throw an error. This fix by checking if the component is mounted. 
 			loadRideCriteria(setRideCriteria);
-			this.loadBestDayCriteria();			
+			loadBestDayCriteria(setBestDayCriteria);			
 		}			
-	}
-
-	// When the app loads, check if there is a best day to ride criteria in local storage
-	loadBestDayCriteria = async () => {
-		const savedBestDayCriteria = await AsyncStorage.getItem('bestDayCriteria');// Get saved best ride criteria from local storage
-		if(savedBestDayCriteria !== null){// Check if the data saved to local storage is not empty                
-			setBestDayCriteria(JSON.parse(savedBestDayCriteria));
-		}else {
-			console.log("Best day Criteria not saved");
-		}		 
 	}
 
 	return(
