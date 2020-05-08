@@ -5,11 +5,11 @@ import {Toast} from 'native-base';
 	 * API call to get the current user location, weather forecast, and update weatherData with the temperature
 	 * @param {*} callback //This is the setWeatherdata function 
 	 */
-    export const getCurrentWeather = (callback) => {
+    export const loadCurrentWeather = (callback) => {
 		navigator.geolocation.getCurrentPosition(position => {// Use the native window api to get current position (first ask permission)
 			const lat = JSON.stringify(position.coords.latitude);
 			const long = JSON.stringify(position.coords.longitude);		
-			getWeather(lat, long, callback);// API call to get the current weather data
+			getCurrentWeather(lat, long, callback);// API call to get the current weather data
 			},
 			error => console.log(error.message),
 			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -18,7 +18,7 @@ import {Toast} from 'native-base';
 	}
 	
 	// API call to get the current weather forecast or display a warning message if there is no internet access
-	getWeather = async (lat, long, callback) => {
+	getCurrentWeather = async (lat, long, callback) => {
 		const response = await fetch(`${API_URL}current?access_key=${ACCESS_KEY}&query=${lat},${long}&units=f`)			
 		if (response.ok === false) {// Check if there is no response or network connection failed				
 			// Display error message to user
@@ -26,7 +26,7 @@ import {Toast} from 'native-base';
 		}
 
 		const data = await response.json();// Extracts the JSON from the response.body and converts JSON string into a JavaScript object
-		callback(sanitizeSevenDayForecastData(data));// Updates weatherData with today's weather data		
+		callback(sanitizeCurrentWeatherData(data));// Updates weatherData with today's weather data		
 	}
 
 	/**
@@ -34,7 +34,7 @@ import {Toast} from 'native-base';
 	 * Certain data is extracted and placed into an object. That object is use to update the weatherData component state 
 	 * @param {*} apiRawData 
 	 */
-	export const sanitizeSevenDayForecastData = (apiRawData) => {
+	export const sanitizeCurrentWeatherData = (apiRawData) => {
 		let convertedData = {};// Temp object to hold select data from API object
 
 		convertedData.temperature = apiRawData.current.temperature;

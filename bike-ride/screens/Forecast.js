@@ -18,7 +18,7 @@ const Forecast = ({navigation}) => {
 	const [rideCriteria, setRideCriteria] = useState({});// State to hold riding criteria loaded from local storage
 	const [bestDayCriteria, setBestDayCriteria] = useState(false);// State to hold the best day criteria loaded from local storage
 
-	useEffect(() => { this.loadWeatherData(); }, []);// Load API weather data to component state before page is loading
+	useEffect(() => { this.loadSevenDayWeatherData(); }, []);// Load API weather data to component state before page is loading
 	
 	useEffect(() => { // Load riding criteria to component state
 		let mounted = true;// Unmounted components "Bug Fix". During clean up (components are unmounted), this stops async calls from being made		
@@ -28,7 +28,7 @@ const Forecast = ({navigation}) => {
 	}, []);
 
 	// API call to get the current weather forecast and the user's device current location
-	loadWeatherData = async () => {
+	loadSevenDayWeatherData = async () => {
 		navigator.geolocation.getCurrentPosition(position => {
 			const lat = JSON.stringify(position.coords.latitude);
 			const long = JSON.stringify(position.coords.longitude);
@@ -49,7 +49,7 @@ const Forecast = ({navigation}) => {
 		}
 
 		const data = await response.json();// Extracts the JSON from the response.body and converts JSON string into a JavaScript object
-		setWeatherData(this.sanitizeCurrentWeatherData(data))// Convert api data into a sanitize object with only needed information
+		setWeatherData(this.sanitizeSevenDayForecastData(data))// Convert api data into a sanitize object with only needed information
 	}
 
 	// If there is no internet access, then get from local storage the last saved 7 Day forecast. If that is empty, display a message to the user
@@ -65,7 +65,7 @@ const Forecast = ({navigation}) => {
 	}
 
 	// Convert data from an API object into a sanitize object to be comsume by the Forecast screen
-	sanitizeCurrentWeatherData = (apiData) => {
+	sanitizeSevenDayForecastData = (apiData) => {
 		let convertedArray = [];
 		const workingArray = [];
 		workingArray.push(apiData);		
