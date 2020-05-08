@@ -3,7 +3,9 @@ import {StyleSheet, View, AsyncStorage} from 'react-native';
 import {Container, H1, Toast, Spinner} from 'native-base';// UI library for styling and complex components missing from the React Native
 import {FORECAST_ACCESS_KEY, FORECAST_API_URL, FORECAST_APP_ID } from 'react-native-dotenv';// Weather service API keys
 import { NavigationEvents } from "react-navigation";// Use to reload state when navigating from another screen
-import {loadRideCriteria} from '../js/loadRideCriteria.js';
+import {loadRideCriteria, loadBestDayCriteria} from '../js/loadRideCriteria.js';
+import {applyRidingCriteria, applyBestDayCriteria} from '../js/applyRideCriteria.js';
+import {sanitizeSevenDayForecastData} from '../js/sanitizeData.js';
 
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
@@ -49,7 +51,7 @@ const Forecast = ({navigation}) => {
 		}
 
 		const data = await response.json();// Extracts the JSON from the response.body and converts JSON string into a JavaScript object
-		setWeatherData(this.sanitizeSevenDayForecastData(data))// Convert api data into a sanitize object with only needed information
+		setWeatherData(sanitizeSevenDayForecastData(data))// Convert api data into a sanitize object with only needed information
 	}
 
 	// If there is no internet access, then get from local storage the last saved 7 Day forecast. If that is empty, display a message to the user
@@ -64,76 +66,12 @@ const Forecast = ({navigation}) => {
 		}
 	}
 
-	// Convert data from an API object into a sanitize object to be comsume by the Forecast screen
-	sanitizeSevenDayForecastData = (apiData) => {
-		let convertedArray = [];
-		const workingArray = [];
-		workingArray.push(apiData);		
-		
-		// Convert key data from each weather object and push into an array
-		workingArray[0].Days.map((weather, index) => {
-			let convertedData = {};
-			convertedData.temperature = weather.temp_max_f;
-			convertedData.windSpeed = weather.windspd_max_mph;
-			convertedData.rain = weather.rain_total_in;
-			convertedData.date = this.rebuildDate(weather.date);
-
-			convertedArray.push(convertedData);
-		})
-
-		return convertedArray;
-	}
- 
-	// Use date in old format (day/month/year) and return in updated format (month/day/year)
-	rebuildDate = (oldDate) => {
-		convertIntoArray = oldDate.split("/");
-		return `${convertIntoArray[1]}/${convertIntoArray[0]}/${convertIntoArray[2]}`;		
-	}
-
 	// When the app loads, check if there is a riding criteria in local storage, if not then update local storage and state with base criteria
 	loadCriteria = async (isComponentMounted) => {		 
 		if(isComponentMounted){// Bug Fix: UseEffect is called when the screen changes and throw an error. This fix by checking if the component is mounted. 
 			loadRideCriteria(setRideCriteria);
-			this.loadBestDayCriteria();			
+			loadBestDayCriteria(setBestDayCriteria);			
 		}			
-	}
-
-	// When the app loads, check if there is a best day to ride criteria in local storage
-	loadBestDayCriteria = async () => {
-		const savedBestDayCriteria = await AsyncStorage.getItem('bestDayCriteria');// Get saved best ride criteria from local storage
-		if(savedBestDayCriteria !== null){// Check if the data saved to local storage is not empty                
-			setBestDayCriteria(JSON.parse(savedBestDayCriteria));
-		}else {
-			console.log("Best day Criteria not saved");
-		}		 
-	}
-
-	// Return true or false based on ride criteria
-	applyRidingCriteria = (forecast) => {
-		// If current weather temperature is less then minimal temp criteria or more then maximum temp criteria then return false
-		if (forecast.temperature < rideCriteria.minimalTemperature || forecast.temperature > rideCriteria.maximumTemperature) {
-			return false;
-		}
-		if(forecast.windSpeed > rideCriteria.windSpeedLimit){return false}// If current weather windspeed is greater then criteria, return false
-		if(forecast.rain > 0 && rideCriteria.ifRained === false){return false}// If it has rained and the criteria is false (no ride), return false
-		return true;
-	}
-
-	// Return true or false based on best riding criteria temperature and wind speed by a negative or positive 2
-	applyBestDayCriteria = (forecast) => {
-		if(bestDayCriteria === false){// Return false if there is no best day criteria saved
-			return false;
-		}
-		// Determine a best day if the forecast temperature is 1 degress more or less then the idea best day criteria temperature
-		if(forecast.temperature > (bestDayCriteria.temperature + 2) || forecast.temperature < (bestDayCriteria.temperature - 2)){
-			return false
-		}
-
-		// Determine a best day if the forecast wind speed is 1 degress more or less then the idea best day criteria wind speed
-		if(forecast.windSpeed >= (bestDayCriteria.windSpeed + 2) || forecast.windSpeed <= (bestDayCriteria.windSpeed - 2)){
-			return false
-		}		
-		return true;
 	}
 
 	return(
@@ -154,15 +92,15 @@ const Forecast = ({navigation}) => {
 
 			{/*Loops through an array of converted api data to display a future Forcast for next 7 days based on two criteria */}
 			{weatherData.map((forecast, index) => {
-				if(applyRidingCriteria(forecast)){
-					if(applyBestDayCriteria(forecast)){
+				if(applyRidingCriteria(forecast, rideCriteria)){
+					if(applyBestDayCriteria(forecast, bestDayCriteria)){
 						return <FutureForecast key={index} date={forecast.date} outcome="Best" />
 					}else{
 						return <FutureForecast key={index} date={forecast.date} outcome="Good" />
 					}					
 				}
 				
-				if(!applyRidingCriteria(forecast)){
+				if(!applyRidingCriteria(forecast, rideCriteria)){
 					return <FutureForecast key={index} date={forecast.date} outcome="Bad" />
 				}
 			 })

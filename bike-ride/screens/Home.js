@@ -8,8 +8,9 @@ import Button from '../components/Button.js';
 import Footer from '../components/Footer.js';
 import CriteriaIcon from '../components/EditCriteria.js';
 import SaveGoodDayIcon from '../components/SaveGoodDay.js';
-import {applyRidingCriteria, loadCurrentWeather, convertToCelsius} from '../js/homeScreenFunctions';
+import {loadCurrentWeather, convertToCelsius} from '../js/homeScreenFunctions';
 import {loadRideCriteria} from '../js/loadRideCriteria.js';
+import {applyRidingCriteria} from '../js/applyRideCriteria.js';
 
 // First screen shown in the app that makes an api call to get today's weather to display if today is a good or bad to ride a bicycle. 
 const Home = ({ navigation }) => {

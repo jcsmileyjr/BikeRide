@@ -1,5 +1,6 @@
 import { ACCESS_KEY, API_URL } from 'react-native-dotenv';
 import {Toast} from 'native-base';
+import {sanitizeCurrentWeatherData} from '../js/sanitizeData.js';
 
 	/**
 	 * API call to get the current user location, weather forecast, and update weatherData with the temperature
@@ -28,38 +29,6 @@ import {Toast} from 'native-base';
 		const data = await response.json();// Extracts the JSON from the response.body and converts JSON string into a JavaScript object
 		callback(sanitizeCurrentWeatherData(data));// Updates weatherData with today's weather data		
 	}
-
-	/**
-	 * Method called in the getCurrentWeather() to convert raw data from an API call into a sanitize object to be comsume on the Home screen.  
-	 * Certain data is extracted and placed into an object. That object is use to update the weatherData component state 
-	 * @param {*} apiRawData 
-	 */
-	export const sanitizeCurrentWeatherData = (apiRawData) => {
-		let convertedData = {};// Temp object to hold select data from API object
-
-		convertedData.temperature = apiRawData.current.temperature;
-		convertedData.windSpeed = apiRawData.current.wind_speed;
-		convertedData.ifRained = apiRawData.current.precip;
-		convertedData.date = apiRawData.location.localtime;
-
-		return convertedData;
-    }
-
-
-	/**
-	 * Function used to determine if its a good/bad day to ride based on a ride criteria and current weather data on the Home screen. 	 * 
-	 * @param {*} weatherData // Object with weather details 
-	 * @param {*} rideCriteria // Method use to update the component state
-	 */
-	export const applyRidingCriteria  = (weatherData, rideCriteria) => {
-		// If current weather temperature is less then minimal temp criteria or more then maximum temp criteria then return false
-		if (weatherData.temperature < rideCriteria.minimalTemperature || weatherData.temperature > rideCriteria.maximumTemperature) {
-			return false;
-		}
-		if(weatherData.windSpeed > rideCriteria.windSpeedLimit){return false}// If current weather windspeed is greater then criteria, return false
-		if(weatherData.precip > 0 && rideCriteria.ifRained === false){return false}// If it has rained and the criteria is false (no ride), return false
-		return true;
-    }
 
 	//Method used on to convert Fahrenheit to Celsius
 	export const convertToCelsius = (temperature) => {
