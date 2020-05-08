@@ -29,7 +29,7 @@ const Button = (props) => {
 		);		
 	}
 
-	{/*Use on the EditCriteria screen to check if the save props is NOT used. If so, save bike ride criteria data to local storage */}
+	{/*If the save props is NOT used, then navigate to other screens */}
 	return(
 		<View style={styles.buttonContainer}>
 			<TouchableNativeFeedback onPress={() => props.navigation.navigate(props.nav)} >
@@ -42,24 +42,24 @@ const Button = (props) => {
 }
 
 const styles = StyleSheet.create({
-	buttonStyle:{//style for the Navigation button
+	buttonStyle:{
 		backgroundColor:'#0C87F5',//signature dark blue color 
-		paddingTop: 8, //space between button title and border
-		paddingBottom: 8, //space between button title and border
-		margin: 10, //whitespace between button and other elements
-		width: 250, //width of button
-		borderColor:'navy',//signature purple color
-		borderRadius: 15, //round the corners    
+		paddingTop: 8, 
+		paddingBottom: 8, 
+		margin: 10, 
+		width: 250, 
+		borderColor:'navy',
+		borderRadius: 15,   
 	},
-	buttonContainer:{/*Style for the container of the button */
-		alignItems:"center",  //help center the button
+	buttonContainer:{//Style for the container of the button
+		alignItems:"center",
 		justifyContent:"center",
 		marginBottom:30,
 	},
 	buttonText:{
-		color: "white", //text color
-		textAlign:"center", //center the text
-		fontWeight:"bold",  //Bigger text
+		color: "white",
+		textAlign:"center",
+		fontWeight:"bold", 
 	}
 });
 

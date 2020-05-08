@@ -1,5 +1,3 @@
-import {AsyncStorage } from 'react-native';
-import baseRideCriteria from '../js/baseRideCriteria.js';
 import { ACCESS_KEY, API_URL } from 'react-native-dotenv';
 import {Toast} from 'native-base';
 
@@ -7,11 +5,11 @@ import {Toast} from 'native-base';
 	 * API call to get the current user location, weather forecast, and update weatherData with the temperature
 	 * @param {*} callback //This is the setWeatherdata function 
 	 */
-    export const getCurrentWeather = (callback) => {
+    export const loadCurrentWeather = (callback) => {
 		navigator.geolocation.getCurrentPosition(position => {// Use the native window api to get current position (first ask permission)
 			const lat = JSON.stringify(position.coords.latitude);
 			const long = JSON.stringify(position.coords.longitude);		
-			getWeather(lat, long, callback);// API call to get the current weather data
+			getCurrentWeather(lat, long, callback);// API call to get the current weather data
 			},
 			error => console.log(error.message),
 			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -20,7 +18,7 @@ import {Toast} from 'native-base';
 	}
 	
 	// API call to get the current weather forecast or display a warning message if there is no internet access
-	getWeather = async (lat, long, callback) => {
+	getCurrentWeather = async (lat, long, callback) => {
 		const response = await fetch(`${API_URL}current?access_key=${ACCESS_KEY}&query=${lat},${long}&units=f`)			
 		if (response.ok === false) {// Check if there is no response or network connection failed				
 			// Display error message to user
@@ -28,7 +26,7 @@ import {Toast} from 'native-base';
 		}
 
 		const data = await response.json();// Extracts the JSON from the response.body and converts JSON string into a JavaScript object
-		callback(sanitizeData(data));// Updates weatherData with today's weather data		
+		callback(sanitizeCurrentWeatherData(data));// Updates weatherData with today's weather data		
 	}
 
 	/**
@@ -36,7 +34,7 @@ import {Toast} from 'native-base';
 	 * Certain data is extracted and placed into an object. That object is use to update the weatherData component state 
 	 * @param {*} apiRawData 
 	 */
-	export const sanitizeData = (apiRawData) => {
+	export const sanitizeCurrentWeatherData = (apiRawData) => {
 		let convertedData = {};// Temp object to hold select data from API object
 
 		convertedData.temperature = apiRawData.current.temperature;
@@ -61,19 +59,6 @@ import {Toast} from 'native-base';
 		if(weatherData.windSpeed > rideCriteria.windSpeedLimit){return false}// If current weather windspeed is greater then criteria, return false
 		if(weatherData.precip > 0 && rideCriteria.ifRained === false){return false}// If it has rained and the criteria is false (no ride), return false
 		return true;
-    }
-    
-    // When the app loads, check if there is a riding criteria in local storage, if not then update local storage and state with base criteria
-	export const loadCriteria = async (callback) => {		
-		const savedCriteria = await AsyncStorage.getItem('rideCriteria');//get saved ride criteria from local storage 
-		if(savedCriteria !== null){//check if the data saved to local storage is not empty                
-			callback(JSON.parse(savedCriteria));
-		}else{
-			// If there is no saved data, then save base criteria to local storage           
-			await AsyncStorage.setItem("rideCriteria",JSON.stringify(baseRideCriteria));// Save base criteria to local storage
-			callback(baseRideCriteria);// Save base criteria to local state				
-		}
-		
     }
 
 	//Method used on to convert Fahrenheit to Celsius
