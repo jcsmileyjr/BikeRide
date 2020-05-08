@@ -6,7 +6,7 @@ const CustomTextInput = (props) => {
     return(                
         <View style={styles.inputContainer}>
             <Text style={[styles.inputLabelStyle, styles.boldLabel]}>{props.labelText}</Text>
-            <TextInput style={styles.textInputStyle} keyboardType="number-pad" onFocus={() => {props.updateState("")}} value={String(props.state)}  onChangeText={(minTemp)=> {props.updateState(minTemp)}} />
+            <TextInput style={styles.textInputStyle} keyboardType="number-pad" maxLength={3} onFocus={() => {props.updateState("")}} value={String(props.state)}  onChangeText={(minTemp)=> {props.updateState(minTemp)}} />
         </View>
 
     );
