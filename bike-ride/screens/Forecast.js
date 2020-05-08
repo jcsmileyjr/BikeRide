@@ -49,7 +49,7 @@ const Forecast = ({navigation}) => {
 		}
 
 		const data = await response.json();// Extracts the JSON from the response.body and converts JSON string into a JavaScript object
-		setWeatherData(this.sanitizeData(data))// Convert api data into a sanitize object with only needed information
+		setWeatherData(this.sanitizeCurrentWeatherData(data))// Convert api data into a sanitize object with only needed information
 	}
 
 	// If there is no internet access, then get from local storage the last saved 7 Day forecast. If that is empty, display a message to the user
@@ -65,7 +65,7 @@ const Forecast = ({navigation}) => {
 	}
 
 	// Convert data from an API object into a sanitize object to be comsume by the Forecast screen
-	sanitizeData = (apiData) => {
+	sanitizeCurrentWeatherData = (apiData) => {
 		let convertedArray = [];
 		const workingArray = [];
 		workingArray.push(apiData);		

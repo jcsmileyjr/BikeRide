@@ -26,7 +26,7 @@ import {Toast} from 'native-base';
 		}
 
 		const data = await response.json();// Extracts the JSON from the response.body and converts JSON string into a JavaScript object
-		callback(sanitizeData(data));// Updates weatherData with today's weather data		
+		callback(sanitizeSevenDayForecastData(data));// Updates weatherData with today's weather data		
 	}
 
 	/**
@@ -34,7 +34,7 @@ import {Toast} from 'native-base';
 	 * Certain data is extracted and placed into an object. That object is use to update the weatherData component state 
 	 * @param {*} apiRawData 
 	 */
-	export const sanitizeData = (apiRawData) => {
+	export const sanitizeSevenDayForecastData = (apiRawData) => {
 		let convertedData = {};// Temp object to hold select data from API object
 
 		convertedData.temperature = apiRawData.current.temperature;
