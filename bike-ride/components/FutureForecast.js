@@ -36,29 +36,29 @@ const styles = StyleSheet.create({
 	},
 	textStyle:{
 		fontSize:25,
-		color:"#4D4D4D",// Light grey color
+		color:"#4D4D4D",
 	},
-	goodImage:{// Color and size of the good day image
+	goodImage:{
 		color:"green",
 		fontSize:45,
 	},
-	badImage:{// Color and size of the bad day image
+	badImage:{
 		color:"red",
 		fontSize:45,
 	},
-	bestImage:{/*color and size of the great day image */
+	bestImage:{
 		color:"navy",
 		fontSize:45,
 	},
-	imageContainer:{/*Style for container of the image */
+	imageContainer:{
 		flex:1,
 		display:"flex",
 	},
-	dateSection:{/*Style for date */
+	dateSection:{
 		flex:2,
 		paddingLeft:20,
 	},
-	outcomeSection:{/*Style for outcome */
+	outcomeSection:{
 		flex:1,
 	}
 });
