@@ -36,7 +36,7 @@
     }  
     
 	// Use date in old format (day/month/year) and return in updated format (month/day/year)
-	rebuildDate = (oldDate) => {
+	export const rebuildDate = (oldDate) => {
 		convertIntoArray = oldDate.split("/");
 		return `${convertIntoArray[1]}/${convertIntoArray[0]}/${convertIntoArray[2]}`;		
 	}    
