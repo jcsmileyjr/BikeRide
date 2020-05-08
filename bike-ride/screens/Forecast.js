@@ -5,6 +5,7 @@ import {FORECAST_ACCESS_KEY, FORECAST_API_URL, FORECAST_APP_ID } from 'react-nat
 import { NavigationEvents } from "react-navigation";// Use to reload state when navigating from another screen
 import {loadRideCriteria} from '../js/loadRideCriteria.js';
 import {applyRidingCriteria, applyBestDayCriteria} from '../js/applyRideCriteria.js';
+import {sanitizeSevenDayForecastData} from '../js/sanitizeData.js';
 
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
@@ -50,7 +51,7 @@ const Forecast = ({navigation}) => {
 		}
 
 		const data = await response.json();// Extracts the JSON from the response.body and converts JSON string into a JavaScript object
-		setWeatherData(this.sanitizeSevenDayForecastData(data))// Convert api data into a sanitize object with only needed information
+		setWeatherData(sanitizeSevenDayForecastData(data))// Convert api data into a sanitize object with only needed information
 	}
 
 	// If there is no internet access, then get from local storage the last saved 7 Day forecast. If that is empty, display a message to the user
@@ -63,32 +64,6 @@ const Forecast = ({navigation}) => {
 			// Display error message to user
 			Toast.show({text:"No network connection and no saved 7 day forecast", position:"bottom", type:"warning", duration:5000});
 		}
-	}
-
-	// Convert data from an API object into a sanitize object to be comsume by the Forecast screen
-	sanitizeSevenDayForecastData = (apiData) => {
-		let convertedArray = [];
-		const workingArray = [];
-		workingArray.push(apiData);		
-		
-		// Convert key data from each weather object and push into an array
-		workingArray[0].Days.map((weather, index) => {
-			let convertedData = {};
-			convertedData.temperature = weather.temp_max_f;
-			convertedData.windSpeed = weather.windspd_max_mph;
-			convertedData.rain = weather.rain_total_in;
-			convertedData.date = this.rebuildDate(weather.date);
-
-			convertedArray.push(convertedData);
-		})
-
-		return convertedArray;
-	}
- 
-	// Use date in old format (day/month/year) and return in updated format (month/day/year)
-	rebuildDate = (oldDate) => {
-		convertIntoArray = oldDate.split("/");
-		return `${convertIntoArray[1]}/${convertIntoArray[0]}/${convertIntoArray[2]}`;		
 	}
 
 	// When the app loads, check if there is a riding criteria in local storage, if not then update local storage and state with base criteria

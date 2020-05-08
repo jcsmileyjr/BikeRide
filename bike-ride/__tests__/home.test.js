@@ -1,4 +1,4 @@
-import {sanitizeCurrentWeatherData} from '../js/homeScreenFunctions';
+import {sanitizeCurrentWeatherData} from '../js/sanitizeData.js';
 import {applyRidingCriteria} from '../js/applyRideCriteria.js';
 import baseRideCriteria from '../js/baseRideCriteria.js';
 describe("IF weather data from an API call is ready to be displayed?", () => {

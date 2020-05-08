@@ -1,5 +1,6 @@
 import { ACCESS_KEY, API_URL } from 'react-native-dotenv';
 import {Toast} from 'native-base';
+import {sanitizeCurrentWeatherData} from '../js/sanitizeData.js';
 
 	/**
 	 * API call to get the current user location, weather forecast, and update weatherData with the temperature
@@ -28,22 +29,6 @@ import {Toast} from 'native-base';
 		const data = await response.json();// Extracts the JSON from the response.body and converts JSON string into a JavaScript object
 		callback(sanitizeCurrentWeatherData(data));// Updates weatherData with today's weather data		
 	}
-
-	/**
-	 * Method called in the getCurrentWeather() to convert raw data from an API call into a sanitize object to be comsume on the Home screen.  
-	 * Certain data is extracted and placed into an object. That object is use to update the weatherData component state 
-	 * @param {*} apiRawData 
-	 */
-	export const sanitizeCurrentWeatherData = (apiRawData) => {
-		let convertedData = {};// Temp object to hold select data from API object
-
-		convertedData.temperature = apiRawData.current.temperature;
-		convertedData.windSpeed = apiRawData.current.wind_speed;
-		convertedData.rain = apiRawData.current.precip;
-		convertedData.date = apiRawData.location.localtime;
-
-		return convertedData;
-    }
 
 	//Method used on to convert Fahrenheit to Celsius
 	export const convertToCelsius = (temperature) => {

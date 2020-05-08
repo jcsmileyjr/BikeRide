@@ -1,5 +1,5 @@
 import baseRideCriteria from '../js/baseRideCriteria.js';
-import {sanitizeData} from '../js/forecastScreenFunctions.js';
+import {sanitizeSevenDayForecastData} from '../js/sanitizeData.js';
 import {applyRidingCriteria, applyBestDayCriteria} from '../js/applyRideCriteria.js';
 describe("Data from an API call can be used", () => {
     const apiData= {
@@ -20,7 +20,7 @@ describe("Data from an API call can be used", () => {
     }
 
     it('should convert the unknown data into a useable object and return the correct temperature', () => {
-        expect((sanitizeData(apiData))[0].temperature).toBe(80);
+        expect((sanitizeSevenDayForecastData(apiData))[0].temperature).toBe(80);
     });
 });
 
