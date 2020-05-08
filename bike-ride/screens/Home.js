@@ -8,7 +8,8 @@ import Button from '../components/Button.js';
 import Footer from '../components/Footer.js';
 import CriteriaIcon from '../components/EditCriteria.js';
 import SaveGoodDayIcon from '../components/SaveGoodDay.js';
-import {applyRidingCriteria, loadCriteria, getCurrentWeather, convertToCelsius} from '../js/homeScreenFunctions';
+import {applyRidingCriteria, getCurrentWeather, convertToCelsius} from '../js/homeScreenFunctions';
+import {loadRideCriteria} from '../js/loadRideCriteria.js';
 
 // First screen shown in the app that makes an api call to get today's weather to display if today is a good or bad to ride a bicycle. 
 const Home = ({ navigation }) => {
@@ -16,13 +17,13 @@ const Home = ({ navigation }) => {
 	const [weatherData, setWeatherData] = useState(loading);// State to hold weather data
 	const [rideCriteria, setRideSetting] = useState({});// State to hold riding criteria
 
-	useEffect(() => { getCurrentWeather(setWeatherData); loadCriteria(setRideSetting);}, []);// This code runs before the screen renders
+	useEffect(() => { getCurrentWeather(setWeatherData); loadRideCriteria(setRideSetting);}, []);// This code runs before the screen renders
 
 	return (
 		<Container>
 			<Header title="Today" />
 			{/*Check if the riding criteria have change */}
-			<NavigationEvents onDidFocus={() => loadCriteria(setRideSetting)} />
+			<NavigationEvents onDidFocus={() => loadRideCriteria(setRideSetting)} />
 
 			{/*Display warning to user while data is loading */}
 			{weatherData === false &&

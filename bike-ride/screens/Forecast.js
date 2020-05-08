@@ -3,6 +3,7 @@ import {StyleSheet, View, AsyncStorage} from 'react-native';
 import {Container, H1, Toast, Spinner} from 'native-base';// UI library for styling and complex components missing from the React Native
 import {FORECAST_ACCESS_KEY, FORECAST_API_URL, FORECAST_APP_ID } from 'react-native-dotenv';// Weather service API keys
 import { NavigationEvents } from "react-navigation";// Use to reload state when navigating from another screen
+import {loadRideCriteria} from '../js/loadRideCriteria.js';
 
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
@@ -10,7 +11,6 @@ import FutureForecast from '../components/FutureForecast.js';// Component with I
 import Button from '../components/Button.js';
 import CriteriaIcon from '../components/EditCriteria.js';
 import SavePredictions from '../components/SavePredictions.js';
-import baseRideCriteria from '../js/baseRideCriteria.js';// If no criteria is found in local storage, this is used. Call in loadCriteria()
 
 // Screen that makes an api call to get 7 days of weather data to display if each day is a good or bad day to ride a bicycle. 
 const Forecast = ({navigation}) => {
@@ -22,7 +22,7 @@ const Forecast = ({navigation}) => {
 	
 	useEffect(() => { // Load riding criteria to component state
 		let mounted = true;// Unmounted components "Bug Fix". During clean up (components are unmounted), this stops async calls from being made		
-		this.loadCriteria(mounted);// Get the current riding criteria from local storage or use the base criteria. 		
+		loadCriteria(mounted);// Get the current riding criteria from local storage or use the base criteria. 		
 		
 		return () => mounted = false;
 	}, []);
@@ -93,21 +93,9 @@ const Forecast = ({navigation}) => {
 	// When the app loads, check if there is a riding criteria in local storage, if not then update local storage and state with base criteria
 	loadCriteria = async (isComponentMounted) => {		 
 		if(isComponentMounted){// Bug Fix: UseEffect is called when the screen changes and throw an error. This fix by checking if the component is mounted. 
-			this.loadRideCriteria();
+			loadRideCriteria(setRideCriteria);
 			this.loadBestDayCriteria();			
 		}			
-	}
-
-	// When the app loads, check if there is a riding criteria in local storage
-	loadRideCriteria = async () => {
-		const savedCriteria = await AsyncStorage.getItem('rideCriteria');// Get saved ride criteria from local storage
-		if(savedCriteria !== null){// Check if the data saved to local storage is not empty                
-			setRideCriteria(JSON.parse(savedCriteria));
-		}else{
-			// If there is no saved data, then save base criteria to local storage           
-			await AsyncStorage.setItem("rideCriteria",JSON.stringify(baseRideCriteria));// Save base criteria to local storage
-			setRideCriteria(baseRideCriteria);// Save base riding criteria to local state
-		}		
 	}
 
 	// When the app loads, check if there is a best day to ride criteria in local storage

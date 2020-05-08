@@ -1,5 +1,3 @@
-import {AsyncStorage } from 'react-native';
-import baseRideCriteria from '../js/baseRideCriteria.js';
 import { ACCESS_KEY, API_URL } from 'react-native-dotenv';
 import {Toast} from 'native-base';
 
@@ -61,19 +59,6 @@ import {Toast} from 'native-base';
 		if(weatherData.windSpeed > rideCriteria.windSpeedLimit){return false}// If current weather windspeed is greater then criteria, return false
 		if(weatherData.precip > 0 && rideCriteria.ifRained === false){return false}// If it has rained and the criteria is false (no ride), return false
 		return true;
-    }
-    
-    // When the app loads, check if there is a riding criteria in local storage, if not then update local storage and state with base criteria
-	export const loadCriteria = async (callback) => {		
-		const savedCriteria = await AsyncStorage.getItem('rideCriteria');//get saved ride criteria from local storage 
-		if(savedCriteria !== null){//check if the data saved to local storage is not empty                
-			callback(JSON.parse(savedCriteria));
-		}else{
-			// If there is no saved data, then save base criteria to local storage           
-			await AsyncStorage.setItem("rideCriteria",JSON.stringify(baseRideCriteria));// Save base criteria to local storage
-			callback(baseRideCriteria);// Save base criteria to local state				
-		}
-		
     }
 
 	//Method used on to convert Fahrenheit to Celsius
