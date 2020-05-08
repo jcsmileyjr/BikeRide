@@ -33,7 +33,7 @@ const Forecast = ({navigation}) => {
 			const lat = JSON.stringify(position.coords.latitude);
 			const long = JSON.stringify(position.coords.longitude);
 
-			this.getWeather(lat, long);// API call to get the current weather forecast and update component state
+			this.getSevenDayForecast(lat, long);// API call to get the current weather forecast and update component state
 		},
 		error => console.log(error.message),
 		{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -42,7 +42,7 @@ const Forecast = ({navigation}) => {
 	}
 
 	// API call to get the current weather forecast or use a saved 7 day forecast if there is no internet access
-	getWeather = async (lat, long) => {
+	getSevenDayForecast = async (lat, long) => {
 		const response = await fetch(`${FORECAST_API_URL}${lat},${long}?app_id=${FORECAST_APP_ID}&app_key=${FORECAST_ACCESS_KEY}`);
 		if (response.ok === false) {// Check if there is no response or network connection failed				
 			this.getSavedPredictions();// Check if there is a saved 7 day forecast. If so, load to component state. If not, show user a message
