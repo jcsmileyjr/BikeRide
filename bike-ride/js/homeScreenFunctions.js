@@ -39,26 +39,10 @@ import {Toast} from 'native-base';
 
 		convertedData.temperature = apiRawData.current.temperature;
 		convertedData.windSpeed = apiRawData.current.wind_speed;
-		convertedData.ifRained = apiRawData.current.precip;
+		convertedData.rain = apiRawData.current.precip;
 		convertedData.date = apiRawData.location.localtime;
 
 		return convertedData;
-    }
-
-
-	/**
-	 * Function used to determine if its a good/bad day to ride based on a ride criteria and current weather data on the Home screen. 	 * 
-	 * @param {*} weatherData // Object with weather details 
-	 * @param {*} rideCriteria // Method use to update the component state
-	 */
-	export const applyRidingCriteria  = (weatherData, rideCriteria) => {
-		// If current weather temperature is less then minimal temp criteria or more then maximum temp criteria then return false
-		if (weatherData.temperature < rideCriteria.minimalTemperature || weatherData.temperature > rideCriteria.maximumTemperature) {
-			return false;
-		}
-		if(weatherData.windSpeed > rideCriteria.windSpeedLimit){return false}// If current weather windspeed is greater then criteria, return false
-		if(weatherData.precip > 0 && rideCriteria.ifRained === false){return false}// If it has rained and the criteria is false (no ride), return false
-		return true;
     }
 
 	//Method used on to convert Fahrenheit to Celsius

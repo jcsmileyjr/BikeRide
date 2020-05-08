@@ -1,5 +1,6 @@
 import baseRideCriteria from '../js/baseRideCriteria.js';
-import {sanitizeData, applyRidingCriteria, applyBestDayCriteria} from '../js/forecastScreenFunctions.js';
+import {sanitizeData} from '../js/forecastScreenFunctions.js';
+import {applyRidingCriteria, applyBestDayCriteria} from '../js/applyRideCriteria.js';
 describe("Data from an API call can be used", () => {
     const apiData= {
         "Days":    [

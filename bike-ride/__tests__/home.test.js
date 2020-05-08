@@ -1,4 +1,5 @@
-import {applyRidingCriteria, loadCriteria, getCurrentWeather, sanitizeData} from '../js/homeScreenFunctions';
+import {sanitizeCurrentWeatherData} from '../js/homeScreenFunctions';
+import {applyRidingCriteria} from '../js/applyRideCriteria.js';
 import baseRideCriteria from '../js/baseRideCriteria.js';
 describe("IF weather data from an API call is ready to be displayed?", () => {
     const testAPIData = {
@@ -10,7 +11,7 @@ describe("IF weather data from an API call is ready to be displayed?", () => {
         "location":"03/05/2020"
     }
     it('should convert the unknown data into a useable object and return the correct temperature', () => {
-        expect((sanitizeData(testAPIData)).temperature).toBe(80);
+        expect((sanitizeCurrentWeatherData(testAPIData)).temperature).toBe(80);
     });
 });
 
