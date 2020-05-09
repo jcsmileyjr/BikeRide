@@ -8,9 +8,10 @@
 3. Objectives
 4. Wireframe
 5. How to play with Demo
-6. How to Install
-7. Technologies Used
-
+6. Install
+7. Run Tests
+8. Technologies Used
+9. License
 
 
 ### Purpose:
@@ -40,7 +41,7 @@ This project was used to practice developing with React Native, APIs, and unit t
 1. Download the Expo app to your phone
 2. Click on this link to view the app: https://expo.io/@jcsmileyjr/bike-ride 
 
-### How to Install
+### Install
 1. On the command line, install expo: npm install -g expo-cli
 2. Clone this repository to your local computer
 3. On the commmand line and from the folder containing the app: npm install
@@ -48,6 +49,10 @@ This project was used to practice developing with React Native, APIs, and unit t
 5. Download the expo app to your mobile device
 6. On the command line type: npm start
 7. Using the broswer window that pops up, use your mobile device's camera to scan the QR code to launch the app.
+
+### Run Tests:
+1. Change the directory to the bike-ride folder.
+2. Type in the command line: npm test
 
 ### This app was built with the following technologies:
 
@@ -69,4 +74,6 @@ This project was used to practice developing with React Native, APIs, and unit t
 
 **CSS:** A formatting language for styling web pages
 
+### License  
+GNU AFFERO GENERAL PUBLIC LICENSE
 _Created by JC Smiley in May of 2020_
