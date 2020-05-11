@@ -23,11 +23,11 @@ This project was used to practice developing with React Native, APIs, and unit t
 
 ### Objectives:
 ##### Original
-- Application displays if today is a good day to ride.
-- Application displays if the next 7 days is a good, bad, or the best day to ride.  
-- The user can save the 7 day forecast to use later if there is no internet accesss
-- The user can change the criteria of what a good day to ride is.
-- The user can save the current weather to help the application learn and display what a "Great" day to ride is.
+1. Application displays if today is a good day to ride.
+2. Application displays if the next 7 days is a good, bad, or the best day to ride.  
+3. The user can save the 7 day forecast to use later if there is no internet accesss
+4. The user can change the criteria of what a good day to ride is.
+5. The user can save the current weather to help the application learn and display what a "Great" day to ride is.
 
 ##### Based on User Feedback
 - User can choose between Fahrenheit & Celsius
@@ -58,13 +58,13 @@ This project was used to practice developing with React Native, APIs, and unit t
 
 **React Native:** JavaScript mobile app framework
 
-**Git-Hub:** Web-based version control repository and Internet hosting service
+**GitHub:** Web-based version control repository and Internet hosting service
 
 **React-Navigation:**  Navigation library for React’s web and mobile apps
 
 **Native-Base:** Open source UI component library for React Native
 
-**Abode XD:** A wire-framing tool used to create a mockup/visual of what is to be coded
+**Adobe XD:** A wire-framing tool used to create a mockup/visual of what is to be coded
 
 **Jest:** A testing framework for unit testing.
 
