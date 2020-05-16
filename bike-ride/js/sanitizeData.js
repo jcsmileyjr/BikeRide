@@ -20,7 +20,7 @@
 		let convertedArray = [];
 		const workingArray = [];
 		workingArray.push(apiRawData);		
-		
+
 		// Convert key data from each weather object and push into an array
 		workingArray[0].Days.map((weather) => {
 			let convertedData = {};
@@ -35,8 +35,11 @@
 		return convertedArray;
     }  
     
-	// Use date in old format (day/month/year) and return in updated format (month/day/year)
+	// Use date in old format (day/month/year),convert to updated format (month/day/year), and return day of the week name
 	export const rebuildDate = (oldDate) => {
-		convertIntoArray = oldDate.split("/");
-		return `${convertIntoArray[1]}/${convertIntoArray[0]}/${convertIntoArray[2]}`;		
+		const daysOfTheWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+		const convertIntoArray = oldDate.split("/");
+		const reconstructedDate = `${convertIntoArray[1]}/${convertIntoArray[0]}/${convertIntoArray[2]}`;
+		const newDate = new Date(reconstructedDate);
+		return daysOfTheWeek[newDate.getDay()];		
 	}    
