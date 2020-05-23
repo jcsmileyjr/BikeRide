@@ -1,6 +1,6 @@
 # Planning my Bike Ride
 
-![gif of app](./bike-ride/assets/wireframe/BikeRide2b.gif);
+![gif of app](./bike-ride/assets/wireframe/BikeRide3gif.gif);
 
 ### Table of Contents
 1. Purpose
